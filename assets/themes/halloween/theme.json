@@ -1,0 +1,114 @@
+{
+ "id": "halloween",
+ "order": 12,
+ "name": "Halloween",
+ "description": "Friendly ghosts, pumpkins, bats and witch hats.",
+ "palette": [
+  "#ff9f1c",
+  "#5a189a",
+  "#2d2140",
+  "#fff1e6"
+ ],
+ "colors": {
+  "primary": "#ff9f1c",
+  "secondary": "#5a189a",
+  "accent": "#2d2140",
+  "text": "#5a189a",
+  "background": "#fff1e6"
+ },
+ "typography": {
+  "heading": "Creepster",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "pumpkin",
+  "ghost",
+  "bat",
+  "spider_web",
+  "moon_cute"
+ ],
+ "accessorySets": {
+  "Witch hats": [
+   "witch_hat"
+  ],
+  "Cat ears": [
+   "cat_ears"
+  ]
+ },
+ "frames": [
+  "frame_ring_stars"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Happy Halloween",
+  "Boo!",
+  "Trick or Treat",
+  "Spooky Cute"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "dots",
+   "color": "#5a189a",
+   "patternColor": "#ff9f1c"
+  },
+  {
+   "type": "gradient",
+   "color": "#ff9f1c",
+   "color2": "#5a189a",
+   "angle": 180
+  },
+  {
+   "type": "solid",
+   "color": "#2d2140"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "id": "dinosaur",
+ "order": 6,
+ "name": "Dinosaur",
+ "description": "Friendly dinos, eggs, footprints and volcanoes.",
+ "palette": [
+  "#06d6a0",
+  "#ff9f1c",
+  "#8d6e63",
+  "#f1faee"
+ ],
+ "colors": {
+  "primary": "#06d6a0",
+  "secondary": "#ff9f1c",
+  "accent": "#8d6e63",
+  "text": "#1b4332",
+  "background": "#f1faee"
+ },
+ "typography": {
+  "heading": "Chewy",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "dino_green",
+  "dino_egg",
+  "dino_footprint",
+  "volcano",
+  "palm_leaf"
+ ],
+ "accessorySets": {
+  "Party hats": [
+   "party_hat_dots"
+  ]
+ },
+ "frames": [
+  "frame_ring_stars"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Dino-mite!",
+  "Roar!",
+  "Three-Rex",
+  "Birthday-saurus"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "dots",
+   "color": "#b7e4c7",
+   "patternColor": "#52b788"
+  },
+  {
+   "type": "gradient",
+   "color": "#f1faee",
+   "color2": "#b7e4c7",
+   "angle": 135
+  },
+  {
+   "type": "solid",
+   "color": "#ffd8a8"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

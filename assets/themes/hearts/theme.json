@@ -1,0 +1,113 @@
+{
+ "id": "hearts",
+ "order": 17,
+ "name": "Hearts and Friendship",
+ "description": "Hearts, wings and sweet sayings for friends and family.",
+ "palette": [
+  "#ff4f8b",
+  "#ffafcc",
+  "#cdb4db",
+  "#fff0f6"
+ ],
+ "colors": {
+  "primary": "#ff4f8b",
+  "secondary": "#ffafcc",
+  "accent": "#cdb4db",
+  "text": "#c9184a",
+  "background": "#fff0f6"
+ },
+ "typography": {
+  "heading": "Pacifico",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "heart_basic",
+  "hearts_double",
+  "heart_outline",
+  "heart_wings",
+  "balloon_heart",
+  "flower_pink"
+ ],
+ "accessorySets": {
+  "Heart glasses": [
+   "sunglasses_heart"
+  ]
+ },
+ "frames": [
+  "frame_ring_hearts"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Best Friends",
+  "Love You",
+  "Besties",
+  "Thank You",
+  "XOXO"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "hearts",
+   "color": "#ffd6e7",
+   "patternColor": "#ffffff"
+  },
+  {
+   "type": "gradient",
+   "color": "#fff0f6",
+   "color2": "#ffafcc",
+   "angle": 135
+  },
+  {
+   "type": "solid",
+   "color": "#ffffff"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

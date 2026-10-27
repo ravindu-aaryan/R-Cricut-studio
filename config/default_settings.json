@@ -1,0 +1,21 @@
+{
+  "host": "127.0.0.1",
+  "port": 5173,
+  "data_dir": null,
+  "max_upload_mb": 40,
+  "max_image_side_px": 12000,
+  "max_image_megapixels": 80,
+  "preview_max_side_px": 1600,
+  "thumbnail_max_side_px": 320,
+  "max_worker_threads": 2,
+  "job_timeout_seconds": 300,
+  "autosave_interval_seconds": 20,
+  "default_dpi": 300,
+  "low_resolution_warning_dpi": 150,
+  "default_sticker_mm": 60,
+  "ui": {
+    "theme": "light",
+    "show_rulers": true,
+    "snap_to_guides": true
+  }
+}

@@ -1,0 +1,131 @@
+{
+ "id": "gentleman",
+ "order": 2,
+ "name": "Mr. Gentleman",
+ "description": "Bow ties, top hats and mustaches with a dapper navy-and-gold palette.",
+ "palette": [
+  "#1d3557",
+  "#c9a227",
+  "#e63946",
+  "#f1faee"
+ ],
+ "colors": {
+  "primary": "#1d3557",
+  "secondary": "#c9a227",
+  "accent": "#e63946",
+  "text": "#2d2140",
+  "background": "#f1faee"
+ },
+ "typography": {
+  "heading": "Lobster",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "cane",
+  "stars_trio",
+  "badge_scallop",
+  "banner_ribbon"
+ ],
+ "accessorySets": {
+  "Hats": [
+   "top_hat",
+   "bowler_hat"
+  ],
+  "Neckwear": [
+   "bowtie",
+   "bowtie_dots",
+   "necktie"
+  ],
+  "Mustaches": [
+   "mustache_curly",
+   "mustache_classic"
+  ],
+  "Monocle": [
+   "monocle"
+  ]
+ },
+ "frames": [
+  "frame_laurel",
+  "frame_scallop"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [
+   {
+    "widthMm": 0.9,
+    "color": "#c9a227",
+    "gapMm": 0
+   }
+  ],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Little Gentleman",
+  "Dapper Dude",
+  "Mr. Cool",
+  "Thank You",
+  "Happy Birthday"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "stripes",
+   "color": "#1d3557",
+   "patternColor": "#2b4a75"
+  },
+  {
+   "type": "solid",
+   "color": "#f1faee"
+  },
+  {
+   "type": "gradient",
+   "color": "#1d3557",
+   "color2": "#457b9d",
+   "angle": 135
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "id": "christmas",
+ "order": 11,
+ "name": "Christmas",
+ "description": "Trees, snowflakes, candy canes and Santa hats.",
+ "palette": [
+  "#e63946",
+  "#2a9d8f",
+  "#ffd166",
+  "#f1faee"
+ ],
+ "colors": {
+  "primary": "#e63946",
+  "secondary": "#2a9d8f",
+  "accent": "#ffd166",
+  "text": "#9d0208",
+  "background": "#f1faee"
+ },
+ "typography": {
+  "heading": "Lobster",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "christmas_tree",
+  "snowflake",
+  "candy_cane",
+  "gingerbread",
+  "gift_box",
+  "star_basic"
+ ],
+ "accessorySets": {
+  "Santa hats": [
+   "santa_hat"
+  ]
+ },
+ "frames": [
+  "frame_laurel",
+  "frame_ring_stars"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Merry Christmas",
+  "Ho Ho Ho",
+  "Season's Greetings",
+  "Happy Holidays"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "snowflakes",
+   "color": "#e63946",
+   "patternColor": "#ffffff"
+  },
+  {
+   "type": "pattern",
+   "patternId": "checks",
+   "color": "#ffffff",
+   "patternColor": "#2a9d8f"
+  },
+  {
+   "type": "gradient",
+   "color": "#2a9d8f",
+   "color2": "#1b4332",
+   "angle": 135
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

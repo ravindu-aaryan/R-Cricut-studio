@@ -1,0 +1,113 @@
+{
+ "id": "minimal",
+ "order": 16,
+ "name": "Minimalist Labels",
+ "description": "Clean labels and badges for names, jars and school supplies.",
+ "palette": [
+  "#2d2140",
+  "#adb5bd",
+  "#f8f9fa",
+  "#ffffff"
+ ],
+ "colors": {
+  "primary": "#2d2140",
+  "secondary": "#adb5bd",
+  "accent": "#f8f9fa",
+  "text": "#2d2140",
+  "background": "#ffffff"
+ },
+ "typography": {
+  "heading": "Poppins",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "badge_label",
+  "badge_tag",
+  "shape_circle",
+  "badge_scallop"
+ ],
+ "accessorySets": {},
+ "frames": [
+  "frame_square_dots"
+ ],
+ "border": {
+  "widthMm": 1.5,
+  "color": "#ffffff",
+  "outlines": [
+   {
+    "widthMm": 0.5,
+    "color": "#2d2140",
+    "gapMm": 0
+   }
+  ],
+  "smoothing": 0.3
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  30,
+  45,
+  60
+ ],
+ "textPresets": [
+  "Name",
+  "Thank You",
+  "Handmade",
+  "Property of",
+  "Custom text"
+ ],
+ "backgrounds": [
+  {
+   "type": "solid",
+   "color": "#ffffff"
+  },
+  {
+   "type": "solid",
+   "color": "#f1f3f5"
+  },
+  {
+   "type": "pattern",
+   "patternId": "grid",
+   "color": "#ffffff",
+   "patternColor": "#e9ecef"
+  }
+ ],
+ "shapes": [
+  "rounded",
+  "rect",
+  "circle",
+  "oval",
+  "silhouette"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

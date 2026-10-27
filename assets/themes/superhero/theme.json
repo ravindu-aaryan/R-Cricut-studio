@@ -1,0 +1,122 @@
+{
+ "id": "superhero",
+ "order": 3,
+ "name": "Superhero",
+ "description": "Comic bursts, capes and lightning in primary colours (original designs, no franchise characters).",
+ "palette": [
+  "#e63946",
+  "#3a86ff",
+  "#ffd166",
+  "#fff3b0"
+ ],
+ "colors": {
+  "primary": "#e63946",
+  "secondary": "#3a86ff",
+  "accent": "#ffd166",
+  "text": "#1d3557",
+  "background": "#fff3b0"
+ },
+ "typography": {
+  "heading": "Bangers",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "pow_burst",
+  "lightning",
+  "hero_emblem",
+  "speech_shout",
+  "star_basic",
+  "hero_cape"
+ ],
+ "accessorySets": {
+  "Masks": [
+   "hero_mask"
+  ],
+  "Capes": [
+   "hero_cape"
+  ]
+ },
+ "frames": [
+  "frame_ring_stars"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [
+   {
+    "widthMm": 1.2,
+    "color": "#1d3557",
+    "gapMm": 0
+   }
+  ],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Super Kid",
+  "Hero Mode",
+  "Power Up!",
+  "Kapow!",
+  "Birthday Hero"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "dots",
+   "color": "#ffd166",
+   "patternColor": "#ff9f1c"
+  },
+  {
+   "type": "gradient",
+   "color": "#3a86ff",
+   "color2": "#e63946",
+   "angle": 160
+  },
+  {
+   "type": "solid",
+   "color": "#fff3b0"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

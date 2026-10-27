@@ -1,0 +1,74 @@
+[
+ {
+  "id": "dots",
+  "name": "Polka dots",
+  "file": "dots.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "stripes",
+  "name": "Stripes",
+  "file": "stripes.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "stars",
+  "name": "Stars",
+  "file": "stars.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "hearts",
+  "name": "Hearts",
+  "file": "hearts.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "checks",
+  "name": "Checks",
+  "file": "checks.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "confetti",
+  "name": "Confetti",
+  "file": "confetti.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "waves",
+  "name": "Waves",
+  "file": "waves.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "zigzag",
+  "name": "Zigzag",
+  "file": "zigzag.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "leaves",
+  "name": "Leaves",
+  "file": "leaves.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "snowflakes",
+  "name": "Snowflakes",
+  "file": "snowflakes.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "grid",
+  "name": "Grid",
+  "file": "grid.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ },
+ {
+  "id": "sparkle",
+  "name": "Sparkles",
+  "file": "sparkle.svg",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)"
+ }
+]

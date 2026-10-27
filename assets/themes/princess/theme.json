@@ -1,0 +1,119 @@
+{
+ "id": "princess",
+ "order": 7,
+ "name": "Princess and Fairytale",
+ "description": "Tiaras, castles, wands and sparkles in soft pinks and lilacs.",
+ "palette": [
+  "#ff8fab",
+  "#cdb4db",
+  "#ffd166",
+  "#fff0f6"
+ ],
+ "colors": {
+  "primary": "#ff8fab",
+  "secondary": "#cdb4db",
+  "accent": "#ffd166",
+  "text": "#9d4edd",
+  "background": "#fff0f6"
+ },
+ "typography": {
+  "heading": "Great Vibes",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "castle",
+  "magic_wand",
+  "sparkles",
+  "heart_basic",
+  "cloud_cute",
+  "flower_pink"
+ ],
+ "accessorySets": {
+  "Tiaras": [
+   "tiara",
+   "crown_royal"
+  ],
+  "Unicorn": [
+   "unicorn_horn"
+  ]
+ },
+ "frames": [
+  "frame_scallop",
+  "frame_ring_hearts"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Little Princess",
+  "Once Upon a Time",
+  "Make a Wish",
+  "Magical Day"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "sparkle",
+   "color": "#ffd6e7",
+   "patternColor": "#ffffff"
+  },
+  {
+   "type": "gradient",
+   "color": "#fff0f6",
+   "color2": "#cdb4db",
+   "angle": 135
+  },
+  {
+   "type": "pattern",
+   "patternId": "hearts",
+   "color": "#ffafcc",
+   "patternColor": "#ffffff"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

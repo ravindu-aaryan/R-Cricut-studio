@@ -1,0 +1,139 @@
+{
+ "id": "birthday",
+ "order": 1,
+ "name": "Birthday",
+ "description": "Balloons, cake and confetti for a bright birthday party.",
+ "palette": [
+  "#ff4f8b",
+  "#4cc9f0",
+  "#ffd166",
+  "#fff5f9"
+ ],
+ "colors": {
+  "primary": "#ff4f8b",
+  "secondary": "#4cc9f0",
+  "accent": "#ffd166",
+  "text": "#2d2140",
+  "background": "#fff5f9"
+ },
+ "typography": {
+  "heading": "Luckiest Guy",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "balloon_bunch",
+  "balloon_single",
+  "confetti_scatter",
+  "cake_birthday",
+  "cupcake",
+  "gift_box",
+  "banner_bunting",
+  "sparkles",
+  "streamers",
+  "star_basic"
+ ],
+ "accessorySets": {
+  "Party hats": [
+   "party_hat_stripes",
+   "party_hat_dots",
+   "crown_paper"
+  ],
+  "Crowns": [
+   "crown_gold"
+  ],
+  "Fun glasses": [
+   "sunglasses_star"
+  ]
+ },
+ "frames": [
+  "frame_ring_stars",
+  "frame_confetti"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [
+   {
+    "widthMm": 0.8,
+    "color": "#ff4f8b",
+    "gapMm": 0
+   }
+  ],
+  "smoothing": 0.6
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Happy Birthday",
+  "Birthday Boy",
+  "Birthday Girl",
+  "Make a Wish",
+  "Party Time",
+  "Let's Celebrate"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "dots",
+   "color": "#ff8fab",
+   "patternColor": "#ffffff"
+  },
+  {
+   "type": "gradient",
+   "color": "#ffd166",
+   "color2": "#ff8fab",
+   "angle": 135
+  },
+  {
+   "type": "pattern",
+   "patternId": "confetti",
+   "color": "#4cc9f0",
+   "patternColor": "#ffffff"
+  },
+  {
+   "type": "solid",
+   "color": "#ffffff"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

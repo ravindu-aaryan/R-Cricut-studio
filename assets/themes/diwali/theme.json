@@ -1,0 +1,108 @@
+{
+ "id": "diwali",
+ "order": 13,
+ "name": "Diwali",
+ "description": "Diyas, rangoli, lanterns and marigold garlands in warm festive colours.",
+ "palette": [
+  "#e76f51",
+  "#ffd166",
+  "#9b5de5",
+  "#fff3e0"
+ ],
+ "colors": {
+  "primary": "#e76f51",
+  "secondary": "#ffd166",
+  "accent": "#9b5de5",
+  "text": "#7b2cbf",
+  "background": "#fff3e0"
+ },
+ "typography": {
+  "heading": "Lobster",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "diya_lamp",
+  "rangoli",
+  "lantern_sky",
+  "fireworks",
+  "flower_garland",
+  "sparkles"
+ ],
+ "accessorySets": {},
+ "frames": [
+  "frame_kolam"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Happy Diwali",
+  "Festival of Lights",
+  "Shubh Deepavali",
+  "Light and Joy"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "sparkle",
+   "color": "#7b2cbf",
+   "patternColor": "#ffd166"
+  },
+  {
+   "type": "gradient",
+   "color": "#ff9f1c",
+   "color2": "#e63946",
+   "angle": 135
+  },
+  {
+   "type": "solid",
+   "color": "#fff3e0"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

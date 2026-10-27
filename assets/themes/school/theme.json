@@ -1,0 +1,120 @@
+{
+ "id": "school",
+ "order": 9,
+ "name": "School",
+ "description": "Pencils, books, apples and backpacks for labels and rewards.",
+ "palette": [
+  "#3a86ff",
+  "#ffd166",
+  "#e63946",
+  "#f8f9fa"
+ ],
+ "colors": {
+  "primary": "#3a86ff",
+  "secondary": "#ffd166",
+  "accent": "#e63946",
+  "text": "#1d3557",
+  "background": "#f8f9fa"
+ },
+ "typography": {
+  "heading": "Permanent Marker",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "pencil",
+  "crayons",
+  "book_open",
+  "apple_red",
+  "ruler",
+  "backpack",
+  "abc_blocks",
+  "star_face",
+  "ribbon_award"
+ ],
+ "accessorySets": {
+  "Graduation": [
+   "grad_cap"
+  ],
+  "Glasses": [
+   "glasses_round"
+  ]
+ },
+ "frames": [
+  "frame_square_dots"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Great Job!",
+  "Star Student",
+  "Back to School",
+  "Super Reader",
+  "First Day"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "grid",
+   "color": "#ffffff",
+   "patternColor": "#a2d2ff"
+  },
+  {
+   "type": "solid",
+   "color": "#fff3b0"
+  },
+  {
+   "type": "gradient",
+   "color": "#e0f2fe",
+   "color2": "#fff3b0",
+   "angle": 135
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "rounded",
+  "rect",
+  "circle"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "id": "rainbow",
+ "order": 18,
+ "name": "Rainbow and Pastel",
+ "description": "Rainbows, clouds and stars in soft pastels.",
+ "palette": [
+  "#a2d2ff",
+  "#ffafcc",
+  "#cdb4db",
+  "#fdfcdc"
+ ],
+ "colors": {
+  "primary": "#a2d2ff",
+  "secondary": "#ffafcc",
+  "accent": "#cdb4db",
+  "text": "#7209b7",
+  "background": "#fdfcdc"
+ },
+ "typography": {
+  "heading": "Chewy",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "rainbow",
+  "cloud_cute",
+  "star_face",
+  "balloon_number",
+  "sparkles",
+  "shape_blob"
+ ],
+ "accessorySets": {
+  "Unicorn": [
+   "unicorn_horn"
+  ]
+ },
+ "frames": [
+  "frame_scallop"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Dream Big",
+  "Hello Sunshine",
+  "Be Kind",
+  "Happy Day"
+ ],
+ "backgrounds": [
+  {
+   "type": "gradient",
+   "color": "#ffafcc",
+   "color2": "#a2d2ff",
+   "angle": 120
+  },
+  {
+   "type": "pattern",
+   "patternId": "dots",
+   "color": "#fdfcdc",
+   "patternColor": "#cdb4db"
+  },
+  {
+   "type": "solid",
+   "color": "#fdfcdc"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "id": "jungle",
+ "order": 5,
+ "name": "Jungle Adventure",
+ "description": "Leaves, binoculars and safari hats for explorers.",
+ "palette": [
+  "#2a9d8f",
+  "#e9c46a",
+  "#f4a261",
+  "#e9f5db"
+ ],
+ "colors": {
+  "primary": "#2a9d8f",
+  "secondary": "#e9c46a",
+  "accent": "#f4a261",
+  "text": "#1b4332",
+  "background": "#e9f5db"
+ },
+ "typography": {
+  "heading": "Chewy",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "palm_leaf",
+  "monstera",
+  "binoculars",
+  "elephant",
+  "sun_happy"
+ ],
+ "accessorySets": {
+  "Safari hats": [
+   "explorer_hat"
+  ]
+ },
+ "frames": [
+  "frame_laurel"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Jungle Explorer",
+  "Wild One",
+  "Adventure Awaits",
+  "Roar!"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "leaves",
+   "color": "#95d5b2",
+   "patternColor": "#2d6a4f"
+  },
+  {
+   "type": "gradient",
+   "color": "#e9f5db",
+   "color2": "#95d5b2",
+   "angle": 135
+  },
+  {
+   "type": "solid",
+   "color": "#e9c46a"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

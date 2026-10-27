@@ -1,0 +1,192 @@
+[
+ {
+  "id": "frame_ring_stars",
+  "name": "Star ring frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "circle",
+   "stars",
+   "badge"
+  ],
+  "kind": "svg",
+  "file": "frame_ring_stars.svg",
+  "aspect": 1.0,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#ffd166"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_ring_hearts",
+  "name": "Heart ring frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "circle",
+   "hearts",
+   "love"
+  ],
+  "kind": "svg",
+  "file": "frame_ring_hearts.svg",
+  "aspect": 1.0,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#ff8fab"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_scallop",
+  "name": "Scalloped frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "scallop",
+   "vintage",
+   "label"
+  ],
+  "kind": "svg",
+  "file": "frame_scallop.svg",
+  "aspect": 1.0,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#9b5de5"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_square_dots",
+  "name": "Dotted square frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "square",
+   "dots",
+   "polaroid"
+  ],
+  "kind": "svg",
+  "file": "frame_square_dots.svg",
+  "aspect": 1.0,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#4cc9f0"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_laurel",
+  "name": "Laurel wreath",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "laurel",
+   "wreath",
+   "award",
+   "wedding"
+  ],
+  "kind": "svg",
+  "file": "frame_laurel.svg",
+  "aspect": 1.0,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#2a9d8f"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_film",
+  "name": "Photo frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "photo",
+   "polaroid",
+   "picture"
+  ],
+  "kind": "svg",
+  "file": "frame_film.svg",
+  "aspect": 0.8696,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#ffffff"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_confetti",
+  "name": "Confetti frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "confetti",
+   "party",
+   "border"
+  ],
+  "kind": "svg",
+  "file": "frame_confetti.svg",
+  "aspect": 1.0,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_kolam",
+  "name": "Kolam border",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "kolam",
+   "pongal",
+   "diwali",
+   "festival"
+  ],
+  "kind": "svg",
+  "file": "frame_kolam.svg",
+  "aspect": 1.0,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#e76f51"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ }
+]

@@ -1,0 +1,115 @@
+{
+ "id": "space",
+ "order": 4,
+ "name": "Space",
+ "description": "Rockets, planets and stars on deep-space colours.",
+ "palette": [
+  "#3a0ca3",
+  "#4cc9f0",
+  "#ffd166",
+  "#10002b"
+ ],
+ "colors": {
+  "primary": "#3a0ca3",
+  "secondary": "#4cc9f0",
+  "accent": "#ffd166",
+  "text": "#3a0ca3",
+  "background": "#10002b"
+ },
+ "typography": {
+  "heading": "Luckiest Guy",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "rocket",
+  "planet_ring",
+  "moon_cute",
+  "ufo",
+  "comet_stars",
+  "star_shooting",
+  "sparkles"
+ ],
+ "accessorySets": {
+  "Helmets": [
+   "astronaut_helmet"
+  ]
+ },
+ "frames": [
+  "frame_ring_stars"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Space Explorer",
+  "To the Moon",
+  "Blast Off!",
+  "Out of this World"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "stars",
+   "color": "#240046",
+   "patternColor": "#ffd166"
+  },
+  {
+   "type": "gradient",
+   "color": "#10002b",
+   "color2": "#3a0ca3",
+   "angle": 180
+  },
+  {
+   "type": "pattern",
+   "patternId": "sparkle",
+   "color": "#3a0ca3",
+   "patternColor": "#4cc9f0"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

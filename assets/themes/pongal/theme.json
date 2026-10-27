@@ -1,0 +1,107 @@
+{
+ "id": "pongal",
+ "order": 14,
+ "name": "Pongal",
+ "description": "Harvest pots, sugarcane, kolam and the happy sun.",
+ "palette": [
+  "#ff9f1c",
+  "#2a9d8f",
+  "#ffd166",
+  "#fffbea"
+ ],
+ "colors": {
+  "primary": "#ff9f1c",
+  "secondary": "#2a9d8f",
+  "accent": "#ffd166",
+  "text": "#9c4a1a",
+  "background": "#fffbea"
+ },
+ "typography": {
+  "heading": "Chewy",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "pongal_pot",
+  "sugarcane",
+  "sun_happy",
+  "rangoli",
+  "flower_garland"
+ ],
+ "accessorySets": {},
+ "frames": [
+  "frame_kolam"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Happy Pongal",
+  "Harvest Joy",
+  "Pongalo Pongal",
+  "Thai Pongal"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "dots",
+   "color": "#ffd166",
+   "patternColor": "#ffffff"
+  },
+  {
+   "type": "gradient",
+   "color": "#fffbea",
+   "color2": "#ffd166",
+   "angle": 135
+  },
+  {
+   "type": "solid",
+   "color": "#e9f5db"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

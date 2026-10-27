@@ -1,0 +1,121 @@
+{
+ "id": "retro",
+ "order": 19,
+ "name": "Retro Pop",
+ "description": "Bold Memphis shapes, zigzags and starbursts.",
+ "palette": [
+  "#ff4f8b",
+  "#ffd166",
+  "#06d6a0",
+  "#fff8e1"
+ ],
+ "colors": {
+  "primary": "#ff4f8b",
+  "secondary": "#ffd166",
+  "accent": "#06d6a0",
+  "text": "#2d2140",
+  "background": "#fff8e1"
+ },
+ "typography": {
+  "heading": "Bangers",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "shape_squiggle",
+  "shape_zigzag",
+  "shape_dots",
+  "shape_triangle",
+  "badge_burst",
+  "lightning",
+  "pow_burst"
+ ],
+ "accessorySets": {
+  "Cool shades": [
+   "sunglasses_classic"
+  ]
+ },
+ "frames": [
+  "frame_square_dots"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [
+   {
+    "widthMm": 1.2,
+    "color": "#2d2140",
+    "gapMm": 0
+   }
+  ],
+  "smoothing": 0.4
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Groovy",
+  "Rad!",
+  "Totally Awesome",
+  "Far Out"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "zigzag",
+   "color": "#ffd166",
+   "patternColor": "#ff4f8b"
+  },
+  {
+   "type": "pattern",
+   "patternId": "checks",
+   "color": "#fff8e1",
+   "patternColor": "#06d6a0"
+  },
+  {
+   "type": "gradient",
+   "color": "#ff4f8b",
+   "color2": "#ffd166",
+   "angle": 135
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta name="app-version" content="{{ app_version }}">
+  <title>{{ app_name }}</title>
+  <link rel="icon" href="/static/icons/app-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar" id="topbar">
+      <a class="brand" href="#/" title="Home">
+        <img src="/static/icons/app-icon.svg" alt="" width="28" height="28">
+        <span>Offline Sticker Studio</span>
+      </a>
+      <div class="topbar-project" id="topbar-project"></div>
+      <div class="topbar-tools" id="topbar-tools"></div>
+      <div class="topbar-right">
+        <span class="offline-pill" title="Everything runs on this computer. No internet connection is used.">
+          <span class="dot"></span>Offline &amp; private
+        </span>
+        <a class="icon-btn" href="#/status" data-tip="Offline and dependency status" data-icon="shield"></a>
+        <a class="icon-btn" href="#/settings" data-tip="Settings" data-icon="settings"></a>
+        <a class="icon-btn" href="#/help" data-tip="Help and troubleshooting" data-icon="help"></a>
+      </div>
+    </header>
+    <div class="body">
+      <nav class="rail" id="rail" aria-label="Project sections"></nav>
+      <main id="view" class="view" tabindex="-1"></main>
+    </div>
+  </div>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="modal-root"></div>
+  <div id="tooltip" class="tooltip" role="tooltip"></div>
+  <script src="/static/vendor/konva-9.3.22.min.js"></script>
+  <script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

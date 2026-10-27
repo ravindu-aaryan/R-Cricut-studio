@@ -1,0 +1,114 @@
+{
+ "id": "sports",
+ "order": 10,
+ "name": "Sports",
+ "description": "Balls, trophies and medals for champions.",
+ "palette": [
+  "#3a86ff",
+  "#06d6a0",
+  "#ffc93c",
+  "#f1faee"
+ ],
+ "colors": {
+  "primary": "#3a86ff",
+  "secondary": "#06d6a0",
+  "accent": "#ffc93c",
+  "text": "#1d3557",
+  "background": "#f1faee"
+ },
+ "typography": {
+  "heading": "Bangers",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "soccer_ball",
+  "basketball",
+  "cricket_bat",
+  "trophy",
+  "medal",
+  "tennis_racket",
+  "stars_trio"
+ ],
+ "accessorySets": {
+  "Caps": [
+   "baseball_cap"
+  ]
+ },
+ "frames": [
+  "frame_laurel"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Champion",
+  "MVP",
+  "Game Day",
+  "Team Player",
+  "Goal!"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "stripes",
+   "color": "#2a9d8f",
+   "patternColor": "#40c9a2"
+  },
+  {
+   "type": "gradient",
+   "color": "#3a86ff",
+   "color2": "#06d6a0",
+   "angle": 135
+  },
+  {
+   "type": "solid",
+   "color": "#f1faee"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

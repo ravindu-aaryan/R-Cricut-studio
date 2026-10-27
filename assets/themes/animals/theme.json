@@ -1,0 +1,113 @@
+{
+ "id": "animals",
+ "order": 8,
+ "name": "Cute Animals",
+ "description": "Cats, bears, bunnies and paw prints.",
+ "palette": [
+  "#ffb703",
+  "#ff8fab",
+  "#9b5de5",
+  "#fff8e7"
+ ],
+ "colors": {
+  "primary": "#ffb703",
+  "secondary": "#ff8fab",
+  "accent": "#9b5de5",
+  "text": "#2d2140",
+  "background": "#fff8e7"
+ },
+ "typography": {
+  "heading": "Chewy",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "cat_face",
+  "bear_face",
+  "paw_print",
+  "fish_cute",
+  "elephant",
+  "heart_basic"
+ ],
+ "accessorySets": {
+  "Animal ears": [
+   "bunny_ears",
+   "cat_ears"
+  ]
+ },
+ "frames": [
+  "frame_ring_hearts"
+ ],
+ "border": {
+  "widthMm": 3.0,
+  "color": "#ffffff",
+  "outlines": [],
+  "smoothing": 0.5
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Purr-fect",
+  "Wild About You",
+  "Beary Cute",
+  "Hello Friend"
+ ],
+ "backgrounds": [
+  {
+   "type": "pattern",
+   "patternId": "dots",
+   "color": "#ffe5b4",
+   "patternColor": "#ffffff"
+  },
+  {
+   "type": "gradient",
+   "color": "#fff8e7",
+   "color2": "#ffd6e7",
+   "angle": 135
+  },
+  {
+   "type": "solid",
+   "color": "#e0f2fe"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}

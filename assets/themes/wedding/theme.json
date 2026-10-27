@@ -1,0 +1,123 @@
+{
+ "id": "wedding",
+ "order": 15,
+ "name": "Wedding and Celebration",
+ "description": "Rings, doves, flowers and tiered cakes in elegant neutrals.",
+ "palette": [
+  "#c9a227",
+  "#ffafcc",
+  "#e5e5e5",
+  "#fffaf5"
+ ],
+ "colors": {
+  "primary": "#c9a227",
+  "secondary": "#ffafcc",
+  "accent": "#e5e5e5",
+  "text": "#8a6d1d",
+  "background": "#fffaf5"
+ },
+ "typography": {
+  "heading": "Great Vibes",
+  "body": "Poppins"
+ },
+ "decorations": [
+  "rings",
+  "dove",
+  "champagne",
+  "wedding_cake",
+  "flower_bouquet",
+  "hearts_double"
+ ],
+ "accessorySets": {
+  "Bow ties": [
+   "bowtie"
+  ],
+  "Tiaras": [
+   "tiara"
+  ]
+ },
+ "frames": [
+  "frame_laurel",
+  "frame_scallop"
+ ],
+ "border": {
+  "widthMm": 2.5,
+  "color": "#ffffff",
+  "outlines": [
+   {
+    "widthMm": 0.6,
+    "color": "#c9a227",
+    "gapMm": 0.6
+   }
+  ],
+  "smoothing": 0.6
+ },
+ "shadow": {
+  "enabled": false,
+  "blurMm": 1.0,
+  "opacity": 0.3
+ },
+ "layoutPresets": [
+  {
+   "id": "grid-60",
+   "name": "Grid of 60 mm stickers",
+   "mode": "grid",
+   "sizeMm": 60
+  },
+  {
+   "id": "pack-mixed",
+   "name": "Mixed sizes, packed",
+   "mode": "pack",
+   "sizesMm": [
+    75,
+    50,
+    40
+   ]
+  },
+  {
+   "id": "fill-50",
+   "name": "Fill page with 50 mm",
+   "mode": "fill",
+   "sizeMm": 50
+  }
+ ],
+ "suggestedSizesMm": [
+  50,
+  60,
+  75
+ ],
+ "textPresets": [
+  "Just Married",
+  "Mr & Mrs",
+  "Happily Ever After",
+  "Thank You",
+  "Let's Celebrate"
+ ],
+ "backgrounds": [
+  {
+   "type": "solid",
+   "color": "#fffaf5"
+  },
+  {
+   "type": "gradient",
+   "color": "#fffaf5",
+   "color2": "#ffd6e7",
+   "angle": 135
+  },
+  {
+   "type": "pattern",
+   "patternId": "hearts",
+   "color": "#fffaf5",
+   "patternColor": "#ffd6e7"
+  }
+ ],
+ "shapes": [
+  "silhouette",
+  "circle",
+  "rounded"
+ ],
+ "license": {
+  "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "fonts": "See assets/fonts/licenses"
+ }
+}
