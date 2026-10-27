@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "offline-sticker-studio"
+version = "1.0.0"
+description = "Offline, local-only studio for turning personal photos into die-cut stickers and A4 print sheets for Cricut Print Then Cut."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "Flask==3.1.3",
+  "waitress==3.0.2",
+  "Pillow==13.0.0",
+  "numpy==2.2.6",
+  "opencv-python-headless==4.12.0.88",
+  "reportlab==5.1.0",
+  "resvg-py==0.5.0",
+  "defusedxml==0.7.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1", "pypdf==5.4.0", "playwright==1.63.0", "pyinstaller==6.22.3"]
+heic = ["pillow-heif==1.8.1"]
+model = ["onnxruntime==1.31.1"]
+
+[project.scripts]
+offline-sticker-studio = "app.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+  "e2e: browser end-to-end tests (need Chromium for Playwright)",
+  "slow: slower tests",
+]
+filterwarnings = ["ignore::DeprecationWarning:reportlab.*"]

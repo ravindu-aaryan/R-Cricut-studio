@@ -36,7 +36,7 @@ def main(argv: list[str] | None = None) -> int:
     from app import create_app
     from app.version import APP_NAME, APP_VERSION
 
-    overrides = {"debug": False}
+    overrides = {"debug": False, "allow_quit": True}
     if args.data_dir:
         overrides["data_dir"] = args.data_dir
     if args.host:

@@ -10,6 +10,7 @@ from ..errors import AppError
 from ..extensions import services
 from ..services import image_adjustments, photo_service, segmentation_service
 from ..services.sticker_service import apply_photo_background
+from ..utils.disk import ensure_free_space
 from ..utils.paths import require_safe_id
 from ..utils.validation import ValidationError, as_float
 from ._common import body, decode_data_url_image, job_response, png_response
@@ -45,6 +46,8 @@ def upload(pid: str):
             payloads.append((f.filename or "photo", data))
         except ValidationError as exc:
             errors.append({"file": (f.filename or "file")[:120], "error": str(exc)})
+    if payloads:
+        ensure_free_space(d, needed_bytes=sum(len(b) for _, b in payloads) * 8)
     if not payloads:
         raise AppError(errors[0]["error"] if len(errors) == 1 else "None of the files could be imported.", code="invalid") \
             if errors else AppError("No files.")
@@ -135,12 +138,13 @@ def set_edits(pid: str, photo_id: str):
         edits["crop"] = {k: as_float(crop.get(k), 0 if k in "xy" else 1, 0, 1) for k in ("x", "y", "w", "h")}
     edits["resizeMaxSide"] = int(as_float(data.get("resizeMaxSide"), 0, 0, 20000)) or None
     d = svc.projects.project_dir(pid)
+    limits = _limits()  # resolved here: the job runs outside the request context
 
     def work(handle):
         p = dict(photo)
         p["edits"] = edits
         handle.progress(0.2, "Rebuilding working copy")
-        photo_service.rebuild_working(d, p, _limits())
+        photo_service.rebuild_working(d, p, limits)
         geometry_changed = edits != (photo.get("edits") or photo_service.DEFAULT_EDITS)
         if geometry_changed:
             # Masks and face regions were aligned to the old geometry.
@@ -189,7 +193,8 @@ def adjusted_preview(pid: str, photo_id: str):
         if protect and faces:
             k = img.width / max(1, photo["width"])
             mask = photo_service.face_mask(img.size, [{kk: r[kk] * k for kk in ("x", "y", "w", "h")} for r in faces])
-        return image_adjustments.apply_adjustments(img, params, scale=img.width / 1000.0, protect_mask=mask)
+        subject = Image.open(paths["mask"]).convert("L").resize(img.size) if paths["mask"].exists() else None
+        return image_adjustments.apply_adjustments(img, params, scale=img.width / 1000.0, protect_mask=mask, subject_mask=subject)
 
     img = svc.jobs.run_sync("adjust-preview", work, timeout=30, project_id=pid)
     return png_response(img)

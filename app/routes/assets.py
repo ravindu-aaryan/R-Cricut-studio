@@ -57,7 +57,8 @@ def asset_png(asset_id: str):
     if not h:
         entry = svc.assets.get(asset_id)
         h = max(8, int(w / float(entry.get("aspect") or 1)))
-    img = svc.jobs.run_sync("asset-png", lambda handle: svc.assets.raster(asset_id, w, h, _colors()), timeout=20)
+    colors = _colors()  # read the request here; the job runs on a worker thread
+    img = svc.jobs.run_sync("asset-png", lambda handle: svc.assets.raster(asset_id, w, h, colors), timeout=20)
     return png_response(img)
 
 

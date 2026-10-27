@@ -16,7 +16,8 @@ const KINDS = [
 ];
 
 export async function mount(root) {
-  const state = { kind: "stickers-png", dpi: 300, transparent: false, cutLines: false, cutOffsetMm: "", includeHoles: false,
+  const xs = store.doc.exportSettings || {};
+  const state = { kind: "stickers-png", dpi: xs.dpi || 300, transparent: false, cutLines: false, cutOffsetMm: xs.cutOffsetMm ? String(xs.cutOffsetMm) : "", includeHoles: false,
     sheetId: store.doc.sheets[0]?.id, stickerIds: new Set(store.doc.stickers.map((s) => s.id)) };
 
   setHTML(root, `<div class="page" style="max-width:1240px">

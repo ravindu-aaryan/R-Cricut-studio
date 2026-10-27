@@ -32,6 +32,7 @@ DEFAULT_ADJUSTMENTS: dict[str, Any] = {
     "duotoneLight": "#ffd36e",
     "bwThreshold": 128,
     "vignette": 0.0,     # 0..1
+    "target": "all",     # all | subject | background (needs a cut-out mask)
 }
 
 FILTERS = ("none", "grayscale", "sepia", "bw", "posterize", "cartoon", "duotone")
@@ -203,22 +204,26 @@ def normalize_adjustments(params: dict | None) -> dict:
             out[key] = value
     if out["filter"] not in FILTERS:
         out["filter"] = "none"
+    if out["target"] not in ("all", "subject", "background"):
+        out["target"] = "all"
     return out
 
 
 def is_identity(params: dict | None) -> bool:
     p = normalize_adjustments(params)
-    return all(p[k] == DEFAULT_ADJUSTMENTS[k] for k in DEFAULT_ADJUSTMENTS)
+    return all(p[k] == DEFAULT_ADJUSTMENTS[k] for k in DEFAULT_ADJUSTMENTS if k != "target")
 
 
 def apply_adjustments(img: Image.Image, params: dict | None, *, scale: float = 1.0,
-                      protect_mask: Image.Image | None = None) -> Image.Image:
+                      protect_mask: Image.Image | None = None, subject_mask: Image.Image | None = None) -> Image.Image:
     """Apply the full adjustment pipeline.
 
     ``scale`` adjusts pixel-radius parameters (blur) so previews and full
     renders look alike. ``protect_mask`` (L mode, 255 = protected) keeps the
     original pixels inside the region, e.g. to leave a face untouched by
-    colour filters.
+    colour filters. With ``target`` set to "subject" or "background" and a
+    ``subject_mask`` (L, 255 = subject), only that region is adjusted, so
+    clothing/subject and background can be treated independently.
     """
     p = normalize_adjustments(params)
     src = img.convert("RGBA")
@@ -242,6 +247,13 @@ def apply_adjustments(img: Image.Image, params: dict | None, *, scale: float = 1
         out = blur(out, as_float(p["blur"], 0, 0, 50) * scale)
     if p["vignette"]:
         out = vignette(out, as_float(p["vignette"], 0, 0, 1))
+    target = p.get("target", "all")
+    if target in ("subject", "background") and subject_mask is not None and out is not src:
+        region = subject_mask.convert("L").resize(out.size)
+        if target == "background":
+            region = ImageOps.invert(region)
+        rgb = Image.composite(out.convert("RGB"), src.convert("RGB"), region)
+        out = _merge(rgb, out.getchannel("A"))
     if protect_mask is not None and out is not src:
         m = protect_mask.convert("L").resize(out.size)
         rgb = Image.composite(src.convert("RGB"), out.convert("RGB"), m)

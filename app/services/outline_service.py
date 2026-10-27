@@ -171,7 +171,7 @@ def smooth_binary(binary: np.ndarray, sigma_px: float) -> np.ndarray:
 
 def antialias(binary: np.ndarray, sigma: float = 0.8) -> np.ndarray:
     """Soft edge for rendering; the hard mask remains the cut geometry."""
-    return np.clip(cv2.GaussianBlur(binary.astype(np.float32), (0, 0), sigma), 0, 255).astype(np.uint8)
+    return np.clip(cv2.GaussianBlur(binary.astype(np.float32), (0, 0), sigma) + 0.5, 0, 255).astype(np.uint8)
 
 
 def component_count(binary: np.ndarray) -> int:
@@ -367,9 +367,11 @@ def build_sticker(art: Image.Image, spec: StickerSpec) -> StickerRender:
 
     cut_final = expand(cut, spec.cut_offset_px) if spec.cut_offset_px else cut
     # Trim to the cut geometry plus everything painted (keeps physical size honest).
+    # Exact bounds (antialiased edge pixels have alpha > 0 and are included),
+    # so the physical size does not depend on the render scale.
     ys, xs = np.nonzero((np.asarray(out.getchannel("A")) > 0) | (cut_final > 0))
-    x0, y0 = max(0, int(xs.min()) - 1), max(0, int(ys.min()) - 1)
-    x1, y1 = min(W, int(xs.max()) + 2), min(H, int(ys.max()) + 2)
+    x0, y0 = int(xs.min()), int(ys.min())
+    x1, y1 = int(xs.max()) + 1, int(ys.max()) + 1
     trimmed = out.crop((x0, y0, x1, y1))
     return StickerRender(
         image=trimmed,

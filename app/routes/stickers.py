@@ -54,7 +54,7 @@ def render(pid: str):
             "widthMm": round(res.size_mm[0], 2), "heightMm": round(res.size_mm[1], 2),
             "widthPx": res.image.width, "heightPx": res.image.height, "scale": scale,
             "warnings": res.warnings, "pieces": res.pieces,
-            "minEffectiveDpi": round(res.min_effective_dpi / scale, 1) if res.min_effective_dpi else None,
+            "minEffectiveDpi": round(res.min_effective_dpi, 1) if res.min_effective_dpi else None,
             "artOffset": res.art_offset, "pxPerMm": res.px_per_mm,
         }
         if data.get("withCut"):
@@ -101,7 +101,8 @@ def new_sticker(pid: str):
         theme = svc.themes.get(theme_id)
     except Exception:
         theme = svc.themes.get("birthday")
-    size = as_float(data.get("sizeMm"), svc.settings.default_sticker_mm, 10, 250)
+    default_size = (project.get("settings") or {}).get("defaultStickerMm") or svc.settings.default_sticker_mm
+    size = as_float(data.get("sizeMm"), default_size, 10, 250)
     photo_id = data.get("photoId")
     if photo_id:
         photo = svc.projects.photo(project, photo_id)

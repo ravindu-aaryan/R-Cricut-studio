@@ -51,6 +51,7 @@ class Settings:
     ui: dict = field(default_factory=dict)
     debug: bool = False
     testing: bool = False
+    allow_quit: bool = False  # set by the desktop launcher so the UI can stop the server
 
     # ---- derived locations -------------------------------------------------
     @property

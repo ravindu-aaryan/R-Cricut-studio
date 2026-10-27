@@ -133,7 +133,7 @@ export async function mount(root, { arg }) {
   const ro = new ResizeObserver(() => { stage.size({ width: container.clientWidth, height: container.clientHeight }); fit(); });
   ro.observe(container);
   fit();
-  function updateZoom() { root.querySelector("#zoom").textContent = `${Math.round(world.scaleX() * 100 * (photo.width / W))}% of original`; layer.batchDraw(); }
+  function updateZoom() { if (!root.querySelector("#zoom")) return; root.querySelector("#zoom").textContent = `${Math.round(world.scaleX() * 100 * (photo.width / W))}% of original`; layer.batchDraw(); }
 
   stage.on("wheel", (e) => {
     e.evt.preventDefault();

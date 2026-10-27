@@ -129,7 +129,8 @@ class FontRegistry:
 
     def font(self, family: str, weight: str | int, size_px: float) -> ImageFont.FreeTypeFont:
         face = self.resolve(family, weight)
-        return _load_font(str(face.path), max(1, int(round(size_px))))
+        # Fractional sizes keep text proportions identical at every render scale.
+        return _load_font(str(face.path), max(1.0, round(float(size_px), 2)))
 
     def list(self) -> list[dict]:
         fams = sorted(self.families.values(), key=lambda f: (not f.bundled, f.family.lower()))
@@ -137,7 +138,7 @@ class FontRegistry:
 
 
 @lru_cache(maxsize=128)
-def _load_font(path: str, size: int) -> ImageFont.FreeTypeFont:
+def _load_font(path: str, size: float) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype(path, size)
 
 
@@ -196,7 +197,7 @@ def render_text(layer, registry: FontRegistry, scale: float = 1.0) -> Image.Imag
     font = registry.font(layer.font_family, layer.font_weight, size)
     spacing = as_float(layer.letter_spacing, 0, -50, 500) * scale
     line_h = size * as_float(layer.line_height, 1.15, 0.6, 4)
-    stroke_w = int(round(as_float(layer.stroke_width, 0, 0, 200) * scale))
+    stroke_w = round(as_float(layer.stroke_width, 0, 0, 200) * scale, 2)
     fill = parse_color(layer.fill, (34, 34, 34, 255))
     stroke = parse_color(layer.stroke, (255, 255, 255, 255))
     text = (layer.text or "").replace("\r", "")

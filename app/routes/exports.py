@@ -6,6 +6,7 @@ from flask import Blueprint, jsonify, request, send_file
 from ..errors import AppError
 from ..extensions import services
 from ..services import export_service
+from ..utils.disk import ensure_free_space
 from ..utils.paths import require_safe_id, safe_join
 from ..utils.validation import as_float
 from ._common import body, job_response, render_context
@@ -23,6 +24,7 @@ def start_export(pid: str):
     kind = data.get("kind")
     if kind not in export_service.EXPORT_KINDS or kind == "archive":
         raise AppError("Unknown export type.")
+    ensure_free_space(svc.projects.project_dir(pid))
     project = svc.projects.load(pid, prefer_autosave=True)
     if isinstance(data.get("document"), dict):
         # Export exactly what is on screen (saved first so the export is reproducible).

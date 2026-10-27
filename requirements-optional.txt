@@ -1,0 +1,5 @@
+# Optional extras. Install only what you need.
+# HEIC/HEIF photo support (local decoder):
+pillow-heif==1.8.1
+# Optional local segmentation model runtime (CPU only); also place a model in models/:
+onnxruntime==1.31.1

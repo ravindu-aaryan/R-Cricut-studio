@@ -6,7 +6,7 @@ import { setHTML, esc, runJob, toast, toastError, slider, bindSliders, loadImage
 import { photoPicker } from "./common.js";
 
 const DEFAULTS = { brightness: 0, contrast: 0, saturation: 0, temperature: 0, exposure: 0, highlights: 0, shadows: 0, sharpness: 0, blur: 0,
-  filter: "none", posterizeLevels: 5, duotoneDark: "#2b1055", duotoneLight: "#ffd36e", bwThreshold: 128, vignette: 0 };
+  filter: "none", posterizeLevels: 5, duotoneDark: "#2b1055", duotoneLight: "#ffd36e", bwThreshold: 128, vignette: 0, target: "all" };
 
 export async function mount(root, { arg }) {
   const photo = arg && photoById(arg);
@@ -53,6 +53,10 @@ export async function mount(root, { arg }) {
     </section>
     <aside class="panel right" id="adjust">
       <div class="panel-section"><div class="panel-title"><h3>Light &amp; colour</h3><button class="btn sm ghost" id="reset-adj">Reset</button></div>
+        <div class="field"><label>Apply to</label><div class="seg" id="target">
+          <button data-t="all" class="${adj.target === "all" ? "on" : ""}">Whole photo</button>
+          <button data-t="subject" class="${adj.target === "subject" ? "on" : ""}" ${photo.mask ? "" : "disabled"} data-tip="Only the cut-out subject (person, clothing)">Subject</button>
+          <button data-t="background" class="${adj.target === "background" ? "on" : ""}" ${photo.mask ? "" : "disabled"} data-tip="Only the area outside the cut-out">Background</button></div></div>
         ${slider("Exposure", "exposure", adj.exposure, -2, 2, 0.05, (v) => `${v.toFixed(2)} EV`)}
         ${slider("Brightness", "brightness", adj.brightness, -1, 1)}
         ${slider("Contrast", "contrast", adj.contrast, -1, 1)}
@@ -137,7 +141,7 @@ export async function mount(root, { arg }) {
     const token = ++previewToken;
     try {
       const r = await api.image(`/api/projects/${store.doc.id}/photos/${photo.id}/adjusted`, { adjustments: adj, background: bg, protectFace: protect, faceRegions: faces, maxSide: Math.max(PW, PH) });
-      if (token !== previewToken) return;
+      if (token !== previewToken || !container.isConnected) return;
       const im = await loadImage(r.url);
       if (lastPreviewUrl) URL.revokeObjectURL(lastPreviewUrl);
       lastPreviewUrl = r.url;
@@ -176,6 +180,11 @@ export async function mount(root, { arg }) {
     el.querySelector("#dt-dark")?.addEventListener("input", (e) => { adj.duotoneDark = e.target.value; requestPreview(); });
     el.querySelector("#dt-light")?.addEventListener("input", (e) => { adj.duotoneLight = e.target.value; requestPreview(); });
   }
+  root.querySelectorAll("#target button").forEach((b) => (b.onclick = () => {
+    adj.target = b.dataset.t;
+    root.querySelectorAll("#target button").forEach((x) => x.classList.toggle("on", x === b));
+    requestPreview();
+  }));
   root.querySelector("#filter").onchange = (e) => { adj.filter = e.target.value; renderFilterOpts(); requestPreview(); };
   renderFilterOpts();
 

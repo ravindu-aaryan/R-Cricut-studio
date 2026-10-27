@@ -1,7 +1,7 @@
 // Entry point: routing, top bar, project rail and global shortcuts.
 import { icon, hydrateIcons } from "./icons.js";
-import { store, loadSession, openProject, saveProject, on, getThemes, getAssets, closeProject } from "./store.js";
-import { $, setHTML, esc, installTooltips, toastError, toast, promptDialog, isTyping } from "./ui.js";
+import { store, loadSession, openProject, saveProject, on, getThemes, getAssets, closeProject, markDirty } from "./store.js";
+import { $, setHTML, esc, installTooltips, toastError, toast, promptDialog, isTyping, contextMenu, modal, runJob } from "./ui.js";
 import { api } from "./api.js";
 
 const ROUTES = {
@@ -35,33 +35,48 @@ function parseHash() {
 export function go(path) { location.hash = path.startsWith("#") ? path : `#${path}`; }
 export const projectPath = (view, arg) => `#/p/${store.doc.id}/${view}${arg ? `/${encodeURIComponent(arg)}` : ""}`;
 
+let navToken = 0;
+
 async function route() {
+  // Each navigation mounts into a fresh container. If the user navigates again
+  // while a view is still loading, the stale view is unmounted as soon as it
+  // finishes and cannot touch the new view's elements.
+  const token = ++navToken;
   const r = parseHash();
   const view = $("#view");
   if (current.unmount) { try { await current.unmount(); } catch (e) { console.error(e); } }
   current.unmount = null;
+  if (token !== navToken) return;
   $("#topbar-tools").innerHTML = "";
+  const container = document.createElement("div");
+  container.className = "view-root";
   try {
+    let mod, args;
     if (r.project) {
       await openProject(r.project);
+      if (token !== navToken) return;
       renderRail(r.view);
       renderProjectBar();
-      const def = PROJECT_VIEWS[r.view] || PROJECT_VIEWS.photos;
-      const mod = await def.load();
-      view.innerHTML = "";
-      current.unmount = await mod.mount(view, { arg: r.arg, rest: r.rest, view: r.view });
+      mod = await (PROJECT_VIEWS[r.view] || PROJECT_VIEWS.photos).load();
+      args = { arg: r.arg, rest: r.rest, view: r.view };
     } else {
       if (store.doc) { if (store.dirty) await saveProject({ quiet: true }); closeProject(); }
       renderRail(null);
       renderProjectBar();
-      const mod = await (ROUTES[r.page] || ROUTES[""])();
-      view.innerHTML = "";
-      current.unmount = await mod.mount(view, { page: r.page, arg: r.arg });
+      mod = await (ROUTES[r.page] || ROUTES[""])();
+      args = { page: r.page, arg: r.arg };
     }
+    if (token !== navToken) return;
+    view.replaceChildren(container);
+    const unmount = await mod.mount(container, args);
+    if (token !== navToken) { try { await unmount?.(); } catch (_) { /* stale view */ } return; }
+    current.unmount = unmount;
     view.focus({ preventScroll: true });
   } catch (e) {
+    if (token !== navToken) return; // error from a view the user already left
     console.error(e);
-    setHTML(view, `<div class="page"><div class="note err">${icon("alert")}<div><b>Could not open this page.</b><br>${esc(e.message)}</div></div>
+    view.replaceChildren(container);
+    setHTML(container, `<div class="page"><div class="note err">${icon("alert")}<div><b>Could not open this page.</b><br>${esc(e.message)}</div></div>
       <p style="margin-top:16px"><a class="btn" href="#/">Back to start</a></p></div>`);
     if (e.status === 404) toastError(e);
   }
@@ -79,17 +94,71 @@ function renderProjectBar() {
   const el = $("#topbar-project");
   if (!store.doc) { el.innerHTML = ""; return; }
   setHTML(el, `<span class="tool-sep"></span><button class="pname" data-tip="Rename project">${esc(store.doc.name)}</button>
+    <button class="icon-btn sm" id="project-menu" data-tip="Project menu" aria-haspopup="menu">${icon("more")}</button>
     <span class="save-state" id="save-state"></span>`);
-  el.querySelector(".pname").onclick = async () => {
-    const name = await promptDialog("Rename project", "Project name", store.doc.name, { okLabel: "Rename" });
-    if (!name) return;
-    try {
-      const res = await api.post(`/api/projects/${store.doc.id}/rename`, { name });
-      store.doc.name = res.document.name;
-      renderProjectBar();
-    } catch (e) { toastError(e); }
+  el.querySelector(".pname").onclick = renameProject;
+  el.querySelector("#project-menu").onclick = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    contextMenu(r.left, r.bottom + 4, [
+      { label: "Save", icon: "save", key: "Ctrl+S", action: () => saveProject() },
+      { label: "Save as…", icon: "copy", action: saveAs },
+      { label: "Rename…", icon: "pencil", action: renameProject },
+      { label: "Project settings…", icon: "settings", action: projectSettings },
+      "-",
+      { label: "Export project archive (.ossproj)", icon: "archive", action: exportArchive },
+      { label: "Show project folder", icon: "folder", action: () => api.post("/api/system/reveal", { projectId: store.doc.id }).then((r2) => { if (!r2.opened) toast(`Folder: ${r2.path}`, "info", 8000); }).catch(toastError) },
+      "-",
+      { label: "Close project", icon: "x", action: () => { location.hash = "#/"; } },
+    ]);
   };
   updateSaveState();
+}
+
+async function renameProject() {
+  const name = await promptDialog("Rename project", "Project name", store.doc.name, { okLabel: "Rename" });
+  if (!name) return;
+  try {
+    const res = await api.post(`/api/projects/${store.doc.id}/rename`, { name });
+    store.doc.name = res.document.name;
+    renderProjectBar();
+  } catch (e) { toastError(e); }
+}
+
+/** Save as: write the current (possibly unsaved) state into a new project and open it. */
+async function saveAs() {
+  const name = await promptDialog("Save as", "Name of the new project", `${store.doc.name} copy`, { okLabel: "Save as new project" });
+  if (!name) return;
+  try {
+    const res = await api.post(`/api/projects/${store.doc.id}/duplicate`, { name, document: store.doc });
+    store.dirty = false;
+    toast(`Saved as "${res.document.name}".`, "ok");
+    location.hash = `#/p/${res.document.id}/${parseHash().view}`;
+  } catch (e) { toastError(e); }
+}
+
+async function projectSettings() {
+  const s = store.doc.settings || {};
+  const x = store.doc.exportSettings || {};
+  await modal({ title: "Project settings", body: `
+    <div class="grid2"><div class="field"><label>Default sticker size (mm)</label><input type="number" id="ps-size" min="15" max="200" value="${s.defaultStickerMm || 60}"></div>
+      <div class="field"><label>Export resolution (DPI)</label><input type="number" id="ps-dpi" min="150" max="600" step="50" value="${x.dpi || 300}"></div></div>
+    <div class="field"><label>Default cut line offset (mm)</label><input type="number" id="ps-cut" step="0.1" min="-3" max="3" value="${x.cutOffsetMm || 0}"></div>
+    <p class="tiny">Stored in this project's file. Application-wide defaults are in Settings.</p>`,
+    actions: [{ label: "Cancel" }, { label: "Save", kind: "primary", onClick: async (b) => {
+      store.doc.settings = { ...s, defaultStickerMm: +b.querySelector("#ps-size").value };
+      store.doc.exportSettings = { ...x, dpi: +b.querySelector("#ps-dpi").value, cutOffsetMm: +b.querySelector("#ps-cut").value };
+      markDirty("settings");
+      await saveProject({ quiet: true });
+    } }] });
+}
+
+async function exportArchive() {
+  try {
+    if (store.dirty) await saveProject({ quiet: true });
+    const res = await runJob("Creating project archive", api.post(`/api/projects/${store.doc.id}/archive-file`));
+    toast("Archive created.", "ok");
+    window.location.href = `/api/projects/${store.doc.id}/exports/${res.exportId}/files/${encodeURIComponent(res.files[0])}`;
+  } catch (e) { if (e.code !== "cancelled") toastError(e); }
 }
 
 function updateSaveState() {

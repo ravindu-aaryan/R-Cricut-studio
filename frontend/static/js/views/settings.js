@@ -30,6 +30,8 @@ export async function mount(root) {
         <div class="field"><label>Preview size (px)</label><input type="number" id="preview_max_side_px" min="600" max="3000" step="100" value="${s.preview_max_side_px}"><span class="tiny">Applies to newly imported photos.</span></div>
       </div>
       <button class="btn primary" id="save">${icon("save")}Save settings</button></div>
+    ${s.allow_quit ? `<div class="card pad" style="margin-bottom:16px"><h3>${icon("x")} Quit</h3><p class="small">Stops the local Offline Sticker Studio server. Your projects are saved first.</p>
+      <button class="btn" id="quit">${icon("x")}Quit Offline Sticker Studio</button></div>` : ""}
     <div class="card pad" style="border-color:#f2c2c9"><h3 style="color:var(--err)">${icon("trash")} Delete all local data</h3>
       <p class="small">Permanently deletes every project, photo, cut-out, export, imported asset and preference stored by Offline Sticker Studio on this computer. Exports you copied elsewhere are not affected.</p>
       <button class="btn danger" id="wipe">${icon("trash")}Delete all data…</button></div></div>`);
@@ -39,6 +41,13 @@ export async function mount(root) {
     payload.preferences = { rulers: root.querySelector("#rulers").checked, snapping: root.querySelector("#snapping").checked };
     try { await api.put("/api/settings", payload); await loadSession(); toast("Settings saved.", "ok"); } catch (e) { toastError(e); }
   };
+  root.querySelector("#quit")?.addEventListener("click", async () => {
+    try {
+      if (store.doc && store.dirty) { const { saveProject } = await import("../store.js"); await saveProject({ quiet: true }); }
+      await api.post("/api/system/quit");
+      document.body.innerHTML = '<div style="font-family:Poppins,sans-serif;padding:60px;text-align:center"><h1>Offline Sticker Studio has stopped</h1><p>You can close this tab.</p></div>';
+    } catch (e) { toastError(e); }
+  });
   root.querySelector("#wipe").onclick = () => modal({
     title: "Delete all local data?",
     body: `<p>This cannot be undone. Type <b>DELETE</b> to confirm.</p><div class="field"><input type="text" id="confirm" autocomplete="off"></div>`,

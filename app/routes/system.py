@@ -165,3 +165,17 @@ def fonts_css():
     resp = Response("\n".join(rules), mimetype="text/css")
     resp.headers["Cache-Control"] = "max-age=3600"
     return resp
+
+
+@bp.post("/api/system/quit")
+def quit_app():
+    """Stop the local server (desktop launcher only). Unsaved work is autosaved by the UI first."""
+    import os
+    import threading
+
+    svc = services()
+    if not svc.settings.allow_quit:
+        raise AppError("Quitting is only available in the desktop app.", 400)
+    svc.jobs.shutdown()
+    threading.Timer(0.4, lambda: os._exit(0)).start()
+    return jsonify({"quitting": True})

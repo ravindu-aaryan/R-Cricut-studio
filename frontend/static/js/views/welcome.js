@@ -155,28 +155,60 @@ function createDialog(themes) {
   });
 }
 
-/** Builds a sample project from bundled graphics and text only (no photos needed). */
+const SAMPLES = [
+  { key: "party", name: "Sample: Party sticker sheet", theme: "birthday", font: "Luckiest Guy", outline: "#ff4f8b",
+    blurb: "Balloons, cake and party crowns with birthday wording.",
+    items: [["balloon_bunch", "Happy Birthday", "silhouette"], ["cake_birthday", "Make a Wish", "circle"], ["crown_gold", "Party Time", "silhouette"],
+      ["gift_box", "Let's Celebrate", "rounded"], ["star_face", "Thank You", "star"], ["dino_green", "Roar!", "silhouette"]],
+    bg: { type: "pattern", patternId: "dots", color: "#ffd6e7", patternColor: "#ffffff" } },
+  { key: "school", name: "Sample: School labels", theme: "minimal", font: "Poppins", outline: "#2d2140",
+    blurb: "Rounded labels for school supplies, ready for your own wording.",
+    items: [["pencil", "Pencils", "rounded"], ["crayons", "Crayons", "rounded"], ["book_open", "Books", "rounded"],
+      ["apple_red", "Snacks", "rounded"], ["ruler", "Maths", "rounded"], ["backpack", "Art", "rounded"]],
+    bg: { type: "solid", color: "#ffffff" }, wide: true },
+  { key: "space", name: "Sample: Space adventure", theme: "space", font: "Luckiest Guy", outline: "#3a0ca3",
+    blurb: "Rockets, planets and moons on deep-space badges.",
+    items: [["rocket", "Blast Off!", "circle"], ["planet_ring", "Space Explorer", "silhouette"], ["moon_cute", "To the Moon", "circle"],
+      ["ufo", "Out of this World", "silhouette"], ["comet_stars", "Dream Big", "rounded"], ["astronaut_helmet", "Space Kid", "circle"]],
+    bg: { type: "gradient", color: "#10002b", color2: "#3a0ca3", angle: 160 } },
+];
+
+/** Offer sample projects built from bundled graphics and text only (no photos needed). */
 async function createSample() {
+  const key = await modal({ title: "Sample projects", body: `<p class="muted small">Samples use only the bundled graphics, so you can try the editor, sheet and exports without your own photos.</p>
+    <div class="file-list">${SAMPLES.map((x) => `<button class="export-option" data-sample="${x.key}" style="width:100%;text-align:left;margin-bottom:8px">
+      <div class="ico"><img src="/api/assets/${x.items[0][0]}/svg" alt="" width="28"></div><div><h3>${esc(x.name.replace("Sample: ", ""))}</h3><p>${esc(x.blurb)}</p></div></button>`).join("")}</div>`,
+    onOpen: (b, close) => b.querySelectorAll("[data-sample]").forEach((el) => (el.onclick = () => close(el.dataset.sample))) });
+  const sample = SAMPLES.find((x) => x.key === key);
+  if (!sample) return;
   try {
-    const res = await api.post("/api/projects", { name: "Sample: Party sticker sheet", themeId: "birthday" });
+    const res = await api.post("/api/projects", { name: sample.name, themeId: sample.theme });
     const doc = res.document;
     const pid = doc.id;
-    const ids = ["balloon_bunch", "cake_birthday", "crown_gold", "gift_box", "star_face", "dino_green"];
-    const texts = ["Happy Birthday", "Make a Wish", "Party Time", "Let's Celebrate", "Thank You", "Roar!"];
-    const shapes = ["silhouette", "circle", "silhouette", "rounded", "star", "silhouette"];
-    const W = 60 / 25.4 * 300;
-    doc.stickers = ids.map((a, i) => ({
-      id: `st_sample${i}`, name: texts[i], widthMm: 60, heightMm: 60, dpi: 300,
-      shape: { type: shapes[i], cornerRadiusMm: 8, starPoints: 5 },
-      border: { widthMm: 3, color: "#ffffff", outlines: [{ widthMm: 0.8, color: "#ff4f8b", gapMm: 0 }], smoothing: 0.6, fillHoles: true, bridgeGaps: true },
-      shadow: { enabled: false }, background: shapes[i] === "silhouette" ? { type: "none" } : { type: "pattern", patternId: "dots", color: "#ffd6e7", patternColor: "#ffffff" },
-      layers: [
-        { id: `ly_a${i}`, type: "asset", assetId: a, name: a, x: W / 2, y: W * 0.42, width: W * 0.62, height: W * 0.62, rotation: 0, scaleX: 1, scaleY: 1 },
-        { id: `ly_t${i}`, type: "text", text: texts[i], name: "Text", fontFamily: "Luckiest Guy", fontSize: W * 0.11, fill: "#2d2140", stroke: "#ffffff",
-          strokeWidth: W * 0.012, x: W / 2, y: W * 0.84, width: W * 0.9, height: W * 0.14, align: "center", curve: 0 },
+    const wMm = sample.wide ? 70 : 60, hMm = sample.wide ? 35 : 60;
+    const W = wMm / 25.4 * 300, H = hMm / 25.4 * 300;
+    doc.stickers = sample.items.map(([asset, text, shape], i) => ({
+      id: `st_${sample.key}${i}`, name: text, widthMm: wMm, heightMm: hMm, dpi: 300,
+      shape: { type: shape, cornerRadiusMm: sample.wide ? 8 : 10, starPoints: 5 },
+      border: { widthMm: sample.wide ? 1.5 : 3, color: "#ffffff", outlines: [{ widthMm: sample.wide ? 0.5 : 0.8, color: sample.outline, gapMm: 0 }], smoothing: 0.6, fillHoles: true, bridgeGaps: true },
+      shadow: { enabled: false }, background: shape === "silhouette" ? { type: "none" } : sample.bg,
+      layers: sample.wide ? [
+        { id: `ly_a${i}`, type: "asset", assetId: asset, name: asset, x: H * 0.55, y: H / 2, width: H * 0.62, height: H * 0.62 },
+        { id: `ly_t${i}`, type: "text", text, name: "Text", fontFamily: sample.font, fontWeight: "bold", fontSize: H * 0.2, fill: "#2d2140",
+          x: (H * 0.9 + W - H * 0.12) / 2, y: H / 2, width: W * 0.45, height: H * 0.25, align: "center", curve: 0 },
+      ] : [
+        { id: `ly_a${i}`, type: "asset", assetId: asset, name: asset, x: W / 2, y: H * 0.42, width: W * 0.62, height: H * 0.62 },
+        { id: `ly_t${i}`, type: "text", text, name: "Text", fontFamily: sample.font, fontSize: W * 0.11, fill: sample.key === "space" ? "#ffffff" : "#2d2140",
+          stroke: sample.key === "space" ? "#3a0ca3" : "#ffffff", strokeWidth: W * 0.012, x: W / 2, y: H * 0.84, width: W * 0.9, height: H * 0.14, align: "center", curve: 0 },
       ],
-      themeId: "birthday",
+      themeId: sample.theme,
     }));
+    await api.put(`/api/projects/${pid}`, { document: doc });
+    // Lay the stickers out on the A4 sheet (two of each) with the real layout engine.
+    const sizes = (await api.post(`/api/projects/${pid}/layout/sizes`, {})).sizes;
+    const requests = doc.stickers.map((st) => ({ stickerId: st.id, widthMm: sizes[st.id].widthMm * 0.8, heightMm: sizes[st.id].heightMm * 0.8, copies: 2 }));
+    const layout = await api.post(`/api/projects/${pid}/layout/auto`, { sheet: doc.sheets[0], requests, mode: "pack" });
+    doc.sheets[0].pages = layout.pages;
     await api.put(`/api/projects/${pid}`, { document: doc });
     toast("Sample project created from bundled graphics.", "ok");
     location.hash = `#/p/${pid}/editor`;

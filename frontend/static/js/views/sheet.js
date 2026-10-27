@@ -22,6 +22,7 @@ export async function mount(root, { arg }) {
   const undo = [], redo = [];
   let last = JSON.stringify(sheet);
   let warnings = [];
+  let alive = true; // async work may finish after the view is closed
 
   setHTML(root, `<div class="studio" style="height:100%">
     <aside class="panel" id="left"></aside>
@@ -133,6 +134,7 @@ export async function mount(root, { arg }) {
 
   // ------------------------------------------------------------ drawing
   async function drawAll() {
+    if (!alive) return;
     const { w, h } = pageSize();
     paper.setAttrs({ width: w, height: h, fill: sheet.background || "#fff" });
     const pr = printable(), c = content();
@@ -141,6 +143,7 @@ export async function mount(root, { arg }) {
     itemsGroup.destroyChildren();
     const items = page().items;
     await Promise.all(items.map((it) => ensureThumb(it.stickerId).catch(() => null)));
+    if (!alive) return;
     for (const it of items) itemsGroup.add(itemNode(it));
     select(selected.filter((id) => items.some((i) => i.id === id)), true);
     renderLeft();
@@ -335,6 +338,7 @@ export async function mount(root, { arg }) {
   const validate = debounce(async () => {
     try {
       const r = await api.post(`/api/projects/${store.doc.id}/layout/validate`, { sheet, stickers: store.doc.stickers });
+      if (!alive) return;
       warnings = r.warnings;
       Object.assign(sizes, r.sizes);
       itemsGroup.getChildren().forEach((g) => {
@@ -462,6 +466,7 @@ export async function mount(root, { arg }) {
     el.querySelector("#del-page")?.addEventListener("click", () => { sheet.pages.splice(pageIdx, 1); pageIdx = Math.max(0, pageIdx - 1); drawAll().then(commit); });
   }
   function renderHud() {
+    if (!alive) return;
     const { w, h } = pageSize();
     const n = sheet.pages.reduce((k, p) => k + p.items.length, 0);
     root.querySelector("#hud").textContent = `A4 ${sheet.orientation} ${w} × ${h} mm · ${Math.round(w / 25.4 * 300)} × ${Math.round(h / 25.4 * 300)} px at 300 DPI · ${n} sticker${n === 1 ? "" : "s"} on ${sheet.pages.length} page${sheet.pages.length > 1 ? "s" : ""}`;
@@ -516,7 +521,7 @@ export async function mount(root, { arg }) {
     toast(`Placed ${ids.length} stickers. Check the layout and export when ready.`, "ok");
   }
 
-  return () => { document.removeEventListener("keydown", onKey); ro.disconnect(); stage.destroy(); validate.cancel(); if (store.dirty) saveProject({ autosave: true, quiet: true }); };
+  return () => { alive = false; document.removeEventListener("keydown", onKey); ro.disconnect(); stage.destroy(); validate.cancel(); if (store.dirty) saveProject({ autosave: true, quiet: true }); };
 }
 
 function round(v) { return Math.round(v * 100) / 100; }

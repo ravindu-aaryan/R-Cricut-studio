@@ -21,6 +21,7 @@ export async function mount(root, { arg }) {
   const ui = { leftTab: "assets", rightTab: "props", assetQuery: "", assetCat: "", previewBg: "light", showCut: false, tool: "select" };
   let lastSnapshot = JSON.stringify(doc);
   let preview = { url: null, info: null };
+  let alive = true; // async work may finish after the view is closed
 
   setHTML(root, `<div style="display:flex;flex-direction:column;height:100%">
     <div class="studio" style="flex:1;min-height:0">
@@ -46,6 +47,9 @@ export async function mount(root, { arg }) {
     onTransforming: () => {},
   });
   await canvas.setDoc(doc);
+  // Text layers get their measured size during the first build; snapshot afterwards
+  // so simply opening a sticker does not count as an edit.
+  lastSnapshot = JSON.stringify(doc);
 
   // ------------------------------------------------------------ history
   function hist() {
@@ -89,7 +93,7 @@ export async function mount(root, { arg }) {
     const maxSide = Math.min(1600, Math.max(400, Math.max(canvas.W, canvas.H) * canvas.zoom * (window.devicePixelRatio || 1) * 1.1));
     try {
       const r = await api.image(`/api/projects/${store.doc.id}/stickers/render`, { sticker: doc, maxSide, previewShadow: true, withCut: ui.showCut });
-      if (token !== previewToken) { URL.revokeObjectURL(r.url); return; }
+      if (token !== previewToken || !alive) { URL.revokeObjectURL(r.url); return; }
       const img = await loadImage(r.url);
       if (preview.url) URL.revokeObjectURL(preview.url);
       preview = { url: r.url, info: r.info, img };
@@ -98,7 +102,7 @@ export async function mount(root, { arg }) {
       if (ui.rightTab === "preview") renderPreviewTab();
       updateTrayThumb(doc);
     } catch (e) {
-      if (token === previewToken) {
+      if (token === previewToken && alive) {
         canvas.setUnderlay(null);
         preview = { url: null, info: { warnings: [e.message] } };
         updateHud();
@@ -110,6 +114,7 @@ export async function mount(root, { arg }) {
   function updateHud() {
     const info = preview.info;
     const pill = root.querySelector("#size-pill");
+    if (!alive || !pill) return;
     pill.textContent = info?.widthMm ? `Artboard ${doc.widthMm}×${doc.heightMm} mm · finished ${info.widthMm.toFixed(1)}×${info.heightMm.toFixed(1)} mm` : `Artboard ${doc.widthMm}×${doc.heightMm} mm`;
     const w = root.querySelector("#warn-pill");
     const warnings = info?.warnings || [];
@@ -751,7 +756,7 @@ export async function mount(root, { arg }) {
 
   // ------------------------------------------------------------ preview tab
   function renderPreviewTab() {
-    const body = root.querySelector("#right-body");
+    const body = alive && root.querySelector("#right-body");
     if (!body || ui.rightTab !== "preview") return;
     const info = preview.info || {};
     setHTML(body, `<div class="panel-section">
@@ -804,7 +809,7 @@ export async function mount(root, { arg }) {
     store.doc.stickers.forEach((s) => updateTrayThumb(s));
   }
   async function updateTrayThumb(s) {
-    const t = root.querySelector(`.tray-item[data-id="${s.id}"]`);
+    const t = alive && root.querySelector(`.tray-item[data-id="${s.id}"]`);
     if (!t) return;
     try {
       const r = s.id === doc.id && preview.url ? { url: preview.url } : await stickerThumb(s, 180);
@@ -964,6 +969,7 @@ export async function mount(root, { arg }) {
   updateHud();
 
   return () => {
+    alive = false;
     document.removeEventListener("keydown", onKey);
     document.removeEventListener("keyup", onKey);
     offSaved();

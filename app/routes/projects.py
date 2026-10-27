@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request, send_file
 
 from ..errors import AppError
 from ..extensions import services
+from ..utils.disk import ensure_free_space
 from ..utils.paths import require_safe_id, sanitize_filename
 from ._common import body, job_response
 
@@ -116,7 +117,7 @@ def set_thumbnail(pid: str):
 @bp.post("/<pid>/archive-file")
 def export_archive(pid: str):
     svc = services()
-    svc.projects.project_dir(pid)
+    ensure_free_space(svc.projects.project_dir(pid))
 
     def work(handle):
         folder, out = svc.projects.export_dir(pid, "archive")
@@ -137,6 +138,7 @@ def import_archive():
     if f is None:
         raise AppError("Choose a .ossproj file to import.")
     data = f.read()
+    ensure_free_space(svc.settings.projects_dir, needed_bytes=len(data) * 2)
     doc = svc.projects.import_archive(data, svc.assets)
     return jsonify({"document": doc}), 201
 

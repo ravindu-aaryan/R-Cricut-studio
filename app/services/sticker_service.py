@@ -33,6 +33,16 @@ class RenderContext:
     low_res_dpi: float = 150.0
     _cache: dict = field(default_factory=dict)
 
+    def photo_mask(self, photo_id: str) -> Image.Image | None:
+        photo = self.photos.get(photo_id)
+        if photo is None:
+            return None
+        key = ("mask", photo_id, photo.get("_rev"))
+        if key not in self._cache:
+            path = photo_paths(self.project_dir, photo)["mask"]
+            self._cache[key] = Image.open(path).convert("L") if path.exists() else None
+        return self._cache[key]
+
     def photo_image(self, photo_id: str, source: str) -> tuple[Image.Image, dict]:
         photo = self.photos.get(photo_id)
         if photo is None:
@@ -209,8 +219,14 @@ def _image_content(layer: Layer, ctx: RenderContext, rw: int, rh: int, out_dpi: 
     piece = piece.resize((rw, rh), resample)
     params = {**(photo.get("adjustments") or {}), **{k: v for k, v in (layer.treatment or {}).items() if v is not None}}
     if not image_adjustments.is_identity(params):
+        subject = None
+        if params.get("target") in ("subject", "background"):
+            m = ctx.photo_mask(layer.photo_id or "")
+            if m is not None:
+                subject = m.resize((sw, sh)).crop(box).resize((rw, rh))
         piece = image_adjustments.apply_adjustments(piece, params, scale=rw / 1000.0,
-                                                    protect_mask=protect.resize((rw, rh)) if protect else None)
+                                                    protect_mask=protect.resize((rw, rh)) if protect else None,
+                                                    subject_mask=subject)
     return piece
 
 

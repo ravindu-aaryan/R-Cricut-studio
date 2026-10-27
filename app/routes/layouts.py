@@ -31,10 +31,11 @@ def _sizes(pid: str, project: dict, ids: list[str]) -> dict[str, dict]:
         for sid in ids:
             if sid not in cache.stickers:
                 continue
-            res = cache.full(sid, 75)  # quick probe; sizes are physical so DPI does not matter
+            res = cache.full(sid, 150)  # half-resolution probe; sizes are physical
             st = cache.stickers[sid]
             out[sid] = {"name": st.name, "widthMm": round(res.size_mm[0], 3), "heightMm": round(res.size_mm[1], 3),
-                        "minEffectiveDpi": round(res.min_effective_dpi * st.dpi / 75, 1) if res.min_effective_dpi else None,
+                        # Effective DPI at the design size; it does not depend on the probe resolution.
+                        "minEffectiveDpi": round(res.min_effective_dpi, 1) if res.min_effective_dpi else None,
                         "warnings": res.warnings}
             handle.progress(len(out) / max(1, len(ids)))
         return out

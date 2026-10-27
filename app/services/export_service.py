@@ -61,7 +61,7 @@ class StickerCache:
 
     def design_size(self, sid: str) -> tuple[float, float]:
         if sid not in self._design:
-            self._design[sid] = render_sticker(self.doc(sid), self.ctx, 0.25).size_mm
+            self._design[sid] = render_sticker(self.doc(sid), self.ctx, 0.5).size_mm
         return self._design[sid]
 
     def full(self, sid: str, dpi: int = 300):

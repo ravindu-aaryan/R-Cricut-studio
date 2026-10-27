@@ -10,6 +10,7 @@ from .services.asset_service import AssetError
 from .services.job_service import JobTimeout
 from .services.project_service import ProjectError, ProjectNotFound
 from .services.theme_service import ThemeError
+from .utils.disk import DiskSpaceError
 from .utils.paths import UnsafePathError
 from .utils.svg_sanitize import SvgSanitizeError
 from .utils.validation import ValidationError
@@ -58,6 +59,10 @@ def register_error_handlers(app: Flask) -> None:
     def _unsafe(e):
         log.warning("rejected unsafe path for %s", request.path)
         return _json("Invalid identifier.", 400, "unsafe_path")
+
+    @app.errorhandler(DiskSpaceError)
+    def _disk(e):
+        return _json(str(e), 507, "disk_full")
 
     @app.errorhandler(JobTimeout)
     def _timeout(e):
