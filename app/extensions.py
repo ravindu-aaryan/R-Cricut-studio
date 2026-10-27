@@ -8,6 +8,7 @@ from flask import current_app
 from .config import Settings
 from .repositories.project_repository import ProjectRepository
 from .services.asset_service import AssetLibrary
+from .services.import_service import TemplateStore
 from .services.job_service import JobManager
 from .services.project_service import ProjectService
 from .services.text_service import FontRegistry
@@ -23,6 +24,7 @@ class Services:
     themes: ThemeService
     fonts: FontRegistry
     jobs: JobManager
+    templates: TemplateStore
     csrf_token: str
 
 

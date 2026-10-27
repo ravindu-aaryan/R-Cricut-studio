@@ -1,0 +1,32 @@
+# scripts/package_app.py on Linux x86_64 (last lines of the PyInstaller log)
+22976 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from '/home/user/R-Cricut-studio/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+22979 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from '/home/user/R-Cricut-studio/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+22982 INFO: Including run-time hook 'pyi_rth_setuptools.py' from '/home/user/R-Cricut-studio/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+23027 INFO: Creating base_library.zip...
+23047 INFO: Looking for dynamic libraries
+24274 INFO: Warnings written to /home/user/R-Cricut-studio/build/OfflineStickerStudio/warn-OfflineStickerStudio.txt
+24433 INFO: Graph cross-reference written to /home/user/R-Cricut-studio/build/OfflineStickerStudio/xref-OfflineStickerStudio.html
+24508 INFO: checking PYZ
+24508 INFO: Building PYZ because PYZ-00.toc is non existent
+24508 INFO: Building PYZ (ZlibArchive) /home/user/R-Cricut-studio/build/OfflineStickerStudio/PYZ-00.pyz
+25671 INFO: Building PYZ (ZlibArchive) /home/user/R-Cricut-studio/build/OfflineStickerStudio/PYZ-00.pyz completed successfully.
+25704 INFO: checking PKG
+25704 INFO: Building PKG because PKG-00.toc is non existent
+25704 INFO: Building PKG (CArchive) OfflineStickerStudio.pkg
+25725 INFO: Building PKG (CArchive) OfflineStickerStudio.pkg completed successfully.
+25726 INFO: Bootloader /home/user/R-Cricut-studio/.venv/lib/python3.12/site-packages/PyInstaller/bootloader/Linux-64bit-intel/run
+25726 INFO: checking EXE
+25726 INFO: Building EXE because EXE-00.toc is non existent
+25726 INFO: Building EXE from EXE-00.toc
+25726 INFO: Copying bootloader EXE to /home/user/R-Cricut-studio/build/OfflineStickerStudio/OfflineStickerStudio
+25727 INFO: Appending PKG archive to custom ELF section in EXE
+25794 INFO: Building EXE from EXE-00.toc completed successfully.
+25808 INFO: checking COLLECT
+25808 INFO: Building COLLECT because COLLECT-00.toc is non existent
+25808 INFO: Building COLLECT COLLECT-00.toc
+26025 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+26038 INFO: Build complete! The results are available in: /home/user/R-Cricut-studio/dist
+Smoke test passed: {'assets': 138, 'fonts': 11, 'frontend': True, 'konva': True, 'patterns': 12, 'themes': 20}
+Archive: /home/user/R-Cricut-studio/dist/OfflineStickerStudio-1.0.0-linux-x86_64.tar.gz
+Built: /home/user/R-Cricut-studio/dist/OfflineStickerStudio
+packaged app offline: {'assets': 138, 'fonts': 11, 'frontend': True, 'konva': True, 'patterns': 12, 'themes': 20} missing: []

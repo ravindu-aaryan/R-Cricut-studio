@@ -1,6 +1,7 @@
 // Asset library: search, categories, user imports (PNG/SVG, sanitised), patterns and presets.
 import { api } from "../api.js";
 import { store, getAssets, getPatterns } from "../store.js";
+import { bulkAssetImport } from "./bulkImport.js";
 import { icon } from "../icons.js";
 import { setHTML, esc, toast, toastError, confirmDialog, modal, h } from "../ui.js";
 import { assetUrl } from "./sticker-canvas.js";
@@ -11,7 +12,7 @@ export async function mount(root) {
 
   setHTML(root, `<div class="page" style="max-width:1300px">
     <div class="page-head"><div><h1>Asset library</h1><p class="muted">${store.assets.length} local decorations, frames and shapes. Import your own transparent PNG or SVG files too.</p></div>
-      <div class="row"><button class="btn primary" id="import">${icon("upload")}Import PNG / SVG</button></div></div>
+      <div class="row"><button class="btn" id="import-bulk">${icon("upload")}Bulk import</button><button class="btn primary" id="import">${icon("upload")}Import PNG / SVG</button></div></div>
     <div class="tabs" style="position:static;margin-bottom:16px;padding:0">
       <button data-tab="assets" class="on">${icon("star")}Decorations</button><button data-tab="patterns">${icon("grid")}Patterns</button><button data-tab="presets">${icon("layers")}Presets</button></div>
     <div id="lib-body"></div></div>`);
@@ -21,6 +22,10 @@ export async function mount(root) {
     render();
   }));
   root.querySelector("#import").onclick = importDialog;
+  root.querySelector("#import-bulk").onclick = async () => {
+    const res = await bulkAssetImport(store.categories);
+    if (res && res.imported) { await getAssets(true); ui.tab = "assets"; ui.cat = "@mine"; render(); }
+  };
 
   function render() { ({ assets: renderAssets, patterns: renderPatterns, presets: renderPresets })[ui.tab](); }
 

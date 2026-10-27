@@ -1,0 +1,338 @@
+........................................................................ [ 35%]
+........................................................................ [ 70%]
+.............................................................            [100%]
+==================================== PASSES ====================================
+_________________ test_bulk_sticker_import_from_files_and_zip __________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_bulk_sticker_import_from_0/data
+______________________ test_bulk_import_rejects_bad_file _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_bulk_import_rejects_bad_f0/data
+____________________________ test_bulk_asset_import ____________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_bulk_asset_import0/data
+____________________ test_templates_crud_and_from_template _____________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_templates_crud_and_from_t0/data
+__________________________ test_from_template_bad_id ___________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_from_template_bad_id0/data
+------------------------------ Captured log call -------------------------------
+WARNING  oss.errors:errors.py:60 rejected unsafe path for /api/projects/pr_5e0dcccae051/stickers/from-template
+_______________________ test_core_workflow_works_offline _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_core_workflow_works_offli0/data
+_________________________ test_status_reports_offline __________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_status_reports_offline0/data
+_____________________ test_csrf_required_for_state_changes _____________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_csrf_required_for_state_c0/data
+____________________ test_foreign_host_and_origin_rejected _____________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_foreign_host_and_origin_r0/data
+____________________________ test_security_headers _____________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_security_headers0/data
+_______________________ test_no_remote_resources_in_page _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_no_remote_resources_in_pa0/data
+_________________________ test_path_traversal_rejected _________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_path_traversal_rejected0/data
+_____________________ test_unknown_export_file_not_served ______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_unknown_export_file_not_s0/data
+_______________________ test_svg_responses_are_sandboxed _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_svg_responses_are_sandbox0/data
+______________________ test_errors_do_not_leak_tracebacks ______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_errors_do_not_leak_traceb0/data
+------------------------------ Captured log call -------------------------------
+ERROR    oss.errors:errors.py:83 unhandled error on GET /api/themes
+Traceback (most recent call last):
+  File "/home/user/R-Cricut-studio/.venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/R-Cricut-studio/.venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/R-Cricut-studio/app/routes/themes.py", line 14, in list_themes
+    return jsonify({"themes": services().themes.list()})
+                              ^^^^^^^^^^
+  File "/home/user/R-Cricut-studio/tests/integration/test_security.py", line 59, in boom
+    raise RuntimeError("secret internal detail")
+RuntimeError: secret internal detail
+______________________ test_delete_requires_confirmation _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_delete_requires_confirmat0/data
+__________________________ test_delete_all_local_data __________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_delete_all_local_data0/data
+______________________ test_debugger_disabled_by_default _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_debugger_disabled_by_defa0/data
+______________________ test_default_binding_is_localhost _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_default_binding_is_localh0/data
+______________________ test_uploaded_svg_asset_sanitized _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_uploaded_svg_asset_saniti0/data
+______________________________ test_bad_ids[../x] ______________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_bad_ids____x_0/data
+______________________________ test_bad_ids[a b] _______________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_bad_ids_a_b_0/data
+------------------------------ Captured log call -------------------------------
+WARNING  oss.errors:errors.py:60 rejected unsafe path for /api/jobs/a b
+_ test_bad_ids[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] _
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_bad_ids_xxxxxxxxxxxxxxxxx0/data
+------------------------------ Captured log call -------------------------------
+WARNING  oss.errors:errors.py:60 rejected unsafe path for /api/jobs/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+_________________ test_quit_disabled_outside_desktop_launcher __________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_quit_disabled_outside_des0/data
+_______________________ test_asset_png_and_svg_endpoints _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_asset_png_and_svg_endpoin0/data
+______________________________ test_full_workflow ______________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_full_workflow0/data
+_______________ test_exported_sticker_png_matches_physical_size ________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_exported_sticker_png_matc0/data
+____________________________ test_archive_roundtrip ____________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_archive_roundtrip0/data
+__________________ test_malicious_archive_entries_are_ignored __________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_malicious_archive_entries0/data
+_______________________ test_photo_edits_and_adjustments _______________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_photo_edits_and_adjustmen0/data
+________________________ test_import_reports_bad_files _________________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_import_reports_bad_files0/data
+___________________ test_heic_import_when_decoder_available ____________________
+------------------------------ Captured log setup ------------------------------
+INFO     oss:__init__.py:102 Offline Sticker Studio 1.0.0 started; data directory: /tmp/pytest-of-root/pytest-40/test_heic_import_when_decoder_0/data
+_________________________ test_job_timeout_and_errors __________________________
+------------------------------ Captured log call -------------------------------
+ERROR    app.services.job_service:job_service.py:132 job 074cb67506104756 (boom) failed:
+Traceback (most recent call last):
+  File "/home/user/R-Cricut-studio/app/services/job_service.py", line 111, in _run
+    result = fn(handle)
+             ^^^^^^^^^^
+  File "/home/user/R-Cricut-studio/tests/unit/test_jobs.py", line 48, in boom
+    raise ValueError("bad input")
+ValueError: bad input
+=========================== short test summary info ============================
+PASSED tests/e2e/test_browser.py::test_main_workflow_in_browser
+PASSED tests/e2e/test_browser.py::test_every_screen_renders_without_errors
+PASSED tests/e2e/test_browser.py::test_one_click_themed_sheet
+PASSED tests/e2e/test_browser.py::test_bulk_import_and_templates
+PASSED tests/integration/test_import.py::test_bulk_sticker_import_from_files_and_zip
+PASSED tests/integration/test_import.py::test_bulk_import_rejects_bad_file
+PASSED tests/integration/test_import.py::test_bulk_asset_import
+PASSED tests/integration/test_import.py::test_templates_crud_and_from_template
+PASSED tests/integration/test_import.py::test_from_template_bad_id
+PASSED tests/integration/test_offline.py::test_guard_blocks_internet
+PASSED tests/integration/test_offline.py::test_core_workflow_works_offline
+PASSED tests/integration/test_offline.py::test_status_reports_offline
+PASSED tests/integration/test_security.py::test_csrf_required_for_state_changes
+PASSED tests/integration/test_security.py::test_foreign_host_and_origin_rejected
+PASSED tests/integration/test_security.py::test_security_headers
+PASSED tests/integration/test_security.py::test_no_remote_resources_in_page
+PASSED tests/integration/test_security.py::test_path_traversal_rejected
+PASSED tests/integration/test_security.py::test_unknown_export_file_not_served
+PASSED tests/integration/test_security.py::test_svg_responses_are_sandboxed
+PASSED tests/integration/test_security.py::test_errors_do_not_leak_tracebacks
+PASSED tests/integration/test_security.py::test_delete_requires_confirmation
+PASSED tests/integration/test_security.py::test_delete_all_local_data
+PASSED tests/integration/test_security.py::test_debugger_disabled_by_default
+PASSED tests/integration/test_security.py::test_default_binding_is_localhost
+PASSED tests/integration/test_security.py::test_uploaded_svg_asset_sanitized
+PASSED tests/integration/test_security.py::test_bad_ids[../x]
+PASSED tests/integration/test_security.py::test_bad_ids[a b]
+PASSED tests/integration/test_security.py::test_bad_ids[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]
+PASSED tests/integration/test_security.py::test_quit_disabled_outside_desktop_launcher
+PASSED tests/integration/test_security.py::test_asset_png_and_svg_endpoints
+PASSED tests/integration/test_workflow.py::test_full_workflow
+PASSED tests/integration/test_workflow.py::test_exported_sticker_png_matches_physical_size
+PASSED tests/integration/test_workflow.py::test_archive_roundtrip
+PASSED tests/integration/test_workflow.py::test_malicious_archive_entries_are_ignored
+PASSED tests/integration/test_workflow.py::test_photo_edits_and_adjustments
+PASSED tests/integration/test_workflow.py::test_import_reports_bad_files
+PASSED tests/integration/test_workflow.py::test_heic_import_when_decoder_available
+PASSED tests/unit/test_adjustments.py::test_identity_returns_equal_pixels
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params0]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params1]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params2]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params3]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params4]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params5]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params6]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params7]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params8]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params9]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params10]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params11]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params12]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params13]
+PASSED tests/unit/test_adjustments.py::test_each_adjustment_keeps_size_and_alpha[params14]
+PASSED tests/unit/test_adjustments.py::test_grayscale_is_neutral
+PASSED tests/unit/test_adjustments.py::test_posterize_levels
+PASSED tests/unit/test_adjustments.py::test_face_protection_keeps_original_pixels
+PASSED tests/unit/test_adjustments.py::test_unknown_filter_ignored
+PASSED tests/unit/test_adjustments.py::test_subject_and_background_targets
+PASSED tests/unit/test_assets_themes.py::test_all_builtin_assets_render
+PASSED tests/unit/test_assets_themes.py::test_required_categories_present
+PASSED tests/unit/test_assets_themes.py::test_search
+PASSED tests/unit/test_assets_themes.py::test_recolor
+PASSED tests/unit/test_assets_themes.py::test_import_png_and_svg
+PASSED tests/unit/test_assets_themes.py::test_import_rejects_bad_files
+PASSED tests/unit/test_assets_themes.py::test_all_themes_valid_and_reference_local_assets
+PASSED tests/unit/test_assets_themes.py::test_custom_theme_save
+PASSED tests/unit/test_assets_themes.py::test_bundled_fonts_registered_with_licenses
+PASSED tests/unit/test_disk.py::test_disk_space_check
+PASSED tests/unit/test_import_service.py::test_expand_zip_and_filter
+PASSED tests/unit/test_import_service.py::test_remove_white_background_keeps_interior
+PASSED tests/unit/test_import_service.py::test_prepare_trims_and_detects_svg
+PASSED tests/unit/test_import_service.py::test_import_stickers_builds_valid_docs
+PASSED tests/unit/test_import_service.py::test_import_reports_bad_files
+PASSED tests/unit/test_import_service.py::test_too_many_files
+PASSED tests/unit/test_import_service.py::test_make_template_strips_photo
+PASSED tests/unit/test_import_service.py::test_instantiate_template_fills_photo_slot_keeping_transform
+PASSED tests/unit/test_import_service.py::test_instantiate_with_asset
+PASSED tests/unit/test_import_service.py::test_template_store_roundtrip
+PASSED tests/unit/test_import_service.py::test_import_bundle_plain_json
+PASSED tests/unit/test_jobs.py::test_job_progress_and_result
+PASSED tests/unit/test_jobs.py::test_job_cancellation
+PASSED tests/unit/test_jobs.py::test_job_timeout_and_errors
+PASSED tests/unit/test_jobs.py::test_bounded_concurrency
+PASSED tests/unit/test_jobs.py::test_run_sync
+PASSED tests/unit/test_layout.py::test_grid_layout_counts_and_bounds
+PASSED tests/unit/test_layout.py::test_pack_layout_mixed_sizes_multi_page
+PASSED tests/unit/test_layout.py::test_pack_is_more_efficient_than_grid_for_mixed_sizes
+PASSED tests/unit/test_layout.py::test_oversized_sticker_is_rejected
+PASSED tests/unit/test_layout.py::test_fit_to_page
+PASSED tests/unit/test_layout.py::test_fill_page
+PASSED tests/unit/test_layout.py::test_printable_presets
+PASSED tests/unit/test_layout.py::test_validation_warnings
+PASSED tests/unit/test_layout.py::test_rotated_overlap_sat
+PASSED tests/unit/test_offline_static.py::test_repository_has_no_remote_references
+PASSED tests/unit/test_offline_static.py::test_scanner_detects_remote_urls
+PASSED tests/unit/test_outline.py::test_expand_is_exact_distance
+PASSED tests/unit/test_outline.py::test_border_width_matches_request
+PASSED tests/unit/test_outline.py::test_outline_layers_grow_outward_with_gap
+PASSED tests/unit/test_outline.py::test_art_is_never_overwritten
+PASSED tests/unit/test_outline.py::test_holes_filled_or_kept
+PASSED tests/unit/test_outline.py::test_disconnected_pieces_are_bridged
+PASSED tests/unit/test_outline.py::test_shape_masks[circle]
+PASSED tests/unit/test_outline.py::test_shape_masks[oval]
+PASSED tests/unit/test_outline.py::test_shape_masks[rounded]
+PASSED tests/unit/test_outline.py::test_shape_masks[rect]
+PASSED tests/unit/test_outline.py::test_shape_masks[square]
+PASSED tests/unit/test_outline.py::test_shape_masks[heart]
+PASSED tests/unit/test_outline.py::test_shape_masks[star]
+PASSED tests/unit/test_outline.py::test_shape_masks[speech]
+PASSED tests/unit/test_outline.py::test_shape_sticker_clips_art_and_fills_background
+PASSED tests/unit/test_outline.py::test_cut_offset_changes_cut_only
+PASSED tests/unit/test_outline.py::test_empty_art_raises
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[photo.jpg-photo.jpg]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[../../etc/passwd-passwd]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[..\\..\\windows\\system32\\cmd.exe-cmd.exe]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[my photo (1).png-my photo _1_.png]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[-file]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[..-file]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[CON.txt-_CON.txt]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[na\xefve caf\xe9.jpg-naive cafe.jpg]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.png-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.png]
+PASSED tests/unit/test_paths_security.py::test_sanitize_filename[\x00evil\n.png-evil_.png]
+PASSED tests/unit/test_paths_security.py::test_safe_join_blocks_traversal
+PASSED tests/unit/test_paths_security.py::test_safe_join_blocks_symlink_escape
+PASSED tests/unit/test_paths_security.py::test_ids[pr_abc123-True]
+PASSED tests/unit/test_paths_security.py::test_ids[ph_0f-True]
+PASSED tests/unit/test_paths_security.py::test_ids[../x-False]
+PASSED tests/unit/test_paths_security.py::test_ids[a/b-False]
+PASSED tests/unit/test_paths_security.py::test_ids[-False]
+PASSED tests/unit/test_paths_security.py::test_ids[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-False]
+PASSED tests/unit/test_paths_security.py::test_host_and_origin_checks
+PASSED tests/unit/test_paths_security.py::test_tokens_match
+PASSED tests/unit/test_photo_service.py::test_exif_orientation_is_applied
+PASSED tests/unit/test_photo_service.py::test_original_bytes_preserved
+PASSED tests/unit/test_photo_service.py::test_transparency_preserved
+PASSED tests/unit/test_photo_service.py::test_previews_and_thumbnails
+PASSED tests/unit/test_photo_service.py::test_geometric_edits
+PASSED tests/unit/test_photo_service.py::test_resize_never_upscales
+PASSED tests/unit/test_photo_service.py::test_rebuild_from_original_does_not_degrade
+PASSED tests/unit/test_photo_service.py::test_face_mask
+PASSED tests/unit/test_project_model.py::test_sticker_roundtrip_preserves_data_and_unknown_fields
+PASSED tests/unit/test_project_model.py::test_sticker_values_are_clamped
+PASSED tests/unit/test_project_model.py::test_unknown_layer_type_rejected
+PASSED tests/unit/test_project_model.py::test_sheet_roundtrip
+PASSED tests/unit/test_project_model.py::test_migration_v1_to_v2
+PASSED tests/unit/test_project_model.py::test_newer_format_rejected
+PASSED tests/unit/test_project_model.py::test_create_save_reopen
+PASSED tests/unit/test_project_model.py::test_autosave_and_recovery
+PASSED tests/unit/test_project_model.py::test_client_cannot_rewrite_photo_paths
+PASSED tests/unit/test_project_model.py::test_rename_duplicate_archive_delete
+PASSED tests/unit/test_project_model.py::test_damaged_document_falls_back_to_backup
+PASSED tests/unit/test_project_model.py::test_reindex_finds_orphan_folders
+PASSED tests/unit/test_project_model.py::test_schema_migrations_idempotent
+PASSED tests/unit/test_segmentation.py::test_grabcut_finds_subject
+PASSED tests/unit/test_segmentation.py::test_grabcut_with_hints_only
+PASSED tests/unit/test_segmentation.py::test_grabcut_cancellation
+PASSED tests/unit/test_segmentation.py::test_color_key_on_plain_background
+PASSED tests/unit/test_segmentation.py::test_manual_mask_is_scaled_and_refined
+PASSED tests/unit/test_segmentation.py::test_refine_removes_specks_and_fills_holes
+PASSED tests/unit/test_segmentation.py::test_keep_largest_only
+PASSED tests/unit/test_segmentation.py::test_hints_decoding
+PASSED tests/unit/test_segmentation.py::test_extract_subject_is_transparent_png_and_decontaminated
+PASSED tests/unit/test_segmentation.py::test_alpha_bbox
+PASSED tests/unit/test_segmentation.py::test_model_status_without_model
+PASSED tests/unit/test_segmentation.py::test_model_engine_with_tiny_local_onnx
+PASSED tests/unit/test_sticker_render.py::test_layer_order_top_wins
+PASSED tests/unit/test_sticker_render.py::test_transforms_rotation_flip_opacity
+PASSED tests/unit/test_sticker_render.py::test_group_transform_matches_children
+PASSED tests/unit/test_sticker_render.py::test_text_and_asset_render
+PASSED tests/unit/test_sticker_render.py::test_curved_text_and_badges
+PASSED tests/unit/test_sticker_render.py::test_finished_sticker_size_includes_border
+PASSED tests/unit/test_sticker_render.py::test_scaled_render_is_proportional
+PASSED tests/unit/test_sticker_render.py::test_backgrounds
+PASSED tests/unit/test_sticker_render.py::test_move_layer_order
+PASSED tests/unit/test_sticker_render.py::test_image_layers_scale_uniformly
+PASSED tests/unit/test_sticker_render.py::test_effective_dpi_is_independent_of_render_scale
+PASSED tests/unit/test_svg.py::test_sanitizer_removes_active_and_external_content
+PASSED tests/unit/test_svg.py::test_sanitizer_rejects_entities_and_non_svg
+PASSED tests/unit/test_svg.py::test_sanitizer_keeps_embedded_data_images
+PASSED tests/unit/test_svg.py::test_cut_path_geometry_in_mm
+PASSED tests/unit/test_svg.py::test_holes_and_multiple_pieces
+PASSED tests/unit/test_svg.py::test_self_intersection_detector
+PASSED tests/unit/test_svg.py::test_sticker_svg_is_valid_and_physical
+PASSED tests/unit/test_svg.py::test_sheet_svg_places_and_rotates_paths
+PASSED tests/unit/test_units.py::test_mm_to_px_formula
+PASSED tests/unit/test_units.py::test_roundtrip
+PASSED tests/unit/test_units.py::test_a4_dimensions_at_300_dpi
+PASSED tests/unit/test_units.py::test_a4_points
+PASSED tests/unit/test_units.py::test_invalid_orientation
+PASSED tests/unit/test_units.py::test_effective_dpi
+PASSED tests/unit/test_validation.py::test_supported_formats[jpeg_bytes-JPEG]
+PASSED tests/unit/test_validation.py::test_supported_formats[png_bytes-PNG]
+PASSED tests/unit/test_validation.py::test_supported_formats[webp_bytes-WEBP]
+PASSED tests/unit/test_validation.py::test_supported_formats[tiff_bytes-TIFF]
+PASSED tests/unit/test_validation.py::test_png_alpha_detected
+PASSED tests/unit/test_validation.py::test_rejects_non_images
+PASSED tests/unit/test_validation.py::test_rejects_corrupt_and_truncated
+PASSED tests/unit/test_validation.py::test_size_limits
+PASSED tests/unit/test_validation.py::test_mismatched_extension_irrelevant
+PASSED tests/unit/test_validation.py::test_parse_color
+PASSED tests/unit/test_wordart_collections.py::test_letter_colors_cycle_per_letter
+PASSED tests/unit/test_wordart_collections.py::test_word_art_templates_reference_local_assets
+PASSED tests/unit/test_wordart_collections.py::test_wordart_layers_stack_lines
+PASSED tests/unit/test_wordart_collections.py::test_mixed_collection_without_photos_and_number_only_when_chosen
+PASSED tests/unit/test_wordart_collections.py::test_matching_phrase_uses_word_art
+205 passed in 53.31s

@@ -75,6 +75,10 @@ class Settings:
         return self.data_dir / "projects"
 
     @property
+    def templates_dir(self) -> Path:
+        return self.library_dir / "templates"
+
+    @property
     def library_dir(self) -> Path:
         """User-imported decorations, backgrounds and presets."""
         return self.data_dir / "library"
@@ -101,7 +105,8 @@ class Settings:
 
     def ensure_dirs(self) -> None:
         for d in (self.data_dir, self.projects_dir, self.library_dir, self.temp_dir, self.log_dir,
-                  self.library_dir / "decorations", self.library_dir / "backgrounds", self.library_dir / "presets"):
+                  self.library_dir / "decorations", self.library_dir / "backgrounds", self.library_dir / "presets",
+                  self.library_dir / "templates"):
             d.mkdir(parents=True, exist_ok=True)
 
     def public_dict(self) -> dict:

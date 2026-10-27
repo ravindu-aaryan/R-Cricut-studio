@@ -1,0 +1,10 @@
+Offline verification — 2026-10-27T12:23:59
+Python 3.12.3 on linux
+
+Static check: PASS
+
+Runtime check: PASS
+network namespace (no internet route)
+.....................................                                    [100%]
+37 passed in 50.00s
+

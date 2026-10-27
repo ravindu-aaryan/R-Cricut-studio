@@ -13,6 +13,7 @@ from .extensions import Services
 from .logging_setup import configure_logging
 from .repositories.project_repository import ProjectRepository
 from .services.asset_service import AssetLibrary
+from .services.import_service import TemplateStore
 from .services.job_service import JobManager
 from .services.project_service import ProjectService
 from .services.text_service import FontRegistry
@@ -53,8 +54,9 @@ def create_app(overrides: dict | None = None) -> Flask:
     assets = AssetLibrary(settings.assets_dir, settings.library_dir, settings.assets_dir / "fonts")
     themes = ThemeService(settings.assets_dir / "themes", settings.library_dir / "themes")
     jobs = JobManager(settings.max_worker_threads, settings.job_timeout_seconds)
+    templates = TemplateStore(settings.templates_dir)
     atexit.register(jobs.shutdown)
-    app.extensions["oss"] = Services(settings, repo, projects, assets, themes, fonts, jobs, security.new_token())
+    app.extensions["oss"] = Services(settings, repo, projects, assets, themes, fonts, jobs, templates, security.new_token())
 
     allowed_hosts = set(LOCAL_HOSTS)
     if settings.host not in ("0.0.0.0", "::"):

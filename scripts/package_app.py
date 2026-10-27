@@ -60,7 +60,7 @@ def build(clean: bool = True) -> Path:
             args += ["--add-data", f"{ROOT / src}{sep}{dst}"]
     for mod in ("resvg_py", "waitress", "defusedxml", "app.routes.assets", "app.routes.exports", "app.routes.jobs",
                 "app.routes.layouts", "app.routes.photos", "app.routes.projects", "app.routes.stickers",
-                "app.routes.system", "app.routes.themes"):
+                "app.routes.system", "app.routes.themes", "app.routes.imports"):
         args += ["--hidden-import", mod]
     args += ["--collect-data", "reportlab", "--collect-data", "cv2", "--exclude-module", "tkinter", "--exclude-module", "pytest",
              "--exclude-module", "playwright"]

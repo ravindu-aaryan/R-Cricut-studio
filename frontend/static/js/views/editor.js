@@ -4,6 +4,7 @@ import { store, markDirty, saveProject, getAssets, getFonts, getPatterns, getThe
 import { icon } from "../icons.js";
 import { setHTML, esc, toast, toastError, uid, clone, debounce, contextMenu, loadImage, isTyping, confirmDialog, promptDialog, emptyState, modal, h } from "../ui.js";
 import { StickerCanvas, assetUrl } from "./sticker-canvas.js";
+import { bulkStickerImport } from "./bulkImport.js";
 
 const SHAPES = [["silhouette", "Silhouette (die-cut)"], ["circle", "Circle"], ["oval", "Oval"], ["rounded", "Rounded rectangle"], ["rect", "Rectangle"], ["square", "Square"], ["heart", "Heart"], ["star", "Star"], ["speech", "Speech bubble"], ["custom", "Custom (from asset)"]];
 const LAYER_ICON = { image: "image", asset: "star", text: "text", shape: "shapes", group: "group" };
@@ -827,7 +828,8 @@ export async function mount(root, { arg }) {
   function renderTray() {
     const el = root.querySelector("#tray");
     setHTML(el, `${store.doc.stickers.map((s) => `<div class="tray-item ${s.id === doc.id ? "on" : ""}" data-id="${s.id}" data-tip="${esc(s.name)}"><div class="spinner"></div><span class="tname">${esc(s.name)}</span></div>`).join("")}
-      <button class="tray-add" id="tray-new">${icon("plus")}New sticker</button>`);
+      <button class="tray-add" id="tray-new">${icon("plus")}New sticker</button>
+      <button class="tray-add" id="tray-more" data-tip="Bulk import and templates">${icon("upload")}Import / template</button>`);
     el.querySelectorAll(".tray-item").forEach((t) => {
       t.onclick = () => { if (t.dataset.id !== doc.id) location.hash = `#/p/${store.doc.id}/editor/${t.dataset.id}`; };
       t.oncontextmenu = (e) => {
@@ -837,12 +839,23 @@ export async function mount(root, { arg }) {
           { label: "Open", icon: "pencil", action: () => (location.hash = `#/p/${store.doc.id}/editor/${s.id}`) },
           { label: "Duplicate", icon: "copy", action: () => duplicateSticker(s) },
           { label: "Rename", icon: "text", action: async () => { const n = await promptDialog("Rename sticker", "Name", s.name); if (n) { s.name = n; markDirty(); renderTray(); } } },
+          { label: "Save as template", icon: "save", action: () => saveAsTemplate(s) },
           "-",
           { label: "Delete", icon: "trash", action: () => deleteSticker(s) },
         ]);
       };
     });
     el.querySelector("#tray-new").onclick = newSticker;
+    el.querySelector("#tray-more").onclick = (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      contextMenu(r.left, r.top - 8 - 4, [
+        { label: "Import images as stickers…", icon: "upload", action: importStickers },
+        { label: "New sticker from template…", icon: "copy", action: () => newFromTemplate() },
+        "-",
+        { label: "Save this sticker as a template", icon: "save", action: () => saveAsTemplate(doc) },
+        { label: "Manage templates…", icon: "layers", action: manageTemplates },
+      ]);
+    };
     store.doc.stickers.forEach((s) => updateTrayThumb(s));
   }
   async function updateTrayThumb(s) {
@@ -870,6 +883,69 @@ export async function mount(root, { arg }) {
       location.hash = `#/p/${store.doc.id}/editor/${res.sticker.id}`;
     } catch (e) { toastError(e); }
   }
+  async function importStickers() {
+    const res = await bulkStickerImport();
+    if (!res || !res.stickers?.length) return;
+    store.doc.stickers.push(...res.stickers);
+    // The import job already saved them server-side; refresh local state cleanly.
+    markDirty("import");
+    renderTray();
+    location.hash = `#/p/${store.doc.id}/editor/${res.stickers[0].id}`;
+  }
+
+  async function saveAsTemplate(sticker) {
+    const name = await promptDialog("Save as template", "Template name", sticker.name, { okLabel: "Save template" });
+    if (!name) return;
+    try {
+      await api.post("/api/templates", { sticker, name, themeId: store.doc.themeId });
+      toast("Template saved. Photo layers become a photo slot you can fill later.", "ok");
+    } catch (e) { toastError(e); }
+  }
+
+  async function newFromTemplate() {
+    let templates;
+    try { templates = (await api.get("/api/templates")).templates; } catch (e) { return toastError(e); }
+    if (!templates.length) { toast("No templates yet. Save a sticker as a template first.", "warn"); return; }
+    const photos = store.doc.photos;
+    const body = h(`<div>
+      <div class="field"><label>Template</label><select id="ft-tpl">${templates.map((t) => `<option value="${t.id}" data-slot="${t.hasPhotoSlot ? 1 : 0}">${esc(t.name)}${t.hasPhotoSlot ? " (photo)" : ""}</option>`).join("")}</select></div>
+      <div class="field" id="ft-fill-wrap"><label>Fill photo slot with</label><select id="ft-fill"><option value="">Leave as placeholder</option>
+        ${photos.map((p) => `<option value="p:${p.id}">Photo: ${esc(p.name)}${p.mask ? " (cut out)" : ""}</option>`).join("")}</select></div>
+      <div class="field"><label>Name</label><input type="text" id="ft-name" placeholder="New sticker"></div></div>`);
+    const upd = () => body.querySelector("#ft-fill-wrap").classList.toggle("hidden", body.querySelector("#ft-tpl").selectedOptions[0].dataset.slot !== "1");
+    body.querySelector("#ft-tpl").onchange = upd; setTimeout(upd, 0);
+    const choice = await modal({ title: "New sticker from template", body, actions: [{ label: "Cancel" },
+      { label: "Create", kind: "primary", onClick: (b) => ({ tpl: b.querySelector("#ft-tpl").value, fill: b.querySelector("#ft-fill").value, name: b.querySelector("#ft-name").value }) }] });
+    if (!choice || !choice.tpl) return;
+    const payload = { templateId: choice.tpl, name: choice.name };
+    if (choice.fill?.startsWith("p:")) payload.photoId = choice.fill.slice(2);
+    try {
+      const r = await api.post(`/api/projects/${store.doc.id}/stickers/from-template`, payload);
+      store.doc.stickers.push(r.sticker);
+      markDirty("template");
+      location.hash = `#/p/${store.doc.id}/editor/${r.sticker.id}`;
+    } catch (e) { toastError(e); }
+  }
+
+  async function manageTemplates() {
+    let templates;
+    try { templates = (await api.get("/api/templates")).templates; } catch (e) { return toastError(e); }
+    const body = h(`<div>
+      <div class="row" style="margin-bottom:10px">
+        <a class="btn sm" href="/api/templates/export" download>${icon("download")}Export all</a>
+        <label class="btn sm">${icon("upload")}Import templates<input type="file" id="tm-file" accept=".zip,.json" hidden></label>
+      </div>
+      <div class="file-list" id="tm-list">${templates.length ? templates.map((t) => `<div class="file-row">${icon("layers")}<span class="fname">${esc(t.name)}${t.hasPhotoSlot ? " · photo slot" : ""} · ${t.widthMm}×${t.heightMm} mm</span>
+        <button class="icon-btn sm" data-del="${t.id}" data-tip="Delete">${icon("trash")}</button></div>`).join("") : '<p class="tiny">No templates yet.</p>'}</div></div>`);
+    body.querySelector("#tm-file").onchange = async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      const fd = new FormData(); fd.append("file", f);
+      try { const r = await api.upload("/api/templates/import", fd); toast(`Imported ${r.imported} template(s).`, "ok"); manageTemplates(); } catch (err) { toastError(err); }
+    };
+    body.querySelectorAll("[data-del]").forEach((b) => (b.onclick = async () => { await api.del(`/api/templates/${b.dataset.del}`); manageTemplates(); }));
+    modal({ title: "Templates", body, actions: [{ label: "Close", kind: "primary" }] });
+  }
+
   function duplicateSticker(s) {
     const c = clone(s);
     c.id = uid("st_");

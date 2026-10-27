@@ -26,6 +26,7 @@ script, icon, theme and decoration is bundled.
 | **Variants** | Deterministic, seeded generation from photos × shapes × borders × compositions (full, word art under the photo, photo + prop, emphasis lines, face close-up, title on top, framed, scattered, round badge) × accessories × decorations × backgrounds × text × colour treatments. It can also add word-art-only and decoration-only stickers, and a number balloon, but only the digit you choose; ages are never guessed. **Full themed sheet in one click** builds a mixed collection like a professional party sheet and places it on A4. Preview, edit, duplicate, remove, add to the project or send straight to an A4 sheet. It never claims to create new poses, faces or outfits. |
 | **A4 sheets** | Portrait/landscape A4 (210 × 297 mm; 2480 × 3508 px at 300 DPI). Printable-area presets: printer margins, Cricut Print Then Cut 6.75 × 9.25 in, or borderless. Margins, gaps, page colour, footer label. Grid, space-efficient packing (MaxRects with 90° rotation), fill page, fit to page, and manual drag/resize/rotate with snapping. Alignment, duplicate, multi-page. Live validation: overlaps, outside printable area, off page, low resolution, enlarged photos. Server-rendered print preview. |
 | **Export** | Individual transparent PNG stickers (DPI stored, true size) plus ZIP. A4 PNG pages. Exact-A4 PDF (transparent images, optional cut lines, embedded footer font). A4 SVG with artwork and a separate cut-path group. Cut-only SVG. Individual SVG stickers. A Cricut bundle. A `.ossproj` project archive. Export history and in-app previews. |
+| **Bulk import & templates** | Drop many images at once (PNG, JPG, WebP, TIFF, SVG — or a ZIP of them, up to 300 files) and each becomes a ready sticker, with a chosen border, size, empty-margin trimming and optional plain-white-background removal. Bulk-import decorations into the asset library the same way. Save any sticker design as a reusable **template** (photo layers become a photo slot); make new stickers from a template plus a chosen photo; export and import template packs (.zip/.json) to share them. |
 
 ## Requirements
 
@@ -108,6 +109,12 @@ it with your own Developer ID. The packaged app shows a **Quit** button in
 Settings.
 
 ## Cricut Print Then Cut workflow
+
+> **Can it drive the Cricut machine directly (print and cut from this app)?**
+> No. Cutting is done through Cricut's own software (Design Space), which uses
+> a proprietary, access-controlled connection to the machine. This app does
+> not reverse-engineer or bypass it. Instead it exports the files Design Space
+> imports best, so the handoff is quick. The steps below cover that handoff.
 
 1. **Recommended:** export *Individual PNG stickers*. In Cricut Design Space,
    choose *Upload → Upload Image*, select a PNG, choose *Complex* and keep the

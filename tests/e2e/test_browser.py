@@ -163,3 +163,55 @@ def test_one_click_themed_sheet(page, tmp_path):
     texts = store(page, "s.doc.stickers.flatMap((x) => x.layers.filter((l) => l.type === 'text').map((l) => l.text))")
     assert not [t for t in texts if t.lower() in ("boy", "girl")], "gendered wording only when chosen"
     assert page.external_requests == [] and not page.js_errors, page.js_errors
+
+
+def test_bulk_import_and_templates(page, tmp_path):
+    """Import several images as stickers at once, then save/reuse a template."""
+    from PIL import Image, ImageDraw
+
+    paths = []
+    for i, color in enumerate([(255, 79, 139, 255), (76, 201, 240, 255), (6, 214, 160, 255)]):
+        im = Image.new("RGBA", (280, 280), (0, 0, 0, 0))
+        ImageDraw.Draw(im).ellipse((30, 30, 250, 250), fill=color)
+        fp = tmp_path / f"s{i}.png"
+        im.save(fp)
+        paths.append(str(fp))
+
+    page.goto(page.base + "/")
+    page.click("#new-project")
+    page.fill("#np-name", "Bulk")
+    page.click("text=Create project")
+    page.wait_for_url("**/photos")
+    page.wait_for_function("() => window.oss.store.doc")
+    pid = store(page, "s.doc.id")
+    page.goto(f"{page.base}/#/p/{pid}/editor")
+    page.wait_for_selector("#blank")
+    page.click("#blank")
+    page.wait_for_url("**/editor/**")
+    page.wait_for_selector("#tray-more")
+
+    page.click("#tray-more")
+    page.click("text=Import images as stickers…")
+    page.wait_for_selector(".modal-backdrop")
+    page.set_input_files(".modal-backdrop input[type=file]", paths)
+    page.click(".modal-foot .btn.primary")
+    page.wait_for_function("() => window.oss.store.doc.stickers.length >= 4", timeout=60000)
+    sources = store(page, "s.doc.stickers.map((x) => x.variant && x.variant.source)")
+    assert sources.count("import") == 3
+    # imported stickers each have exactly one asset layer
+    assert store(page, "s.doc.stickers.filter((x) => x.variant && x.variant.source === 'import').every((x) => x.layers.length === 1 && x.layers[0].type === 'asset')")
+
+    # save a template and instantiate it
+    page.click("#tray-more")
+    page.click("text=Save this sticker as a template")
+    page.fill(".modal-backdrop input[type=text]", "Tpl")
+    page.click(".modal-foot .btn.primary")
+    page.wait_for_timeout(500)
+    before = store(page, "s.doc.stickers.length")
+    page.click("#tray-more")
+    page.click("text=New sticker from template…")
+    page.wait_for_selector("#ft-tpl")
+    page.click(".modal-foot .btn.primary")
+    page.wait_for_function(f"() => window.oss.store.doc.stickers.length === {before + 1}", timeout=30000)
+
+    assert page.external_requests == [] and not page.js_errors, page.js_errors
