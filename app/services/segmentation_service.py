@@ -41,6 +41,9 @@ def _never() -> bool:
     return False
 
 
+MAX_REFINE_SIDE = 3000  # refinement resolution cap; plenty for physical sticker sizes
+
+
 @dataclass
 class RefineOptions:
     feather_px: float = 1.0
@@ -233,21 +236,37 @@ def remove_small_components(binary: np.ndarray, min_area: int, keep_largest_only
 
 
 def fill_small_holes(binary: np.ndarray, max_area: int) -> np.ndarray:
+    """Fill enclosed background regions up to ``max_area`` pixels (vectorised)."""
     inv = cv2.bitwise_not(binary)
     n, labels, stats, _ = cv2.connectedComponentsWithStats(inv, connectivity=4)
-    out = binary.copy()
+    if n <= 1:
+        return binary
     h, w = binary.shape
-    for i in range(1, n):
-        x, y, cw, ch, area = stats[i]
-        touches_border = x == 0 or y == 0 or x + cw == w or y + ch == h
-        if not touches_border and area <= max_area:
-            out[labels == i] = 255
+    x, y, cw, ch, area = (stats[:, i] for i in range(5))
+    touches = (x == 0) | (y == 0) | (x + cw == w) | (y + ch == h)
+    fill = (~touches) & (area <= max_area)
+    fill[0] = False
+    out = binary.copy()
+    out[fill[labels]] = 255
     return out
 
 
-def refine_mask(mask: np.ndarray, rgb: np.ndarray | None = None, options: RefineOptions | None = None) -> np.ndarray:
-    """Clean up a raw 0..255 mask: specks, holes, smoothing, grow/shrink, edges, feather."""
+def refine_mask(mask: np.ndarray, rgb: np.ndarray | None = None, options: RefineOptions | None = None,
+                max_side: int = MAX_REFINE_SIDE) -> np.ndarray:
+    """Clean up a raw 0..255 mask: specks, holes, smoothing, grow/shrink, edges, feather.
+
+    Very large photos are refined at ``max_side`` and the soft alpha is
+    upsampled, which bounds memory use and time on ordinary laptops.
+    """
     o = options or RefineOptions()
+    H, W = mask.shape[:2]
+    if max(H, W) > max_side:
+        k = max_side / max(H, W)
+        size = (max(1, int(round(W * k))), max(1, int(round(H * k))))
+        small_rgb = cv2.resize(rgb, size, interpolation=cv2.INTER_AREA) if rgb is not None else None
+        scaled = RefineOptions(**{**o.__dict__, "feather_px": o.feather_px * k, "grow_px": int(round(o.grow_px * k))})
+        small = refine_mask(cv2.resize(mask, size, interpolation=cv2.INTER_AREA), small_rgb, scaled, max_side)
+        return cv2.resize(small, (W, H), interpolation=cv2.INTER_LINEAR)
     h, w = mask.shape[:2]
     scale = max(h, w) / 1000.0
     binary = np.where(mask >= 128, 255, 0).astype(np.uint8)
@@ -281,25 +300,38 @@ def refine_mask(mask: np.ndarray, rgb: np.ndarray | None = None, options: Refine
     return (np.clip(alpha, 0, 1) * 255 + 0.5).astype(np.uint8)
 
 
-def decontaminate_edges(rgb: np.ndarray, alpha: np.ndarray, radius: int = 6) -> np.ndarray:
+def decontaminate_edges(rgb: np.ndarray, alpha: np.ndarray, radius: int = 6, work_side: int = 1500) -> np.ndarray:
     """Replace background colour bleeding into soft edges with nearby subject colour.
 
     Uses normalised convolution: colours of confidently-opaque pixels are
     blurred outward and used for partially transparent edge pixels, which
-    removes the halo of old background around hair and outlines.
+    removes the halo of old background around hair and outlines. The colour
+    estimate is smooth, so it is computed at ``work_side`` and upsampled.
     """
     a = alpha.astype(np.float32) / 255.0
-    solid = (a > 0.95).astype(np.float32)
+    edge = (a < 0.95) & (a > 0.0)
+    if not edge.any():
+        return rgb
+    H, W = alpha.shape
+    k = min(1.0, work_side / max(H, W))
+    size = (max(1, int(round(W * k))), max(1, int(round(H * k))))
+    small_rgb = cv2.resize(rgb, size, interpolation=cv2.INTER_AREA).astype(np.float32) if k < 1 else rgb.astype(np.float32)
+    small_a = cv2.resize(a, size, interpolation=cv2.INTER_AREA) if k < 1 else a
+    solid = (small_a > 0.95).astype(np.float32)
     if solid.sum() == 0:
         return rgb
-    k = max(3, radius * 2 + 1)
-    w = cv2.GaussianBlur(solid, (k, k), 0)
-    est = cv2.GaussianBlur(rgb.astype(np.float32) * solid[..., None], (k, k), 0) / np.maximum(w[..., None], 1e-4)
-    edge = (a < 0.95) & (a > 0.0) & (w > 1e-3)
-    out = rgb.astype(np.float32).copy()
-    t = np.clip(1.0 - a, 0, 1)[..., None]
-    out[edge] = (out * (1 - t) + est * t)[edge]
-    return np.clip(out + 0.5, 0, 255).astype(np.uint8)
+    ks = max(3, int(round(radius * k)) * 2 + 1)
+    wsum = cv2.GaussianBlur(solid, (ks, ks), 0)
+    est = cv2.GaussianBlur(small_rgb * solid[..., None], (ks, ks), 0) / np.maximum(wsum[..., None], 1e-4)
+    valid = (wsum > 1e-3).astype(np.float32)
+    if k < 1:
+        est = cv2.resize(est, (W, H), interpolation=cv2.INTER_LINEAR)
+        valid = cv2.resize(valid, (W, H), interpolation=cv2.INTER_NEAREST)
+    edge &= valid > 0
+    out = rgb.copy()
+    t = np.clip(1.0 - a[edge], 0, 1)[:, None]
+    out[edge] = np.clip(rgb[edge].astype(np.float32) * (1 - t) + est[edge] * t + 0.5, 0, 255).astype(np.uint8)
+    return out
 
 
 def extract_subject(rgb: Image.Image, alpha: np.ndarray, decontaminate: bool = True) -> Image.Image:

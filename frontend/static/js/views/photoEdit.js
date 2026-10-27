@@ -71,6 +71,7 @@ export async function mount(root, { arg }) {
       <div class="panel-section"><div class="panel-title"><h3>Filter</h3></div>
         <select id="filter">${["none", "grayscale", "sepia", "bw", "posterize", "cartoon", "duotone"].map((f) => `<option value="${f}" ${adj.filter === f ? "selected" : ""}>${{ none: "None", grayscale: "Grayscale", sepia: "Sepia", bw: "Black and white", posterize: "Posterize", cartoon: "Cartoon (posterize + ink edges)", duotone: "Duotone" }[f]}</option>`).join("")}</select>
         <div id="filter-opts" style="margin-top:10px"></div>
+        <p class="tiny" id="protect-hint" style="margin-top:6px"></p>
       </div>
       <div class="panel-section"><div class="panel-title"><h3>Background</h3></div>
         ${photo.mask ? "" : `<div class="note small">${icon("info")}<span>Cut out the subject first to replace the background.</span></div>`}
@@ -128,6 +129,7 @@ export async function mount(root, { arg }) {
       r.on("click", () => { tr.nodes([r]); layer.batchDraw(); });
       faceGroup.add(r, label);
     });
+    updateProtectHint?.();
     root.querySelector("#face-count").textContent = faces.length ? `${faces.length} protected region${faces.length > 1 ? "s" : ""}.` : "No face regions.";
     layer.batchDraw();
   }
@@ -168,7 +170,12 @@ export async function mount(root, { arg }) {
     renderFilterOpts();
     requestPreview();
   };
+  function updateProtectHint() {
+    const hint = root.querySelector("#protect-hint");
+    if (hint) hint.textContent = protect && faces.length ? "Face regions keep their original pixels. Turn off face protection on the left to apply colour changes to faces too." : "";
+  }
   function renderFilterOpts() {
+    updateProtectHint();
     const el = root.querySelector("#filter-opts");
     const f = adj.filter;
     let html = "";
@@ -204,7 +211,7 @@ export async function mount(root, { arg }) {
   renderBgOpts();
 
   // ---------------------------------------------------------------- faces
-  root.querySelector("#protect").onchange = (e) => { protect = e.target.checked; requestPreview(); };
+  root.querySelector("#protect").onchange = (e) => { protect = e.target.checked; updateProtectHint(); requestPreview(); };
   root.querySelector("#detect").onclick = async () => {
     try {
       const r = await api.post(`/api/projects/${store.doc.id}/photos/${photo.id}/faces/detect`);
