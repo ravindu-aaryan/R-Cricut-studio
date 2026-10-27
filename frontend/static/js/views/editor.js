@@ -382,9 +382,34 @@ export async function mount(root, { arg }) {
     setHTML(body, `<div class="panel-section"><div class="field"><label>Your own text</label><textarea id="custom" placeholder="Type a name or message"></textarea></div>
       <button class="btn primary block" id="add-custom">${icon("plus")}Add text</button>
       <p class="tiny" style="margin-top:6px">Only text you choose is added. The app never makes up names, ages or dates.</p></div>
+      ${(theme?.wordArt || []).length ? `<div class="panel-section"><h4>Word art</h4>
+        ${theme.wordArt.map((w) => `<button class="text-preset" data-wa="${w.id}" style="text-align:center;line-height:1.05">${w.lines.map((l) => `<span style="display:block;font-family:'${esc(l.font)}';font-size:${Math.round(14 + l.size * 60)}px">${
+          l.colors ? [...l.text].map((ch, i) => `<span style="color:${l.colors[i % l.colors.length]}">${esc(ch)}</span>`).join("") : `<span style="color:${l.fill || "#1d2b6a"}">${esc(l.text)}</span>`}</span>`).join("")}</button>`).join("")}
+        <button class="btn sm block" id="wa-sticker" style="margin-top:4px" data-tip="Create a separate text-only sticker from the first word-art design">${icon("plus")}Word art as its own sticker…</button></div>` : ""}
       <div class="panel-section"><h4>Presets</h4>${presets.map((p) => `<button class="text-preset" style="font-family:'${esc(theme?.typography?.heading || "Poppins")}'">${esc(p)}</button>`).join("")}</div>`);
+    body.querySelectorAll("[data-wa]").forEach((b) => (b.onclick = async () => {
+      try {
+        const r = await api.post(`/api/projects/${store.doc.id}/stickers/wordart`, { themeId: store.doc.themeId, wordArtId: b.dataset.wa,
+          widthPx: canvas.W, x: canvas.W / 2, y: canvas.H * 0.8, boxWidthPx: canvas.W * 0.9 });
+        doc.layers.push(...r.layers);
+        await canvas.setDoc(doc, { keepView: true });
+        canvas.select(r.layers.map((l) => l.id));
+        commit("wordart");
+      } catch (e) { toastError(e); }
+    }));
+    body.querySelector("#wa-sticker")?.addEventListener("click", async () => {
+      const choice = await modal({ title: "Word-art sticker", body: `<div class="field"><label>Design</label><select id="wa-pick">${theme.wordArt.map((w) => `<option value="${w.id}">${esc(w.name)}</option>`).join("")}</select></div>`,
+        actions: [{ label: "Cancel" }, { label: "Create sticker", kind: "primary", onClick: (b2) => b2.querySelector("#wa-pick").value }] });
+      if (!choice) return;
+      try {
+        const r = await api.post(`/api/projects/${store.doc.id}/stickers/wordart`, { themeId: store.doc.themeId, wordArtId: choice, asSticker: true, sizeMm: doc.widthMm });
+        store.doc.stickers.push(r.sticker);
+        markDirty("sticker");
+        location.hash = `#/p/${store.doc.id}/editor/${r.sticker.id}`;
+      } catch (e) { toastError(e); }
+    });
     body.querySelector("#add-custom").onclick = () => { const v = body.querySelector("#custom").value.trim(); if (v) addText(v); };
-    body.querySelectorAll(".text-preset").forEach((b) => (b.onclick = () => addText(b.textContent)));
+    body.querySelectorAll(".text-preset:not([data-wa])").forEach((b) => (b.onclick = () => addText(b.textContent)));
   }
   function leftPhotos(body) {
     const photos = store.doc.photos;
@@ -611,6 +636,10 @@ export async function mount(root, { arg }) {
       ${num("Wrap width (px, 0 = none)", "wrapWidth", Math.round(l.wrapWidth || 0), { step: 10, min: 0, max: 20000 })}
       ${range("Curve (°)", "curve", l.curve || 0, -300, 300, 5)}
       ${color("Fill", "fill", l.fill)}
+      <label class="check"><input type="checkbox" id="multi" ${(l.letterColors || []).length ? "checked" : ""}>Multi-colour letters (word art)</label>
+      ${(l.letterColors || []).length ? `<div class="row wrap" style="margin:6px 0 10px">${l.letterColors.map((c, i) => `<input type="color" data-lc="${i}" value="${c}">`).join("")}
+        <button class="icon-btn sm" id="lc-add" data-tip="Add colour">${icon("plus")}</button><button class="icon-btn sm" id="lc-rm" data-tip="Remove last colour">${icon("x")}</button>
+        <button class="btn sm ghost" id="lc-theme">Theme colours</button><button class="btn sm ghost" id="lc-rainbow">Rainbow</button></div>` : ""}
       ${color("Outline", "stroke", l.stroke)}
       ${range("Outline width", "strokeWidth", l.strokeWidth || 0, 0, Math.max(40, l.fontSize * 0.3), 0.5)}
     </div>
@@ -625,6 +654,14 @@ export async function mount(root, { arg }) {
     </div>`;
   }
   function bindText(body, l) {
+    const RAINBOW = ["#e63946", "#ff9f1c", "#f6c343", "#06d6a0", "#3a86ff", "#9b5de5"];
+    const setColors = async (cols) => { l.letterColors = cols; if (cols.length && (!l.strokeWidth || l.stroke === "#ffffff")) { l.stroke = "#1d2b6a"; l.strokeWidth = Math.max(l.strokeWidth || 0, l.fontSize * 0.07); } await canvas.refreshLayer(l); commit("colors"); renderProps(); };
+    body.querySelector("#multi").onchange = (e) => setColors(e.target.checked ? RAINBOW.slice() : []);
+    body.querySelectorAll("[data-lc]").forEach((inp) => inp.addEventListener("change", () => { const c = [...l.letterColors]; c[+inp.dataset.lc] = inp.value; setColors(c); }));
+    body.querySelector("#lc-add")?.addEventListener("click", () => setColors([...l.letterColors, "#ff4f8b"]));
+    body.querySelector("#lc-rm")?.addEventListener("click", () => setColors(l.letterColors.slice(0, -1)));
+    body.querySelector("#lc-theme")?.addEventListener("click", () => setColors((themeById(store.doc.themeId)?.palette || RAINBOW).slice(0, 4)));
+    body.querySelector("#lc-rainbow")?.addEventListener("click", () => setColors(RAINBOW.slice()));
     body.querySelectorAll("[data-align-text]").forEach((b) => (b.onclick = async () => { l.align = b.dataset.alignText; await canvas.refreshLayer(l); commit(); renderProps(); }));
     body.querySelector("#sh-on").onchange = async (e) => { l.shadow = e.target.checked ? { color: "#00000055", blur: 4, offsetX: 4, offsetY: 5 } : null; await canvas.refreshLayer(l); commit(); renderProps(); };
     body.querySelector("#bg-on").onchange = async (e) => { l.background = e.target.checked ? { color: themeById(store.doc.themeId)?.palette?.[2] || "#ffd166", padding: l.fontSize * 0.2, radius: l.fontSize * 0.3 } : null; await canvas.refreshLayer(l); commit(); renderProps(); };

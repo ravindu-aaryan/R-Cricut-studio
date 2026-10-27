@@ -116,5 +116,6 @@
  "license": {
   "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
   "fonts": "See assets/fonts/licenses"
- }
+ },
+ "wordArt": []
 }

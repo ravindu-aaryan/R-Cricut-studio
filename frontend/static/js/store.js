@@ -142,7 +142,7 @@ window.addEventListener("beforeunload", (e) => {
     try {
       const csrf = document.querySelector('meta[name="csrf-token"]').content;
       fetch(`/api/projects/${store.doc.id}?autosave=1`, { method: "PUT", keepalive: true,
-        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf }, body: JSON.stringify({ document: store.doc }) });
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf }, body: JSON.stringify({ document: store.doc }) }).catch(() => {});
     } catch (_) { /* ignore */ }
     e.preventDefault();
     e.returnValue = "";

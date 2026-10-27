@@ -77,6 +77,8 @@ function textNodes(layer) {
       : `M ${sx} ${-r * (1 - Math.cos(a))} A ${r} ${r} 0 ${large} 0 ${ex} ${-r * (1 - Math.cos(a))}`;
     return [new Konva.TextPath({ ...common, text: (layer.text || "").replace(/\n/g, " "), data, align: "center", textBaseline: "middle" })];
   }
+  const colors = (layer.letterColors || []).filter(Boolean);
+  if (colors.length) return letterNodes(layer, common, colors);
   const t = new Konva.Text({ ...common, text: layer.text || " ", lineHeight: layer.lineHeight || 1.15, align: layer.align || "center",
     width: layer.wrapWidth > 0 ? layer.wrapWidth : undefined, wrap: layer.wrapWidth > 0 ? "word" : "none",
     padding: (layer.strokeWidth || 0) });
@@ -87,6 +89,37 @@ function textNodes(layer) {
       fill: layer.background.color, cornerRadius: layer.background.radius || 0 }));
   }
   return nodes;
+}
+
+/** Per-letter coloured text (word art): outlines first, then fills, like the renderer. */
+function letterNodes(layer, common, colors) {
+  const size = common.fontSize;
+  const lineH = size * (layer.lineHeight || 1.15);
+  const spacing = layer.letterSpacing || 0;
+  const sw = layer.strokeWidth || 0;
+  const measure = new Konva.Text({ ...common, letterSpacing: 0, strokeWidth: 0 });
+  const width = (str) => { measure.text(str); return measure.width(); };
+  const lines = (layer.text || " ").split("\n");
+  const placed = lines.map((ln) => {
+    let x = 0;
+    const chars = [...ln].map((ch) => { const c = { ch, x }; x += width(ch) + spacing; return c; });
+    return { chars, w: Math.max(0, x - spacing) };
+  });
+  const maxW = Math.max(...placed.map((p) => p.w), 1);
+  const strokes = [], fills = [];
+  let idx = 0;
+  placed.forEach((line, li) => {
+    const off = layer.align === "left" ? 0 : layer.align === "right" ? maxW - line.w : (maxW - line.w) / 2;
+    const y = li * lineH + (lineH - size) / 2;
+    for (const c of line.chars) {
+      const base = { ...common, text: c.ch, x: sw + off + c.x, y: sw + y, letterSpacing: 0 };
+      if (sw > 0) strokes.push(new Konva.Text({ ...base, fill: layer.stroke, stroke: layer.stroke, strokeWidth: sw * 2, fillAfterStrokeEnabled: false }));
+      const color = c.ch.trim() ? colors[idx++ % colors.length] : common.fill;
+      fills.push(new Konva.Text({ ...base, fill: color, strokeWidth: 0, stroke: undefined, shadowEnabled: false }));
+    }
+  });
+  measure.destroy();
+  return [...strokes, ...fills];
 }
 
 export class StickerCanvas {

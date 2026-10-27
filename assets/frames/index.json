@@ -188,5 +188,76 @@
   "anchor": null,
   "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
   "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_ornate_oval",
+  "name": "Ornate oval frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "ornate",
+   "oval",
+   "princess",
+   "royal"
+  ],
+  "kind": "svg",
+  "file": "frame_ornate_oval.svg",
+  "aspect": 0.8696,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#3d5fa8"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_floral_oval",
+  "name": "Floral oval frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "flowers",
+   "oval",
+   "princess",
+   "wedding"
+  ],
+  "kind": "svg",
+  "file": "frame_floral_oval.svg",
+  "aspect": 0.8696,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#8fb6f0"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "frame_heart_gold",
+  "name": "Golden heart frame",
+  "category": "frames",
+  "tags": [
+   "frame",
+   "heart",
+   "gold",
+   "love",
+   "princess"
+  ],
+  "kind": "svg",
+  "file": "frame_heart_gold.svg",
+  "aspect": 1.0526,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
  }
 ]

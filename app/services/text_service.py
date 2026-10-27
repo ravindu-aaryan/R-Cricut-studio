@@ -173,14 +173,33 @@ def wrap_lines(text: str, font: ImageFont.FreeTypeFont, max_width: float, spacin
     return lines
 
 
-def _draw_line(draw: ImageDraw.ImageDraw, xy, text, font, fill, spacing, stroke_width=0, stroke_fill=None):
+def _draw_line(draw: ImageDraw.ImageDraw, xy, text, font, fill, spacing, stroke_width=0, stroke_fill=None,
+               colors: list | None = None, start: int = 0) -> int:
+    """Draw one line; with ``colors`` each visible letter cycles through them.
+
+    Returns the colour index to continue from on the next line. Strokes are
+    drawn for the whole line first so outlines never cover neighbouring letters.
+    """
     x, y = xy
-    if spacing == 0:
+    if not colors and spacing == 0:
         draw.text((x, y), text, font=font, fill=fill, anchor="lm", stroke_width=stroke_width, stroke_fill=stroke_fill)
-        return
+        return start
+    positions = []
     for ch in text:
-        draw.text((x, y), ch, font=font, fill=fill, anchor="lm", stroke_width=stroke_width, stroke_fill=stroke_fill)
+        positions.append((x, ch))
+        # Kerning-aware advance: width of the prefix pair minus the next letter.
         x += font.getlength(ch) + spacing
+    if stroke_width:
+        for px, ch in positions:
+            draw.text((px, y), ch, font=font, fill=stroke_fill, anchor="lm", stroke_width=stroke_width, stroke_fill=stroke_fill)
+    idx = start
+    for px, ch in positions:
+        color = fill
+        if colors and not ch.isspace():
+            color = colors[idx % len(colors)]
+            idx += 1
+        draw.text((px, y), ch, font=font, fill=color, anchor="lm")
+    return idx
 
 
 def text_block_size(layer, registry: FontRegistry, scale: float = 1.0) -> tuple[int, int]:
@@ -201,10 +220,11 @@ def render_text(layer, registry: FontRegistry, scale: float = 1.0) -> Image.Imag
     fill = parse_color(layer.fill, (34, 34, 34, 255))
     stroke = parse_color(layer.stroke, (255, 255, 255, 255))
     text = (layer.text or "").replace("\r", "")
+    colors = [parse_color(c) for c in (getattr(layer, "letter_colors", None) or []) if isinstance(c, str)][:12]
     if not text.strip():
         return Image.new("RGBA", (max(1, int(size)), max(1, int(line_h))), (0, 0, 0, 0))
     if abs(as_float(layer.curve, 0, -360, 360)) >= 1:
-        return _render_curved(layer, text.replace("\n", " "), font, size, spacing, fill, stroke, stroke_w, scale)
+        return _render_curved(layer, text.replace("\n", " "), font, size, spacing, fill, stroke, stroke_w, scale, colors)
 
     lines = wrap_lines(text, font, as_float(layer.wrap_width, 0, 0, 20000) * scale, spacing)
     widths = [_line_width(font, ln, spacing) for ln in lines]
@@ -223,6 +243,7 @@ def render_text(layer, registry: FontRegistry, scale: float = 1.0) -> Image.Imag
     d = ImageDraw.Draw(text_img)
     ox, oy = margin + pad + stroke_w, margin + pad + stroke_w
     align = layer.align if layer.align in ("left", "center", "right") else "center"
+    color_idx = 0
     for i, (ln, lw) in enumerate(zip(lines, widths)):
         if align == "center":
             x = ox + (max(widths) - lw) / 2
@@ -231,7 +252,7 @@ def render_text(layer, registry: FontRegistry, scale: float = 1.0) -> Image.Imag
         else:
             x = ox
         y = oy + line_h * i + line_h / 2
-        _draw_line(d, (x, y), ln, font, fill, spacing, stroke_w, stroke if stroke_w else None)
+        color_idx = _draw_line(d, (x, y), ln, font, fill, spacing, stroke_w, stroke if stroke_w else None, colors, color_idx)
     out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     if pad or bg.get("color"):
         if bg.get("color"):
@@ -252,7 +273,7 @@ def render_text(layer, registry: FontRegistry, scale: float = 1.0) -> Image.Imag
     return out
 
 
-def _render_curved(layer, text, font, size, spacing, fill, stroke, stroke_w, scale) -> Image.Image:
+def _render_curved(layer, text, font, size, spacing, fill, stroke, stroke_w, scale, colors=None) -> Image.Image:
     """Lay glyphs along a circular arc. Positive curve bends upward (smile = negative)."""
     arc = math.radians(as_float(layer.curve, 0, -360, 360))
     widths = [font.getlength(c) + spacing for c in text]
@@ -265,10 +286,15 @@ def _render_curved(layer, text, font, size, spacing, fill, stroke, stroke_w, sca
     cx = cy = W / 2
     sign = 1 if arc > 0 else -1
     angle = -abs(arc) / 2
+    idx = 0
     for ch, w in zip(text, widths):
         mid = angle + (w - spacing) / 2 / radius
         glyph = Image.new("RGBA", (cell, cell), (0, 0, 0, 0))
-        ImageDraw.Draw(glyph).text((cell / 2, cell / 2), ch, font=font, fill=fill, anchor="mm",
+        color = fill
+        if colors and not ch.isspace():
+            color = colors[idx % len(colors)]
+            idx += 1
+        ImageDraw.Draw(glyph).text((cell / 2, cell / 2), ch, font=font, fill=color, anchor="mm",
                                    stroke_width=stroke_w, stroke_fill=stroke if stroke_w else None)
         if sign > 0:  # along the top of a circle (a "frown"), reading left to right
             px, py = cx + radius * math.sin(mid), cy - radius * math.cos(mid)

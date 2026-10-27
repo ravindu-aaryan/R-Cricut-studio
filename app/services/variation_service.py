@@ -19,7 +19,10 @@ from ..models.layer import Layer
 from ..models.sticker import Background, Border, Outline, Shadow, ShapeSpec, StickerDoc
 from ..utils.image_dimensions import mm_to_px
 
-COMPOSITIONS = ("hero", "closeup", "title-top", "framed", "scatter", "badge")
+COMPOSITIONS = ("hero", "closeup", "title-top", "framed", "scatter", "badge", "wordart-under", "prop", "emphasis")
+NAVY = "#1d2b6a"
+PROP_ASSETS = ("gift_stack", "teddy_bear", "cake_chocolate", "balloon_cluster", "gift_box", "slipper_cushion", "pumpkin_carriage",
+               "vintage_car", "books_stack", "castle_blue", "rose_pink", "rose_blue")
 BORDER_STYLES = ("classic", "bold", "double", "thin", "kiss")
 TREATMENTS = ("none", "grayscale", "sepia", "posterize", "duotone", "cartoon", "warm", "vivid")
 
@@ -27,6 +30,60 @@ ANCHOR_BY_CATEGORY = {
     "crowns": "head", "party-hats": "head", "hats": "head", "sunglasses": "eyes", "bowties": "neck",
     "gentleman": "mouth",
 }
+
+
+def wordart_layers(template: dict, cx: float, cy: float, box_w: float, assets: dict[str, dict] | None = None) -> list[Layer]:
+    """Build the layers of a word-art template centred at (cx, cy), ``box_w`` px wide.
+
+    Large decorations (banners, balloon clusters) go behind the text; small
+    ones (sparkles, hearts) go in front.
+    """
+    assets = assets or {}
+    lines = template.get("lines") or []
+    sizes = [float(l.get("size") or 0.15) * box_w for l in lines]
+    heights = [sz * (1.25 if (l.get("font") or "") in ("Great Vibes", "Pacifico", "Lobster") else 1.05) for sz, l in zip(sizes, lines)]
+    total = sum(heights)
+    y = cy - total / 2
+    text_layers = []
+    for l, sz, hh in zip(lines, sizes, heights):
+        colors = [c for c in (l.get("colors") or []) if isinstance(c, str)]
+        stroke_rel = float(template.get("strokeRel", 0.07))
+        text_layers.append(Layer(
+            type="text", name=l.get("text") or "Text", text=l.get("text") or "", font_family=l.get("font") or "Luckiest Guy",
+            font_size=sz, fill=l.get("fill") or NAVY, letter_colors=colors,
+            stroke=NAVY if colors else template.get("stroke", "#ffffff"), stroke_width=sz * (0.07 if colors else stroke_rel),
+            curve=float(l.get("curve") or 0), align="center", x=cx, y=y + hh / 2, width=box_w, height=hh,
+            shadow={"color": "#1d2b6a40", "blur": 0, "offsetX": sz * 0.03, "offsetY": sz * 0.04} if colors else None))
+        y += hh
+    behind, front = [], []
+    top = cy - total / 2
+    for d in template.get("decor") or []:
+        a = assets.get(d.get("asset"))
+        aspect = float(a.get("aspect") or 1) if a else 1.0
+        w = float(d.get("w") or 0.15) * box_w
+        h = w / aspect
+        fy = float(d.get("y", 0.5))
+        y_px = top + fy * total
+        if float(d.get("w") or 0) < 0.6:
+            # Keep top/bottom ornaments (crowns, bows, hearts) clear of the lettering.
+            if fy <= 0.15:
+                y_px = top - h * 0.45
+            elif fy >= 0.85 and abs(float(d.get("x", 0.5)) - 0.5) < 0.2:
+                y_px = top + total + h * 0.45
+        layer = Layer(type="asset", asset_id=d.get("asset"), name=(a or {}).get("name", d.get("asset")),
+                      x=cx - box_w / 2 + float(d.get("x", 0.5)) * box_w, y=y_px,
+                      width=w, height=h, rotation=float(d.get("rotation") or 0))
+        (behind if float(d.get("w") or 0) >= 0.6 else front).append(layer)
+    return behind + text_layers + front
+
+
+def _match_wordart(text: str | None, theme: dict) -> dict | None:
+    def norm(v):
+        return "".join(ch for ch in (v or "").lower() if ch.isalnum())
+    for t in theme.get("wordArt") or []:
+        if norm(t.get("name", "").split("(")[0]) == norm(text) or norm(" ".join(l.get("text", "") for l in t.get("lines", []))) == norm(text):
+            return t
+    return None
 
 
 @dataclass
@@ -46,6 +103,10 @@ class CollectionOptions:
     seed: int = 1
     randomize: bool = False
     use_face_anchors: bool = True
+    word_art: bool = True  # style matching text as theme word art
+    text_stickers: int = 0  # extra word-art-only stickers
+    decor_stickers: int = 0  # extra decoration-only stickers
+    number: str | None = None  # optional number balloon chosen by the user (never inferred)
 
 
 def _treatment_params(name: str, theme: dict) -> dict:
@@ -175,9 +236,11 @@ def _scatter(rng: random.Random, assets: list[dict], n: int, W: float, H: float,
 
 def generate_collection(opts: CollectionOptions, theme: dict, photos: list[dict], assets: dict[str, dict]) -> list[dict]:
     """Return ``opts.count`` sticker documents (dicts) for the given options."""
-    if not photos:
-        raise ValueError("Select at least one photo.")
     rng = random.Random(int(opts.seed))
+    if not photos:
+        if opts.text_stickers or opts.decor_stickers:
+            return extra_stickers(opts, theme, assets, rng, 0)
+        raise ValueError("Select at least one photo.")
     count = max(1, min(48, int(opts.count)))
     W = H = mm_to_px(opts.size_mm, 300)
     shapes = opts.shapes or ["silhouette"]
@@ -186,7 +249,7 @@ def generate_collection(opts: CollectionOptions, theme: dict, photos: list[dict]
     treatments = [t for t in opts.treatments if t in TREATMENTS] or ["none"]
     backgrounds = opts.backgrounds or theme.get("backgrounds") or [{"type": "solid", "color": "#ffffff"}]
     accessories = [assets[a] for a in opts.accessory_ids if a in assets]
-    decorations = [assets[a] for a in opts.decoration_ids if a in assets]
+    decorations = [assets[a] for a in opts.decoration_ids if a in assets and (not a.startswith("balloon_number_") or a == f"balloon_number_{opts.number}")]
     head = [a for a in accessories if ANCHOR_BY_CATEGORY.get(a.get("category", "")) == "head"]
     other_anchor = [a for a in accessories if ANCHOR_BY_CATEGORY.get(a.get("category", "")) in ("eyes", "neck", "mouth")]
     loose = [a for a in accessories if a not in head and a not in other_anchor] + decorations
@@ -222,6 +285,12 @@ def generate_collection(opts: CollectionOptions, theme: dict, photos: list[dict]
             img = _image_layer(photo, crop, (W / 2, H * 0.52, W * 0.62, H * 0.66), source, treatment)
         elif comp == "badge":
             img = _image_layer(photo, crop, (W / 2, H * 0.5, W * 0.6, H * 0.6), source, treatment)
+        elif comp == "wordart-under":
+            img = _image_layer(photo, crop, (W / 2, H * 0.36, W * 0.84, H * 0.66), source, treatment)
+        elif comp == "prop":
+            img = _image_layer(photo, crop, (W * 0.44, H * 0.45, W * 0.76, H * 0.86), source, treatment)
+        elif comp == "emphasis":
+            img = _image_layer(photo, crop, (W / 2, H * 0.5, W * 0.78, H * 0.88), source, treatment)
         else:  # framed
             img = _image_layer(photo, crop, (W / 2, H * 0.53, W * 0.72, H * 0.72), source, treatment)
         layers.append(img)
@@ -246,7 +315,40 @@ def generate_collection(opts: CollectionOptions, theme: dict, photos: list[dict]
         if loose and comp in ("scatter", "hero", "framed", "title-top"):
             n = 4 if comp == "scatter" else 2
             layers += _scatter(rng, loose, n, W, H, img)
-        if text:
+        if comp == "prop":
+            # Number balloons only ever come from the user's explicit choice (never a guessed age).
+            props = [assets[a] for a in dict.fromkeys(opts.decoration_ids + list(theme.get("decorations") or [])) if a in assets and a in PROP_ASSETS]
+            if opts.number and f"balloon_number_{opts.number}" in assets:
+                props.insert(0, assets[f"balloon_number_{opts.number}"])
+            if props:
+                a = props[i % len(props)]
+                aspect = float(a.get("aspect") or 1)
+                h = H * (0.62 if aspect < 0.8 else 0.42)
+                w = h * aspect
+                tall = aspect < 0.8
+                layers.append(Layer(type="asset", asset_id=a["id"], name=a["name"], x=W - w / 2 - W * 0.04,
+                                    y=H * (0.5 if tall else 0.72), width=w, height=h))
+        if comp in ("emphasis", "prop", "wordart-under"):
+            lines = assets.get("action_lines_color") or assets.get("action_lines")
+            if lines:
+                fx = _face_box(photo, crop)
+                top_y = img.y - img.height / 2 + (fx[1] * img.height if fx else img.height * 0.05)
+                left_x = img.x - img.width / 2 + (fx[0] * img.width if fx else img.width * 0.15)
+                right_x = img.x - img.width / 2 + ((fx[0] + fx[2]) * img.width if fx else img.width * 0.85)
+                s_ = min(W, H) * 0.17
+                layers.append(Layer(type="asset", asset_id=lines["id"], name="Emphasis lines", x=max(s_ / 2, left_x - s_ * 0.1), y=max(s_ / 2, top_y), width=s_, height=s_))
+                if comp == "emphasis":
+                    layers.append(Layer(type="asset", asset_id=lines["id"], name="Emphasis lines", x=min(W - s_ / 2, right_x + s_ * 0.1), y=max(s_ / 2, top_y),
+                                        width=s_, height=s_, flip_x=True))
+        template = _match_wordart(text, theme) if (text and opts.word_art) else None
+        if comp == "wordart-under" and text:
+            template = template or {"lines": [{"text": text, "font": (theme.get("typography") or {}).get("heading", "Luckiest Guy"),
+                                               "size": 0.15, "colors": (theme.get("palette") or [])[:3]}], "decor": []}
+        if template:
+            # Inside shaped stickers the art is clipped by the shape, so keep word art smaller and higher.
+            shaped = shape != "silhouette"
+            layers += wordart_layers(template, W / 2, H * (0.72 if shaped else 0.8), W * (0.62 if shaped else 0.92), assets)
+        elif text:
             if comp == "title-top":
                 layers.append(_text_layer(text, theme, W, H, H * 0.17, H * 0.12, curve=60))
             elif comp == "badge":
@@ -274,4 +376,42 @@ def generate_collection(opts: CollectionOptions, theme: dict, photos: list[dict]
         for layer in doc.layers:
             layer.id = new_id("ly_")
         docs.append(doc.to_dict())
+    docs += extra_stickers(opts, theme, assets, rng, len(docs))
     return docs
+
+
+def _plain_doc(name: str, opts: CollectionOptions, theme: dict, layers: list[Layer], index: int, kind: str) -> dict:
+    doc = StickerDoc(name=name, width_mm=opts.size_mm, height_mm=opts.size_mm, shape=ShapeSpec(type="silhouette"),
+                     border=border_for((opts.border_styles or ["classic"])[0], theme), layers=layers, theme_id=theme.get("id"),
+                     variant={"index": index, "composition": kind, "shape": "silhouette", "seed": opts.seed,
+                              "note": "Made from local graphics and text only."})
+    return doc.to_dict()
+
+
+def extra_stickers(opts: CollectionOptions, theme: dict, assets: dict[str, dict], rng: random.Random, start: int) -> list[dict]:
+    """Word-art-only and decoration-only stickers that complete a themed sheet."""
+    W = mm_to_px(opts.size_mm, 300)
+    out = []
+    templates = list(theme.get("wordArt") or [])
+    wanted = [t for t in templates if any(_match_wordart(x, theme) is t for x in opts.texts)] or templates
+    for k in range(max(0, min(24, int(opts.text_stickers)))):
+        if not wanted:
+            break
+        t = wanted[k % len(wanted)]
+        out.append(_plain_doc(t["name"], opts, theme, wordart_layers(t, W / 2, W / 2, W * 0.9, assets), start + len(out), "wordart"))
+    skip = {"confetti", "banners", "frames", "shapes", "badges"}
+    decor = [a for a in (opts.decoration_ids or theme.get("decorations") or []) if a in assets and assets[a].get("category") not in skip
+             and not a.startswith("balloon_number_")]
+    picks = [decor[(k * 3 + int(opts.seed)) % len(decor)] for k in range(max(0, min(24, int(opts.decor_stickers))))] if decor else []
+    if opts.number and f"balloon_number_{opts.number}" in assets and opts.decor_stickers:
+        picks = [f"balloon_number_{opts.number}"] + picks[:-1]  # the chosen number comes first
+    for k, aid in enumerate(picks):
+        a = assets[aid]
+        aspect = float(a.get("aspect") or 1)
+        w, h = (W * 0.86, W * 0.86 / aspect) if aspect >= 1 else (W * 0.86 * aspect, W * 0.86)
+        layers = [Layer(type="asset", asset_id=a["id"], name=a["name"], x=W / 2, y=W / 2, width=w, height=h)]
+        sparkle = assets.get("sparkles")
+        if sparkle and 0.6 <= aspect <= 1.4:
+            layers.append(Layer(type="asset", asset_id="sparkles", name="Sparkles", x=W / 2 + w * 0.42, y=W / 2 - h * 0.38, width=W * 0.18, height=W * 0.18, rotation=rng.uniform(-10, 10)))
+        out.append(_plain_doc(a["name"], opts, theme, layers, start + len(out), "decoration"))
+    return out

@@ -137,3 +137,29 @@ def test_every_screen_renders_without_errors(page):
         page.wait_for_selector("#view h1, #view h2", timeout=15000)
     assert page.external_requests == []
     assert not page.js_errors, page.js_errors
+
+
+def test_one_click_themed_sheet(page, tmp_path):
+    """Photo + word art + props + decoration stickers, generated and placed on A4 in one click."""
+    photo_path = tmp_path / "figure.jpg"
+    photo_path.write_bytes(jpeg_bytes(figure_image((800, 1000))))
+    page.goto(page.base + "/")
+    page.click("#new-project")
+    page.fill("#np-name", "Recipe")
+    page.select_option("#np-theme", "birthday")
+    page.click("text=Create project")
+    page.wait_for_url("**/photos")
+    page.set_input_files("#file", str(photo_path))
+    page.wait_for_selector(".photo-card", timeout=30000)
+    page.click("#rail >> text=Variants")
+    page.select_option("#number", "6")
+    page.click("#recipe")
+    page.wait_for_url("**/sheet", timeout=120000)
+    page.wait_for_function("() => window.oss.store.doc.sheets[0].pages[0].items.length >= 10", timeout=60000)
+    kinds = store(page, "s.doc.stickers.map((x) => x.variant.composition)")
+    assert {"wordart", "decoration", "wordart-under"} <= set(kinds)
+    assets = store(page, "s.doc.stickers.flatMap((x) => x.layers.map((l) => l.assetId)).filter(Boolean)")
+    assert "balloon_number_6" in assets and not [a for a in assets if a.startswith("balloon_number_") and a != "balloon_number_6"]
+    texts = store(page, "s.doc.stickers.flatMap((x) => x.layers.filter((l) => l.type === 'text').map((l) => l.text))")
+    assert not [t for t in texts if t.lower() in ("boy", "girl")], "gendered wording only when chosen"
+    assert page.external_requests == [] and not page.js_errors, page.js_errors

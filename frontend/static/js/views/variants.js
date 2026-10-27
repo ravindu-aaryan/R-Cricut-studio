@@ -6,7 +6,8 @@ import { setHTML, esc, toast, toastError, uid, clone, emptyState } from "../ui.j
 
 const SHAPES = [["silhouette", "Die-cut silhouette"], ["circle", "Circle"], ["oval", "Oval"], ["rounded", "Rounded square"], ["square", "Square"], ["rect", "Rectangle"], ["heart", "Heart"], ["star", "Star"], ["speech", "Speech bubble"]];
 const BORDERS = [["classic", "Classic white"], ["bold", "White + colour outline"], ["double", "Double outline"], ["thin", "Thin"], ["kiss", "Minimal (kiss-cut)"]];
-const COMPS = [["hero", "Full subject"], ["closeup", "Face close-up"], ["title-top", "Title on top"], ["framed", "Framed"], ["scatter", "Scattered decorations"], ["badge", "Round badge"]];
+const COMPS = [["hero", "Full subject"], ["wordart-under", "Word art under photo"], ["prop", "Photo + prop (gift, teddy, number)"], ["emphasis", "Emphasis lines"],
+  ["closeup", "Face close-up"], ["title-top", "Title on top"], ["framed", "Framed"], ["scatter", "Scattered decorations"], ["badge", "Round badge"]];
 const TREATMENTS = [["none", "Original colours"], ["vivid", "Vivid"], ["warm", "Warm"], ["grayscale", "Grayscale"], ["sepia", "Sepia"], ["posterize", "Posterize"], ["duotone", "Duotone"], ["cartoon", "Cartoon"]];
 
 export async function mount(root) {
@@ -15,8 +16,8 @@ export async function mount(root) {
   const saved = store.doc.collection?.options || {};
   const opts = {
     photoIds: store.doc.photos.map((p) => p.id), themeId: store.doc.themeId, shapes: ["silhouette", "circle"], borders: ["classic", "bold"],
-    compositions: ["hero", "closeup", "title-top", "scatter"], count: 8, accessoryIds: [], decorationIds: [], backgrounds: [], texts: [],
-    treatments: ["none"], sizeMm: 60, seed: 1, randomize: false, useFaceAnchors: true, ...saved,
+    compositions: ["wordart-under", "prop", "emphasis", "hero", "closeup"], count: 8, accessoryIds: [], decorationIds: [], backgrounds: [], texts: [],
+    treatments: ["none"], sizeMm: 60, seed: 1, randomize: false, useFaceAnchors: true, wordArt: true, textStickers: 2, decorStickers: 2, number: "", ...saved,
   };
   opts.photoIds = opts.photoIds.filter((id) => store.doc.photos.some((p) => p.id === id));
   if (!store.doc.collection?.options) applyThemeDefaults();
@@ -25,7 +26,9 @@ export async function mount(root) {
     const t = theme();
     opts.accessoryIds = Object.values(t.accessorySets || {}).map((ids) => ids[0]).filter(Boolean).slice(0, 3);
     opts.decorationIds = (t.decorations || []).slice(0, 4);
-    opts.texts = (t.textPresets || []).slice(0, 2);
+    // Neutral phrases by default; "Birthday Boy/Girl" style wording only if the user picks it.
+    const neutral = (t.wordArt || []).map((w) => w.name.split(" (")[0]).filter((n) => !/\b(boy|girl)\b/i.test(n));
+    opts.texts = neutral.length ? neutral.slice(0, 4) : (t.textPresets || []).filter((n) => !/\b(boy|girl)\b/i.test(n)).slice(0, 2);
     opts.treatments = ["none", "vivid"];
   }
   let results = store.doc.collection?.results || [];
@@ -62,7 +65,8 @@ export async function mount(root) {
       <div class="panel-section"><h4>8 · Backgrounds (shaped stickers)</h4><div class="chips">${(t.backgrounds || []).map((b, i) => `<span class="chip ${opts.backgrounds.some((x) => JSON.stringify(x) === JSON.stringify(b)) ? "on" : ""}" data-bgi="${i}">
           <span class="swatch" style="background:${b.type === "gradient" ? `linear-gradient(135deg,${b.color},${b.color2})` : b.color}"></span>${esc(b.type === "pattern" ? b.patternId : b.type)}</span>`).join("")}</div>
           <p class="tiny" style="margin-top:6px">None selected: uses the theme backgrounds in turn.</p></div>
-      <div class="panel-section"><h4>9 · Text</h4><div class="chips">${(t.textPresets || []).map((x) => `<span class="chip ${textSet.has(x) ? "on" : ""}" data-text="${esc(x)}">${esc(x)}</span>`).join("")}</div>
+      <div class="panel-section"><h4>9 · Text</h4>${(t.wordArt || []).length ? `<p class="tiny">Phrases with a <b>★</b> have a multi-colour word-art design in this theme.</p>` : ""}<div class="chips">${[...new Set([...(t.wordArt || []).map((w) => w.name.split(" (")[0]), ...(t.textPresets || [])])].map((x) => `<span class="chip ${textSet.has(x) ? "on" : ""}" data-text="${esc(x)}">${(t.wordArt || []).some((w) => w.name.split(" (")[0] === x) ? "★ " : ""}${esc(x)}</span>`).join("")}</div>
+        <label class="check" style="margin-top:6px"><input type="checkbox" id="wordart" ${opts.wordArt ? "checked" : ""}>Use word-art designs for matching phrases</label>
         <div class="field" style="margin-top:8px"><label>Your own words (one per line, e.g. a name)</label><textarea id="custom-text" placeholder="Only text you type here is used">${esc(custom.join("\n"))}</textarea></div></div>
       <div class="panel-section"><h4>10 · Colour treatments</h4>${chips(TREATMENTS, "treatments")}</div>
       <div class="panel-section"><h4>Options</h4>
@@ -71,9 +75,14 @@ export async function mount(root) {
         <div class="grid2"><div class="field"><label>Seed</label><div class="row"><input type="number" id="seed" value="${opts.seed}"><button class="icon-btn" id="reseed" data-tip="New random seed">${icon("dice")}</button></div></div>
           <div class="field"><label>&nbsp;</label><label class="check"><input type="checkbox" id="randomize" ${opts.randomize ? "checked" : ""}>Shuffle combinations</label></div></div>
         <label class="check"><input type="checkbox" id="anchors" ${opts.useFaceAnchors ? "checked" : ""}>Place accessories using face regions</label>
+        <div class="grid3" style="margin-top:8px"><div class="field"><label>Word-art stickers</label><input type="number" id="textStickers" min="0" max="24" value="${opts.textStickers}"></div>
+          <div class="field"><label>Decoration stickers</label><input type="number" id="decorStickers" min="0" max="24" value="${opts.decorStickers}"></div>
+          <div class="field"><label>Number balloon</label><select id="number"><option value="">None</option>${[..."0123456789"].map((d) => `<option ${opts.number === d ? "selected" : ""}>${d}</option>`).join("")}</select></div></div>
+        <p class="tiny">The number balloon is only added if you choose a digit (for example the age). Nothing is guessed.</p>
         <p class="tiny">The same seed and options always give the same collection.</p>
       </div>
-      <div class="panel-section" style="position:sticky;bottom:0;background:#fff"><button class="btn primary block lg" id="generate">${icon("sparkles")}Generate variants</button></div>`);
+      <div class="panel-section" style="position:sticky;bottom:0;background:#fff"><button class="btn primary block lg" id="generate">${icon("sparkles")}Generate variants</button>
+        <button class="btn block" id="recipe" style="margin-top:8px" data-tip="Photo stickers with accessories and word art, plus word-art-only and decoration stickers, laid out on an A4 sheet">${icon("page")}Full themed sheet in one click</button></div>`);
 
     function tile(id, key) {
       const a = assetById(id);
@@ -100,6 +109,7 @@ export async function mount(root) {
     };
     el.querySelector("#reseed").onclick = () => { el.querySelector("#seed").value = Math.floor(Math.random() * 1e6); };
     el.querySelector("#generate").onclick = generate;
+    el.querySelector("#recipe").onclick = recipe;
   }
   const toggle = (arr, v) => { const i = arr.indexOf(v); i >= 0 ? arr.splice(i, 1) : arr.push(v); };
 
@@ -113,6 +123,10 @@ export async function mount(root) {
     opts.seed = +el.querySelector("#seed").value || 1;
     opts.randomize = el.querySelector("#randomize").checked;
     opts.useFaceAnchors = el.querySelector("#anchors").checked;
+    opts.wordArt = el.querySelector("#wordart")?.checked ?? true;
+    opts.textStickers = +el.querySelector("#textStickers").value || 0;
+    opts.decorStickers = +el.querySelector("#decorStickers").value || 0;
+    opts.number = el.querySelector("#number").value;
     if (!opts.photoIds.length) { toast("Select at least one photo.", "warn"); return; }
     try {
       const res = await api.post(`/api/projects/${store.doc.id}/collection/generate`, opts);
@@ -123,6 +137,17 @@ export async function mount(root) {
       markDirty("collection");
       renderResults();
     } catch (e) { toastError(e); }
+  }
+
+  /** One click: a mixed, themed collection placed straight onto an A4 sheet. */
+  async function recipe() {
+    const el = root.querySelector("#form");
+    opts.compositions = ["wordart-under", "prop", "emphasis", "hero", "closeup", "title-top"];
+    el.querySelector("#count").value = Math.max(8, Math.min(12, opts.photoIds.length * 4));
+    if (!+el.querySelector("#textStickers").value) el.querySelector("#textStickers").value = 3;
+    if (!+el.querySelector("#decorStickers").value) el.querySelector("#decorStickers").value = 2;
+    await generate();
+    if (results.length) await addSelected(true);
   }
 
   function renderResults() {

@@ -373,7 +373,7 @@ export async function mount(root, { arg }) {
       <div class="panel-section"><h4>Automatic layout</h4>
         <div class="grid2"><button class="btn sm" data-auto="grid">${icon("grid")}Grid</button><button class="btn sm" data-auto="pack">${icon("shapes")}Pack tightly</button>
           <button class="btn sm" data-auto="fill">${icon("copy")}Fill page</button><button class="btn sm" data-auto="fit">${icon("fit")}Fit to page</button></div>
-        <label class="check" style="margin-top:8px"><input type="checkbox" id="rot" checked>Allow 90° rotation when packing</label>
+        <label class="check" style="margin-top:8px"><input type="checkbox" id="rot">Allow 90° rotation when packing (fits more, but stickers lie sideways)</label>
         <p class="tiny">Fill page repeats the selected stickers (or all) until the page is full.</p></div>
       <div class="panel-section"><h4>Add stickers</h4>
         ${store.doc.stickers.length ? `<div class="grid2"><div class="field"><label>Size (longest side, mm)</label><input type="number" id="add-size" min="10" max="250" value="${theme?.suggestedSizesMm?.[1] || 60}"></div>
@@ -517,7 +517,7 @@ export async function mount(root, { arg }) {
     const target = themeById(store.doc.themeId)?.suggestedSizesMm?.[1] || 60;
     await ensureSizes(ids);
     for (const id of ids) { const { w, h } = sizeFor(id, target); page().items.push({ id: uid("it_"), stickerId: id, xMm: 0, yMm: 0, widthMm: w, heightMm: h, rotation: 0 }); }
-    await autoLayout("pack");
+    await autoLayout("pack", { allowRotate: false });
     toast(`Placed ${ids.length} stickers. Check the layout and export when ready.`, "ok");
   }
 

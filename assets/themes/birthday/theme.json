@@ -30,7 +30,21 @@
   "banner_bunting",
   "sparkles",
   "streamers",
-  "star_basic"
+  "star_basic",
+  "balloon_cluster",
+  "gift_stack",
+  "teddy_bear",
+  "cake_chocolate",
+  "action_lines_color",
+  "balloon_number_1",
+  "balloon_number_2",
+  "balloon_number_3",
+  "balloon_number_4",
+  "balloon_number_5",
+  "balloon_number_6",
+  "balloon_number_7",
+  "balloon_number_8",
+  "balloon_number_9"
  ],
  "accessorySets": {
   "Party hats": [
@@ -43,6 +57,14 @@
   ],
   "Fun glasses": [
    "sunglasses_star"
+  ],
+  "Party glasses": [
+   "party_glasses",
+   "sunglasses_star"
+  ],
+  "Emphasis": [
+   "action_lines",
+   "action_lines_color"
   ]
  },
  "frames": [
@@ -101,7 +123,8 @@
   "Birthday Girl",
   "Make a Wish",
   "Party Time",
-  "Let's Celebrate"
+  "Let's Celebrate",
+  "Party Mode On"
  ],
  "backgrounds": [
   {
@@ -135,5 +158,308 @@
  "license": {
   "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
   "fonts": "See assets/fonts/licenses"
- }
+ },
+ "wordArt": [
+  {
+   "id": "birthday_boy",
+   "name": "Birthday Boy",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "Birthday",
+     "font": "Pacifico",
+     "size": 0.17,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "BOY",
+     "font": "Luckiest Guy",
+     "size": 0.24,
+     "fill": null,
+     "colors": [
+      "#e63946",
+      "#ff9f1c",
+      "#f6c343",
+      "#06d6a0",
+      "#3a86ff",
+      "#9b5de5"
+     ],
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "sparkles",
+     "x": 0.12,
+     "y": 0.85,
+     "w": 0.16,
+     "rotation": 0
+    },
+    {
+     "asset": "star_basic",
+     "x": 0.9,
+     "y": 0.8,
+     "w": 0.1,
+     "rotation": 15
+    }
+   ]
+  },
+  {
+   "id": "birthday_girl",
+   "name": "Birthday Girl",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "Birthday",
+     "font": "Pacifico",
+     "size": 0.17,
+     "fill": "#c9184a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "GIRL",
+     "font": "Luckiest Guy",
+     "size": 0.24,
+     "fill": null,
+     "colors": [
+      "#e63946",
+      "#ff9f1c",
+      "#f6c343",
+      "#06d6a0",
+      "#3a86ff",
+      "#9b5de5"
+     ],
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "sparkles",
+     "x": 0.12,
+     "y": 0.85,
+     "w": 0.16,
+     "rotation": 0
+    },
+    {
+     "asset": "heart_basic",
+     "x": 0.9,
+     "y": 0.8,
+     "w": 0.1,
+     "rotation": 15
+    }
+   ]
+  },
+  {
+   "id": "happy_birthday",
+   "name": "Happy Birthday",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "HAPPY",
+     "font": "Luckiest Guy",
+     "size": 0.2,
+     "fill": null,
+     "colors": [
+      "#e63946",
+      "#ff9f1c",
+      "#f6c343",
+      "#06d6a0",
+      "#3a86ff",
+      "#9b5de5"
+     ],
+     "curve": null
+    },
+    {
+     "text": "BIRTHDAY",
+     "font": "Luckiest Guy",
+     "size": 0.17,
+     "fill": null,
+     "colors": [
+      "#9b5de5",
+      "#3a86ff",
+      "#06d6a0",
+      "#f6c343",
+      "#ff9f1c",
+      "#e63946"
+     ],
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "action_lines_color",
+     "x": 0.08,
+     "y": 0.3,
+     "w": 0.16,
+     "rotation": -20
+    },
+    {
+     "asset": "action_lines_color",
+     "x": 0.92,
+     "y": 0.3,
+     "w": 0.16,
+     "rotation": 200
+    }
+   ]
+  },
+  {
+   "id": "party_mode",
+   "name": "Party Mode On",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "PARTY",
+     "font": "Luckiest Guy",
+     "size": 0.22,
+     "fill": null,
+     "colors": [
+      "#e63946",
+      "#ff9f1c",
+      "#f6c343",
+      "#06d6a0",
+      "#3a86ff",
+      "#9b5de5"
+     ],
+     "curve": null
+    },
+    {
+     "text": "MODE ON",
+     "font": "Luckiest Guy",
+     "size": 0.15,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "action_lines",
+     "x": 0.06,
+     "y": 0.2,
+     "w": 0.15,
+     "rotation": -10
+    }
+   ]
+  },
+  {
+   "id": "make_a_wish",
+   "name": "Make a Wish",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "Make a",
+     "font": "Pacifico",
+     "size": 0.14,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "Wish",
+     "font": "Pacifico",
+     "size": 0.26,
+     "fill": "#f6a700",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "star_basic",
+     "x": 0.12,
+     "y": 0.75,
+     "w": 0.1,
+     "rotation": -10
+    },
+    {
+     "asset": "sparkles",
+     "x": 0.88,
+     "y": 0.25,
+     "w": 0.14,
+     "rotation": 0
+    }
+   ]
+  },
+  {
+   "id": "lets_celebrate",
+   "name": "Let's Celebrate!",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "LET'S",
+     "font": "Luckiest Guy",
+     "size": 0.17,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "CELEBRATE!",
+     "font": "Luckiest Guy",
+     "size": 0.16,
+     "fill": null,
+     "colors": [
+      "#e63946",
+      "#ff9f1c",
+      "#f6c343",
+      "#06d6a0",
+      "#3a86ff",
+      "#9b5de5"
+     ],
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "confetti_scatter",
+     "x": 0.5,
+     "y": 0.15,
+     "w": 0.4,
+     "rotation": 0
+    }
+   ]
+  },
+  {
+   "id": "balloons_hb",
+   "name": "Balloons + Happy Birthday",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "HAPPY",
+     "font": "Luckiest Guy",
+     "size": 0.18,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "BIRTHDAY",
+     "font": "Luckiest Guy",
+     "size": 0.15,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "balloon_cluster",
+     "x": 0.5,
+     "y": 0.42,
+     "w": 0.95,
+     "rotation": 0
+    }
+   ]
+  }
+ ]
 }

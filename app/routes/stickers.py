@@ -130,6 +130,8 @@ def generate(pid: str):
     project = svc.projects.load(pid, prefer_autosave=True)
     photo_ids = [p for p in data.get("photoIds", []) if isinstance(p, str)]
     photos = [svc.projects.photo(project, p) for p in photo_ids]
+    if not photos and (data.get("textStickers") or data.get("decorStickers")):
+        photos = []  # graphics-only collection
     theme = svc.themes.get(data.get("themeId") or project.get("themeId") or "birthday")
     assets = {a["id"]: a for a in svc.assets.list()}
     opts = variation_service.CollectionOptions(
@@ -147,6 +149,10 @@ def generate(pid: str):
         seed=int(as_float(data.get("seed"), 1, 0, 2**31)),
         randomize=bool(data.get("randomize", False)),
         use_face_anchors=bool(data.get("useFaceAnchors", True)),
+        word_art=bool(data.get("wordArt", True)),
+        text_stickers=int(as_float(data.get("textStickers"), 0, 0, 24)),
+        decor_stickers=int(as_float(data.get("decorStickers"), 0, 0, 24)),
+        number=str(data["number"])[:1] if str(data.get("number") or "").isdigit() else None,
     )
     try:
         docs = variation_service.generate_collection(opts, theme, photos, assets)
@@ -156,3 +162,24 @@ def generate(pid: str):
                     "note": "Variants combine your photos with local graphics. No new poses, faces or outfits are generated."})
 
 
+
+
+@bp.post("/stickers/wordart")
+def wordart(pid: str):
+    """Layers for a theme word-art template, sized for a sticker (or an existing artboard box)."""
+    svc = services()
+    data = body()
+    theme = svc.themes.get(data.get("themeId") or svc.projects.load(pid).get("themeId") or "birthday")
+    template = next((t for t in theme.get("wordArt") or [] if t.get("id") == data.get("wordArtId")), None)
+    if template is None:
+        raise AppError("Word art not found in this theme.", 404)
+    assets = {a["id"]: a for a in svc.assets.list()}
+    w = as_float(data.get("widthPx"), 709, 50, 5000)
+    cx, cy = as_float(data.get("x"), w / 2), as_float(data.get("y"), w / 2)
+    layers = variation_service.wordart_layers(template, cx, cy, as_float(data.get("boxWidthPx"), w * 0.9, 20, 5000), assets)
+    if data.get("asSticker"):
+        opts = variation_service.CollectionOptions(photo_ids=[], theme_id=theme["id"], size_mm=as_float(data.get("sizeMm"), 60, 15, 200))
+        W = mm_to_px(opts.size_mm, 300)
+        doc = variation_service._plain_doc(template["name"], opts, theme, variation_service.wordart_layers(template, W / 2, W / 2, W * 0.9, assets), 0, "wordart")
+        return jsonify({"sticker": doc})
+    return jsonify({"layers": [l.to_dict() for l in layers]})

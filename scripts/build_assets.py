@@ -717,6 +717,179 @@ add("frame_kolam", "Kolam border", "frames", ["frame", "kolam", "pongal", "diwal
     + "".join(f'<path d="M{c[0]},{c[1]} m-28,0 a28,28 0 1,0 56,0 a28,28 0 1,0 -56,0" fill="none" stroke="#9b5de5" stroke-width="6"/>' for c in ((20, 20), (380, 20), (20, 380), (380, 380))), frame=True)
 
 
+# ------------------------------------------------------------------ expansion pack: birthday
+GOLD = ('<defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1a8"/>'
+        '<stop offset="0.35" stop-color="#f6c343"/><stop offset="0.7" stop-color="#d49a1a"/><stop offset="1" stop-color="#fbe07a"/></linearGradient></defs>')
+
+add("action_lines", "Emphasis lines", "confetti", ["action", "lines", "emphasis", "pop", "excited"], 120, 120,
+    "".join(f'<path d="M{60 + 22 * math.cos(math.radians(a)):.1f},{60 + 22 * math.sin(math.radians(a)):.1f} L{60 + 54 * math.cos(math.radians(a)):.1f},{60 + 54 * math.sin(math.radians(a)):.1f}" '
+            f'stroke="#2d2140" stroke-width="9" stroke-linecap="round" data-recolor="primary"/>' for a in (200, 235, 270)), ())
+add("action_lines_color", "Colour pop lines", "confetti", ["action", "lines", "emphasis", "burst"], 120, 120,
+    "".join(f'<path d="M{60 + 24 * math.cos(math.radians(a)):.1f},{60 + 24 * math.sin(math.radians(a)):.1f} L{60 + 52 * math.cos(math.radians(a)):.1f},{60 + 52 * math.sin(math.radians(a)):.1f}" '
+            f'stroke="{c}" stroke-width="8" stroke-linecap="round"/>' for a, c in ((195, "#ff9f1c"), (225, "#ffd166"), (255, "#ff4f8b"), (285, "#3a86ff"))), ())
+
+# Balloon numbers: thick rounded strokes in gold foil over a dark outline.
+DIGITS = {
+    "0": "M60,25 C20,25 20,175 60,175 C100,175 100,25 60,25 Z",
+    "1": "M40,50 L68,28 L68,175 M42,175 L94,175",
+    "2": "M28,62 C28,22 92,18 92,60 C92,95 30,130 28,175 L95,175",
+    "3": "M28,45 C45,15 95,22 90,60 C88,85 62,92 55,95 C70,95 95,105 93,140 C90,185 35,185 25,155",
+    "4": "M78,175 L78,28 L22,128 L100,128",
+    "5": "M90,28 L36,28 L30,90 C55,72 95,82 95,125 C95,180 35,185 25,152",
+    "6": "M85,35 C50,18 28,55 28,120 C28,185 95,185 95,128 C95,82 40,80 30,115",
+    "7": "M25,30 L95,30 L50,175",
+    "8": "M60,95 C25,95 25,25 60,25 C95,25 95,95 60,95 Z M60,95 C20,95 18,175 60,175 C102,175 100,95 60,95 Z",
+    "9": "M92,82 C92,25 28,22 28,68 C28,110 85,112 92,82 C95,150 70,180 32,168",
+}
+for d, path in DIGITS.items():
+    add(f"balloon_number_{d}", f"Number balloon {d}", "balloons", ["number", "balloon", "age", "gold", "birthday", d], 130, 230,
+        GOLD + f'<path d="{path}" fill="none" stroke="{INK}" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>'
+        f'<path d="{path}" fill="none" stroke="url(#gold)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>'
+        f'<path d="{path}" fill="none" stroke="#fffbe0" stroke-width="5" stroke-linecap="round" stroke-dasharray="18 40" opacity="0.8" transform="translate(-5,-4)"/>'
+        '<path d="M65,205 C60,215 70,222 65,230" stroke="#2d2140" stroke-width="3" fill="none"/>', ())
+
+add("balloon_cluster", "Glossy balloon cluster", "balloons", ["balloons", "party", "birthday", "bunch", "glossy"], 240, 280,
+    "".join(f'<defs><radialGradient id="b{i}" cx="0.35" cy="0.3" r="0.75"><stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/>'
+            f'<stop offset="0.25" stop-color="{c}"/><stop offset="1" stop-color="{c}" stop-opacity="0.95"/></radialGradient></defs>'
+            f'<path d="M{x},{y + r * 1.15} C{x - 6},{y + r * 1.6} {120},{230} {120},{278}" stroke="#7a6f8f" stroke-width="2" fill="none"/>'
+            f'<ellipse cx="{x}" cy="{y}" rx="{r}" ry="{r * 1.15}" fill="url(#b{i})" stroke="{INK}" stroke-width="3"/>'
+            for i, (x, y, r, c) in enumerate(((70, 95, 46, "#3a86ff"), (170, 95, 46, "#e63946"), (120, 60, 50, "#ffd166"),
+                                                (55, 175, 40, "#06d6a0"), (185, 170, 40, "#ff4f8b")))), ())
+add("gift_stack", "Stack of gifts", "gifts", ["gifts", "presents", "birthday", "stack"], 200, 220,
+    f'<rect x="20" y="115" width="160" height="95" rx="8" {P("primary", "#e63946")} {ink()}/>'
+    + "".join(f'<polygon points="{star_pts(x, y, 9, 0.45)}" fill="#ffffff" opacity="0.9"/>' for x, y in ((45, 140), (85, 185), (150, 135), (140, 192), (60, 195)))
+    + f'<rect x="88" y="115" width="24" height="95" {P("secondary", "#ffd166")}/>'
+    f'<rect x="40" y="50" width="120" height="70" rx="8" {P("accent", "#3a86ff")} {ink()}/>'
+    + "".join(f'<polygon points="{star_pts(x, y, 8, 0.45)}" fill="#ffffff" opacity="0.9"/>' for x, y in ((60, 70), (135, 95), (70, 105)))
+    + f'<rect x="88" y="50" width="24" height="70" {P("secondary", "#ffd166")}/>'
+    f'<path d="M100,50 C75,10 45,25 62,45 C70,52 88,52 100,50 C112,52 130,52 138,45 C155,25 125,10 100,50 Z" {P("secondary", "#ffd166")} {ink()}/>',
+    ("primary", "secondary", "accent"))
+add("teddy_bear", "Teddy bear", "animals", ["teddy", "bear", "toy", "cuddle", "cute"], 200, 230,
+    f'<circle cx="55" cy="40" r="24" fill="#c68642" {ink()}/><circle cx="145" cy="40" r="24" fill="#c68642" {ink()}/>'
+    f'<circle cx="55" cy="40" r="11" fill="#f1d3a1"/><circle cx="145" cy="40" r="11" fill="#f1d3a1"/>'
+    f'<ellipse cx="100" cy="165" rx="70" ry="60" fill="#c68642" {ink()}/><ellipse cx="100" cy="170" rx="38" ry="35" fill="#f1d3a1"/>'
+    f'<ellipse cx="40" cy="205" rx="28" ry="20" fill="#c68642" {ink()}/><ellipse cx="160" cy="205" rx="28" ry="20" fill="#c68642" {ink()}/>'
+    f'<ellipse cx="40" cy="207" rx="14" ry="10" fill="#f1d3a1"/><ellipse cx="160" cy="207" rx="14" ry="10" fill="#f1d3a1"/>'
+    f'<circle cx="100" cy="72" r="55" fill="#c68642" {ink()}/><ellipse cx="100" cy="92" rx="26" ry="20" fill="#f1d3a1"/>'
+    f'<circle cx="80" cy="66" r="6" fill="{INK}"/><circle cx="120" cy="66" r="6" fill="{INK}"/><ellipse cx="100" cy="85" rx="9" ry="6" fill="{INK}"/>'
+    f'<path d="M100,91 L100,98 M90,100 Q100,107 110,100" stroke="{INK}" stroke-width="3" fill="none"/>'
+    f'<path d="M100,128 L65,112 L65,145 Z M100,128 L135,112 L135,145 Z" {P("primary", "#e63946")} {ink("stroke-width=\"3\"")}/><circle cx="100" cy="128" r="9" {P("primary", "#e63946")} {ink("stroke-width=\"3\"")}/>')
+add("party_glasses", "Birthday party glasses", "sunglasses", ["party", "glasses", "birthday", "candles", "fun"], 240, 130,
+    "".join(f'<rect x="{x}" y="10" width="10" height="38" rx="3" fill="{c}" {ink("stroke-width=\"2\"")}/><path d="M{x + 5},0 C{x + 12},8 {x + 9},12 {x + 5},12 C{x + 1},12 {x - 2},8 {x + 5},0 Z" fill="#ff9f1c"/>'
+            for x, c in ((60, "#ff4f8b"), (90, "#3a86ff"), (115, "#06d6a0"), (140, "#ffd166"), (170, "#9b5de5")))
+    + f'<rect x="30" y="45" width="180" height="20" rx="8" {P("secondary", "#ffffff")} {ink("stroke-width=\"3\"")}/>'
+    f'<path d="M10,70 L230,70" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+    f'<rect x="18" y="68" width="88" height="52" rx="22" {P("primary", "#ff4f8b")} {ink()}/><rect x="134" y="68" width="88" height="52" rx="22" {P("primary", "#ff4f8b")} {ink()}/>'
+    f'<rect x="28" y="78" width="68" height="34" rx="15" fill="#2d2140"/><rect x="144" y="78" width="68" height="34" rx="15" fill="#2d2140"/>'
+    f'<path d="M40,88 L58,88 M156,88 L174,88" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.6"/>', ("primary", "secondary"), anchor="eyes")
+add("cake_chocolate", "Chocolate cake with candles", "cakes", ["cake", "chocolate", "candles", "birthday"], 220, 200,
+    "".join(f'<rect x="{x}" y="35" width="9" height="40" rx="3" fill="{c}" {ink("stroke-width=\"2\"")}/><path d="M{x + 4.5},14 C{x + 13},26 {x + 10},32 {x + 4.5},32 C{x - 1},32 {x - 4},26 {x + 4.5},14 Z" fill="#ffb703"/>'
+            for x, c in ((62, "#ff4f8b"), (92, "#4cc9f0"), (122, "#ffd166"), (152, "#06d6a0")))
+    + f'<ellipse cx="110" cy="80" rx="90" ry="24" fill="#5d3a1a" {ink()}/>'
+    f'<path d="M20,80 L20,155 C20,190 200,190 200,155 L200,80 C200,110 20,110 20,80 Z" fill="#7b4a22" {ink()}/>'
+    f'<path d="M20,82 C30,120 45,96 55,118 C65,140 80,100 92,120 C104,140 118,100 130,120 C142,140 158,100 170,118 C182,136 192,100 200,84" fill="#5d3a1a"/>'
+    + "".join(f'<rect x="{x}" y="{y}" width="8" height="3" rx="1.5" fill="{c}" transform="rotate({r} {x} {y})"/>' for x, y, c, r in
+              ((50, 75, "#ffd166", 20), (80, 70, "#ff4f8b", -30), (140, 72, "#4cc9f0", 40), (165, 82, "#06d6a0", -10), (110, 88, "#ffffff", 60)))
+    + f'<ellipse cx="110" cy="182" rx="105" ry="12" fill="#ffffff" {ink("stroke-width=\"4\"")}/>', ())
+
+# ------------------------------------------------------------------ expansion pack: gentleman
+add("fedora", "Fedora hat", "hats", ["fedora", "hat", "gentleman", "classic"], 220, 140,
+    f'<path d="M50,100 C45,40 70,20 110,35 C150,20 175,40 170,100 Z" {P("primary", "#1f1d2b")} {ink()}/>'
+    f'<path d="M80,40 C95,52 125,52 140,40" stroke="#3a3650" stroke-width="5" fill="none"/>'
+    f'<rect x="50" y="80" width="120" height="20" {P("secondary", "#2b4a75")}/>'
+    f'<path d="M5,108 C30,92 190,92 215,108 C205,128 15,128 5,108 Z" {P("primary", "#1f1d2b")} {ink()}/>'
+    f'<path d="M60,60 C65,50 72,45 80,43" stroke="#ffffff" stroke-width="4" fill="none" opacity="0.25" stroke-linecap="round"/>', ("primary", "secondary"), anchor="head")
+add("mustache_stick", "Mustache on a stick", "gentleman", ["mustache", "prop", "photo booth", "gentleman", "funny"], 200, 220,
+    f'<path d="M100,70 L105,215" stroke="#c68642" stroke-width="9" stroke-linecap="round"/>'
+    f'<path d="M100,40 C80,20 50,25 40,50 C30,72 8,70 2,55 C2,82 30,95 55,82 C75,72 90,62 100,62 C110,62 125,72 145,82 C170,95 198,82 198,55 C192,70 170,72 160,50 C150,25 120,20 100,40 Z" '
+    f'{P("primary", "#1f1d2b")} {ink("stroke-width=\"3\"")}/>', anchor="mouth")
+add("vintage_car", "Vintage car", "gentleman", ["car", "vintage", "classic", "gentleman", "toy"], 280, 160,
+    f'<path d="M20,110 L30,70 L80,68 L100,30 L190,30 L210,68 L255,72 C268,74 272,90 270,110 Z" {P("primary", "#1d2b4a")} {ink()}/>'
+    f'<path d="M110,40 L180,40 L195,68 L100,68 Z" fill="#a2d2ff" fill-opacity="0.7" {ink("stroke-width=\"3\"")}/><path d="M145,40 L145,68" stroke="{INK}" stroke-width="4"/>'
+    f'<rect x="250" y="80" width="18" height="14" rx="3" fill="#ffd166" {ink("stroke-width=\"3\"")}/><rect x="15" y="100" width="260" height="12" rx="6" fill="#adb5bd" {ink("stroke-width=\"3\"")}/>'
+    + "".join(f'<circle cx="{x}" cy="118" r="30" fill="#2d2140"/><circle cx="{x}" cy="118" r="16" fill="#e5e5e5" {ink("stroke-width=\"3\"")}/><circle cx="{x}" cy="118" r="5" fill="{INK}"/>' for x in (70, 215)))
+add("books_stack", "Stack of books", "school", ["books", "reading", "stack", "smart", "gentleman"], 220, 120,
+    f'<rect x="20" y="70" width="180" height="40" rx="5" {P("primary", "#5a3e2b")} {ink()}/><path d="M30,80 L190,80" stroke="#c9a227" stroke-width="3"/>'
+    f'<rect x="35" y="35" width="160" height="38" rx="5" {P("secondary", "#2b4a75")} {ink()}/><path d="M45,45 L185,45" stroke="#c9a227" stroke-width="3"/>'
+    f'<rect x="28" y="5" width="150" height="33" rx="5" fill="#7a2e2e" {ink()}/><path d="M38,15 L168,15" stroke="#c9a227" stroke-width="3"/>', ("primary", "secondary"))
+
+# ------------------------------------------------------------------ expansion pack: princess / fairytale
+LB, MB, DB = "#cfe3ff", "#8fb6f0", "#3d5fa8"
+add("castle_blue", "Fairytale castle (blue)", "fantasy", ["castle", "princess", "fairytale", "palace", "blue"], 220, 240,
+    "".join(f'<rect x="{x}" y="{y}" width="{w}" height="{240 - y}" {P("primary", MB)} opacity="0.95"/>'
+            f'<path d="M{x - 6},{y + 2} L{x + w / 2},{y - h} L{x + w + 6},{y + 2} Z" {P("secondary", DB)}/>'
+            f'<rect x="{x + w / 2 - 4}" y="{y + 25}" width="8" height="16" rx="4" fill="#ffffff" opacity="0.8"/>'
+            for x, y, w, h in ((15, 120, 30, 50), (175, 120, 30, 50), (55, 80, 34, 60), (131, 80, 34, 60), (93, 40, 34, 70)))
+    + f'<rect x="40" y="160" width="140" height="80" {P("primary", MB)}/><path d="M95,240 L95,200 C95,180 125,180 125,200 L125,240 Z" fill="#ffffff" opacity="0.85"/>'
+    + "".join(f'<path d="M{x},{y} l3,7 l7,3 l-7,3 l-3,7 l-3,-7 l-7,-3 l7,-3 Z" fill="#ffffff"/>' for x, y in ((30, 60), (190, 50), (110, 15), (60, 30))), ("primary", "secondary"))
+add("glass_slipper", "Glass slipper", "fantasy", ["slipper", "shoe", "princess", "fairytale", "glass"], 220, 160,
+    f'<defs><linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="{LB}"/><stop offset="1" stop-color="{MB}"/></linearGradient></defs>'
+    f'<path d="M20,120 C20,90 60,80 95,95 C130,110 150,60 175,30 C190,20 205,30 200,50 C195,75 185,95 185,140 L172,140 L170,100 C160,120 140,135 110,138 C70,142 30,145 20,120 Z" fill="url(#glass)" stroke="{DB}" stroke-width="4" stroke-linejoin="round"/>'
+    f'<path d="M172,140 L176,152 L186,152 L185,140" fill="{MB}" stroke="{DB}" stroke-width="3"/>'
+    f'<path d="M40,112 C60,100 85,105 100,112" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round"/>'
+    + "".join(f'<path d="M{x},{y} l2,6 l6,2 l-6,2 l-2,6 l-2,-6 l-6,-2 l6,-2 Z" fill="#ffffff"/>' for x, y in ((150, 70), (60, 98), (190, 40))), ())
+add("slipper_cushion", "Slipper on a cushion", "fantasy", ["slipper", "cushion", "princess", "royal"], 240, 170,
+    f'<path d="M10,120 C40,90 200,90 230,120 C240,140 220,160 120,160 C20,160 0,140 10,120 Z" {P("primary", "#1d2b6a")} {ink()}/>'
+    f'<path d="M20,150 L10,168 M220,150 L232,168" stroke="#c9a227" stroke-width="5" stroke-linecap="round"/>'
+    f'<path d="M50,110 C50,90 80,85 105,95 C130,105 145,65 165,45 C177,36 188,44 184,60 C180,80 172,95 172,120 L162,120 L160,95 C150,110 135,118 112,120 C82,124 55,126 50,110 Z" fill="{LB}" stroke="{DB}" stroke-width="3"/>')
+add("pumpkin_carriage", "Pumpkin carriage", "fantasy", ["carriage", "pumpkin", "princess", "fairytale", "coach"], 260, 200,
+    f'<path d="M30,95 C20,40 90,20 130,30 C170,20 240,40 230,95 C235,140 190,160 130,158 C70,160 25,140 30,95 Z" {P("primary", MB)} {ink()}/>'
+    f'<path d="M85,35 C70,70 70,130 85,155 M175,35 C190,70 190,130 175,155 M130,30 L130,158" stroke="{DB}" stroke-width="3" fill="none" opacity="0.6"/>'
+    f'<path d="M105,70 C105,55 155,55 155,70 L155,115 L105,115 Z" fill="#ffffff" opacity="0.85" stroke="#c9a227" stroke-width="4"/>'
+    f'<path d="M130,30 C128,15 135,8 142,5" stroke="#c9a227" stroke-width="6" fill="none" stroke-linecap="round"/>'
+    + "".join(f'<circle cx="{x}" cy="168" r="28" fill="none" stroke="#c9a227" stroke-width="6"/><path d="M{x - 28},168 L{x + 28},168 M{x},140 L{x},196 M{x - 20},148 L{x + 20},188 M{x + 20},148 L{x - 20},188" stroke="#c9a227" stroke-width="3"/>' for x in (60, 200))
+    + f'<path d="M60,140 C40,120 25,140 15,130" stroke="#c9a227" stroke-width="4" fill="none"/>', ())
+add("clock_roman", "Midnight clock", "fantasy", ["clock", "midnight", "time", "princess", "fairytale"], 220, 220,
+    f'<circle cx="110" cy="110" r="100" fill="#ffffff" stroke="{DB}" stroke-width="8" data-recolor="primary"/>'
+    f'<circle cx="110" cy="110" r="88" fill="none" stroke="{MB}" stroke-width="3"/>'
+    + "".join(f'<path d="M{110 + 80 * math.sin(math.radians(a)):.1f},{110 - 80 * math.cos(math.radians(a)):.1f} L{110 + (66 if a % 90 == 0 else 72) * math.sin(math.radians(a)):.1f},{110 - (66 if a % 90 == 0 else 72) * math.cos(math.radians(a)):.1f}" stroke="{DB}" stroke-width="{7 if a % 90 == 0 else 4}" stroke-linecap="round"/>' for a in range(0, 360, 30))
+    + f'<path d="M110,110 L110,42 M110,110 L108,48" stroke="{DB}" stroke-width="6" stroke-linecap="round"/><path d="M110,110 L122,62" stroke="{DB}" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="110" r="8" fill="#c9a227"/>')
+add("butterfly_blue", "Butterfly", "fantasy", ["butterfly", "princess", "garden", "spring"], 180, 150,
+    f'<path d="M90,75 C60,10 5,20 15,60 C20,80 60,85 90,75 Z M90,75 C120,10 175,20 165,60 C160,80 120,85 90,75 Z" {P("primary", MB)} {ink("stroke-width=\"3\"")}/>'
+    f'<path d="M90,78 C60,90 25,105 40,130 C55,145 80,115 90,78 Z M90,78 C120,90 155,105 140,130 C125,145 100,115 90,78 Z" {P("secondary", LB)} {ink("stroke-width=\"3\"")}/>'
+    f'<ellipse cx="90" cy="80" rx="5" ry="30" fill="{DB}"/><path d="M88,52 C80,35 75,30 70,28 M92,52 C100,35 105,30 110,28" stroke="{DB}" stroke-width="3" fill="none"/>'
+    f'<circle cx="45" cy="55" r="7" fill="#ffffff" opacity="0.7"/><circle cx="135" cy="55" r="7" fill="#ffffff" opacity="0.7"/>', ("primary", "secondary"))
+
+
+def rose(cx, cy, r, color, slot):
+    out = f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{color}" data-recolor="{slot}" {ink("stroke-width=\"3\"")}/>'
+    for k, rr in enumerate((0.75, 0.52, 0.3)):
+        out += f'<path d="M{cx - r * rr},{cy + r * rr * 0.2} C{cx - r * rr},{cy - r * rr} {cx + r * rr},{cy - r * rr} {cx + r * rr},{cy + r * rr * 0.1}" stroke="{INK}" stroke-width="2.5" fill="none" opacity="0.55"/>'
+    return out
+
+
+add("rose_pink", "Pink roses", "flowers", ["rose", "flowers", "princess", "wedding", "pink"], 220, 160,
+    f'<path d="M30,120 C10,100 20,80 40,90 M190,120 C210,100 200,80 180,90" fill="#7fb77e" stroke="{INK}" stroke-width="2"/>'
+    f'<ellipse cx="40" cy="120" rx="30" ry="14" fill="#7fb77e" transform="rotate(-25 40 120)" {ink("stroke-width=\"2\"")}/><ellipse cx="180" cy="120" rx="30" ry="14" fill="#7fb77e" transform="rotate(25 180 120)" {ink("stroke-width=\"2\"")}/>'
+    + rose(70, 95, 34, "#f7a8c4", "primary") + rose(150, 95, 34, "#f7a8c4", "primary") + rose(110, 70, 42, "#f48fb1", "secondary"), ("primary", "secondary"))
+add("rose_blue", "Blue roses", "flowers", ["rose", "flowers", "princess", "blue"], 220, 160,
+    f'<ellipse cx="40" cy="120" rx="30" ry="14" fill="#9cc5a1" transform="rotate(-25 40 120)" {ink("stroke-width=\"2\"")}/><ellipse cx="180" cy="120" rx="30" ry="14" fill="#9cc5a1" transform="rotate(25 180 120)" {ink("stroke-width=\"2\"")}/>'
+    + rose(70, 95, 34, LB, "primary") + rose(150, 95, 34, LB, "primary") + rose(110, 70, 42, MB, "secondary"), ("primary", "secondary"))
+add("banner_scroll", "Scroll banner", "banners", ["banner", "scroll", "ribbon", "princess", "title", "parchment"], 320, 110,
+    f'<path d="M10,30 L50,30 L50,95 L10,95 L28,62 Z" {P("secondary", "#e8d8b0")} {ink()}/><path d="M310,30 L270,30 L270,95 L310,95 L292,62 Z" {P("secondary", "#e8d8b0")} {ink()}/>'
+    f'<path d="M40,15 C110,5 210,5 280,15 L280,85 C210,75 110,75 40,85 Z" {P("primary", "#fbf3dc")} {ink()}/>'
+    f'<path d="M40,85 L50,95 L50,80 M280,85 L270,95 L270,80" fill="#cbb98c" stroke="{INK}" stroke-width="3"/>', ("primary", "secondary"))
+add("princess_cameo", "Princess silhouette cameo", "fantasy", ["princess", "silhouette", "cameo", "portrait", "fairytale"], 180, 230,
+    f'<ellipse cx="90" cy="115" rx="82" ry="108" fill="#ffffff" stroke="{DB}" stroke-width="7" data-recolor="secondary"/>'
+    f'<ellipse cx="90" cy="115" rx="70" ry="96" fill="none" stroke="{MB}" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/>'
+    f'<path d="M78,48 C58,52 52,80 62,95 C56,105 64,112 70,112 C70,125 66,135 60,145 C45,165 40,190 45,205 L140,205 C140,180 128,160 112,150 C104,140 104,128 108,118 '
+    f'C120,115 122,100 118,90 C130,60 112,40 90,42 C110,30 130,40 135,60 C150,95 140,140 160,175 C150,130 160,60 120,35 C105,25 88,30 78,48 Z" {P("primary", DB)}/>'
+    f'<path d="M72,46 L78,36 L86,44 L92,32 L98,44 L106,36 L108,48 Z" fill="#c9a227"/>'
+    f'<path d="{heart_path(90, 205, 10)}" fill="#ff8fab"/>', ("primary", "secondary"))
+add("frame_ornate_oval", "Ornate oval frame", "frames", ["frame", "ornate", "oval", "princess", "royal"], 400, 460,
+    f'<ellipse cx="200" cy="230" rx="178" ry="208" fill="none" stroke="{DB}" stroke-width="10" data-recolor="primary"/>'
+    f'<ellipse cx="200" cy="230" rx="164" ry="194" fill="none" stroke="{MB}" stroke-width="3" stroke-dasharray="3 9" stroke-linecap="round"/>'
+    + "".join(f'<path d="M{x},{y} c-18,-18 -40,-6 -30,12 c6,10 22,8 22,-4" fill="none" stroke="{DB}" stroke-width="6" stroke-linecap="round" transform="rotate({r} {x} {y})"/>'
+              for x, y, r in ((200, 22, 0), (200, 438, 180), (22, 230, -90), (378, 230, 90), (80, 75, -40), (320, 75, 40), (80, 385, -140), (320, 385, 140)))
+    + f'<path d="M170,18 L180,0 L190,14 L200,-2 L210,14 L220,0 L230,18 Z" fill="#c9a227"/>', frame=True)
+add("frame_floral_oval", "Floral oval frame", "frames", ["frame", "flowers", "oval", "princess", "wedding"], 400, 460,
+    f'<ellipse cx="200" cy="230" rx="175" ry="205" fill="none" stroke="{MB}" stroke-width="8" data-recolor="primary"/>'
+    + "".join(rose(cx, cy, r, c, "secondary") for cx, cy, r, c in ((55, 360, 30, "#f7a8c4"), (95, 405, 24, LB), (345, 360, 30, "#f7a8c4"), (305, 405, 24, LB), (60, 100, 22, LB), (340, 100, 22, "#f7a8c4")))
+    + "".join(f'<ellipse cx="{x}" cy="{y}" rx="16" ry="7" fill="#9cc5a1" transform="rotate({r} {x} {y})"/>' for x, y, r in ((30, 320, -60), (130, 425, 10), (370, 320, 60), (270, 425, -10), (40, 140, 60), (360, 140, -60))), frame=True)
+add("frame_heart_gold", "Golden heart frame", "frames", ["frame", "heart", "gold", "love", "princess"], 400, 380,
+    GOLD + f'<path d="{heart_path(200, 195, 175)}" fill="none" stroke="{INK}" stroke-width="22"/><path d="{heart_path(200, 195, 175)}" fill="none" stroke="url(#gold)" stroke-width="16"/>'
+    f'<path d="{heart_path(200, 195, 175)}" fill="none" stroke="#fff6c8" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>', (), frame=True)
+
 # ------------------------------------------------------------------ patterns (tiles)
 PATTERNS = [
     ("dots", "Polka dots", '<circle cx="25" cy="25" r="9" {f}/><circle cx="75" cy="75" r="9" {f}/>'),
@@ -864,6 +1037,98 @@ THEMES = [
 ]
 
 
+RAINBOW = ["#e63946", "#ff9f1c", "#f6c343", "#06d6a0", "#3a86ff", "#9b5de5"]
+NAVY = "#1d2b6a"
+
+
+def wa(id, name, lines, decor=(), stroke="#ffffff", stroke_rel=0.07):
+    """Word-art template: stacked text lines (sizes relative to sticker width) plus decorations."""
+    return {"id": id, "name": name, "stroke": stroke, "strokeRel": stroke_rel,
+            "lines": [dict(zip(("text", "font", "size", "fill", "colors", "curve"), (*l, *([None] * (6 - len(l)))))) for l in lines],
+            "decor": [dict(zip(("asset", "x", "y", "w", "rotation"), d)) for d in decor]}
+
+
+THEME_EXTRAS = {
+    "birthday": {
+        "decorations": ["balloon_cluster", "gift_stack", "teddy_bear", "cake_chocolate", "action_lines_color", "balloon_number_1",
+                        "balloon_number_2", "balloon_number_3", "balloon_number_4", "balloon_number_5", "balloon_number_6",
+                        "balloon_number_7", "balloon_number_8", "balloon_number_9"],
+        "accessorySets": {"Party glasses": ["party_glasses", "sunglasses_star"], "Emphasis": ["action_lines", "action_lines_color"]},
+        "textPresets": ["Party Mode On", "Birthday Boy", "Birthday Girl"],
+        "wordArt": [
+            wa("birthday_boy", "Birthday Boy", [("Birthday", "Pacifico", 0.17, NAVY), ("BOY", "Luckiest Guy", 0.24, None, RAINBOW)],
+               [("sparkles", 0.12, 0.85, 0.16, 0), ("star_basic", 0.9, 0.8, 0.1, 15)]),
+            wa("birthday_girl", "Birthday Girl", [("Birthday", "Pacifico", 0.17, "#c9184a"), ("GIRL", "Luckiest Guy", 0.24, None, RAINBOW)],
+               [("sparkles", 0.12, 0.85, 0.16, 0), ("heart_basic", 0.9, 0.8, 0.1, 15)]),
+            wa("happy_birthday", "Happy Birthday", [("HAPPY", "Luckiest Guy", 0.2, None, RAINBOW), ("BIRTHDAY", "Luckiest Guy", 0.17, None, RAINBOW[::-1])],
+               [("action_lines_color", 0.08, 0.3, 0.16, -20), ("action_lines_color", 0.92, 0.3, 0.16, 200)]),
+            wa("party_mode", "Party Mode On", [("PARTY", "Luckiest Guy", 0.22, None, RAINBOW), ("MODE ON", "Luckiest Guy", 0.15, NAVY)],
+               [("action_lines", 0.06, 0.2, 0.15, -10)]),
+            wa("make_a_wish", "Make a Wish", [("Make a", "Pacifico", 0.14, NAVY), ("Wish", "Pacifico", 0.26, "#f6a700")],
+               [("star_basic", 0.12, 0.75, 0.1, -10), ("sparkles", 0.88, 0.25, 0.14, 0)]),
+            wa("lets_celebrate", "Let's Celebrate!", [("LET'S", "Luckiest Guy", 0.17, NAVY), ("CELEBRATE!", "Luckiest Guy", 0.16, None, RAINBOW)],
+               [("confetti_scatter", 0.5, 0.15, 0.4, 0)]),
+            wa("balloons_hb", "Balloons + Happy Birthday", [("HAPPY", "Luckiest Guy", 0.18, NAVY), ("BIRTHDAY", "Luckiest Guy", 0.15, NAVY)],
+               [("balloon_cluster", 0.5, 0.42, 0.95, 0)]),
+        ],
+    },
+    "gentleman": {
+        "decorations": ["fedora", "mustache_stick", "vintage_car", "books_stack", "action_lines", "sparkles", "heart_basic", "crown_gold"],
+        "accessorySets": {"Hats": ["top_hat", "bowler_hat", "fedora"], "Glasses": ["glasses_round", "sunglasses_classic"],
+                          "Props": ["mustache_stick", "monocle"], "Emphasis": ["action_lines"]},
+        "textPresets": ["Mr. Gentleman", "Little Gentleman"],
+        "wordArt": [
+            wa("mr_gentleman", "Mr. Gentleman", [("Mr.", "Lobster", 0.16, "#1f1d2b"), ("Gentleman", "Lobster", 0.2, "#1f1d2b")],
+               [("bowtie", 0.5, 0.88, 0.22, 0)], stroke="#ffffff", stroke_rel=0.06),
+            wa("little_gentleman", "Little Gentleman", [("Little", "Lobster", 0.17, "#1f1d2b"), ("Gentleman", "Lobster", 0.2, "#1f1d2b")],
+               [("bowler_hat", 0.5, 0.1, 0.3, 0), ("bowtie", 0.5, 0.9, 0.2, 0), ("action_lines", 0.1, 0.3, 0.12, 0)]),
+            wa("dapper", "Dapper Dude", [("DAPPER", "Bangers", 0.2, "#c9a227"), ("DUDE", "Bangers", 0.2, "#1f1d2b")], [("mustache_classic", 0.5, 0.88, 0.3, 0)]),
+        ],
+    },
+    "princess": {
+        "decorations": ["castle_blue", "glass_slipper", "slipper_cushion", "pumpkin_carriage", "clock_roman", "butterfly_blue", "rose_pink",
+                        "rose_blue", "banner_scroll", "princess_cameo"],
+        "frames": ["frame_ornate_oval", "frame_floral_oval", "frame_heart_gold"],
+        "textPresets": ["Little Princess", "Believe in Magic", "Born to be a Princess", "Princess Vibes", "Have Courage and be Kind"],
+        "wordArt": [
+            wa("little_princess", "Little Princess (scroll)", [("Little Princess", "Great Vibes", 0.14, NAVY)], [("banner_scroll", 0.5, 0.5, 1.0, 0)], stroke_rel=0.0),
+            wa("born_princess", "Born to be a Princess", [("Born", "Great Vibes", 0.2, NAVY), ("to be a", "Great Vibes", 0.12, NAVY), ("Princess", "Great Vibes", 0.2, NAVY)],
+               [("tiara", 0.5, 0.05, 0.3, 0), ("heart_basic", 0.5, 0.97, 0.06, 0)]),
+            wa("princess_vibes", "Princess Vibes", [("Princess", "Great Vibes", 0.2, "#3d5fa8"), ("Vibes", "Great Vibes", 0.22, "#f48fb1")],
+               [("crown_gold", 0.5, 0.06, 0.3, 0), ("heart_basic", 0.12, 0.6, 0.07, -15), ("heart_basic", 0.88, 0.45, 0.07, 15)]),
+            wa("courage_kind", "Have Courage and be Kind", [("Have", "Great Vibes", 0.18, NAVY), ("Courage", "Great Vibes", 0.2, NAVY), ("and be Kind", "Great Vibes", 0.14, NAVY)],
+               [("glass_slipper", 0.15, 0.85, 0.22, 0), ("heart_basic", 0.9, 0.2, 0.06, 0)]),
+            wa("believe_magic", "Believe in Magic", [("Believe in Magic", "Great Vibes", 0.13, NAVY)], [("banner_scroll", 0.5, 0.5, 1.0, 0), ("sparkles", 0.88, 0.15, 0.14, 0)], stroke_rel=0.0),
+        ],
+    },
+}
+THEME_EXTRAS["fairytale_blue"] = {**THEME_EXTRAS["princess"]}
+
+THEMES.append(theme("fairytale_blue", 7.5, "Fairytale Ball (blue)", "Soft blues, castles, glass slippers, pumpkin carriages, roses and ornate frames.",
+                    ["#8fb6f0", "#3d5fa8", "#f7a8c4", "#eef5ff"], "Great Vibes",
+                    ["castle_blue", "glass_slipper", "pumpkin_carriage", "butterfly_blue", "rose_blue", "rose_pink", "sparkles", "clock_roman"],
+                    {"Tiaras": ["tiara", "crown_royal"], "Butterflies": ["butterfly_blue"]},
+                    ["frame_ornate_oval", "frame_floral_oval", "frame_heart_gold", "frame_scallop"],
+                    ["Little Princess", "Believe in Magic", "Princess Vibes"],
+                    [bg_grad("#eef5ff", "#cfe3ff", 160), bg_pat("sparkle", "#dbe9ff", "#ffffff"), bg_solid("#ffffff")],
+                    text_color="#1d2b6a", shapes=("silhouette", "oval", "heart", "rounded"),
+                    border={"widthMm": 3.0, "color": "#ffffff", "outlines": [{"widthMm": 0.5, "color": "#c9d6ee", "gapMm": 0}], "smoothing": 0.6}))
+
+
+def apply_theme_extras():
+    for t in THEMES:
+        extra = THEME_EXTRAS.get(t["id"])
+        if not extra:
+            t.setdefault("wordArt", [])
+            continue
+        t["decorations"] = list(dict.fromkeys(t["decorations"] + extra.get("decorations", [])))
+        t["frames"] = list(dict.fromkeys(t["frames"] + extra.get("frames", [])))
+        for k, v in extra.get("accessorySets", {}).items():
+            t["accessorySets"][k] = list(dict.fromkeys(t["accessorySets"].get(k, []) + v))
+        t["textPresets"] = list(dict.fromkeys(t["textPresets"] + extra.get("textPresets", [])))
+        t["wordArt"] = extra.get("wordArt", [])
+
+
 def main():
     for d in (DEC, FRM, PAT):
         d.mkdir(parents=True, exist_ok=True)
@@ -896,7 +1161,11 @@ def main():
         (PAT / f"{pid}.svg").write_text(pattern_svg(body), encoding="utf-8")
         pat_index.append({"id": pid, "name": name, "file": f"{pid}.svg", "license": LICENSE})
     (PAT / "index.json").write_text(json.dumps(pat_index, indent=1), encoding="utf-8")
+    apply_theme_extras()
     for t in THEMES:
+        for wa_ in t.get("wordArt", []):
+            for dd in wa_["decor"]:
+                assert dd["asset"] in ids, f"word art {wa_['id']} references missing asset {dd['asset']}"
         for ref in t["decorations"] + t["frames"] + [x for v in t["accessorySets"].values() for x in v]:
             assert ref in ids, f"theme {t['id']} references missing asset {ref}"
         d = THM / t["id"]

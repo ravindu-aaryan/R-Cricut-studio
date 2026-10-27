@@ -26,7 +26,17 @@
   "sparkles",
   "heart_basic",
   "cloud_cute",
-  "flower_pink"
+  "flower_pink",
+  "castle_blue",
+  "glass_slipper",
+  "slipper_cushion",
+  "pumpkin_carriage",
+  "clock_roman",
+  "butterfly_blue",
+  "rose_pink",
+  "rose_blue",
+  "banner_scroll",
+  "princess_cameo"
  ],
  "accessorySets": {
   "Tiaras": [
@@ -39,7 +49,10 @@
  },
  "frames": [
   "frame_scallop",
-  "frame_ring_hearts"
+  "frame_ring_hearts",
+  "frame_ornate_oval",
+  "frame_floral_oval",
+  "frame_heart_gold"
  ],
  "border": {
   "widthMm": 3.0,
@@ -85,7 +98,11 @@
   "Little Princess",
   "Once Upon a Time",
   "Make a Wish",
-  "Magical Day"
+  "Magical Day",
+  "Believe in Magic",
+  "Born to be a Princess",
+  "Princess Vibes",
+  "Have Courage and be Kind"
  ],
  "backgrounds": [
   {
@@ -115,5 +132,207 @@
  "license": {
   "assets": "CC0 1.0 (original artwork for Offline Sticker Studio)",
   "fonts": "See assets/fonts/licenses"
- }
+ },
+ "wordArt": [
+  {
+   "id": "little_princess",
+   "name": "Little Princess (scroll)",
+   "stroke": "#ffffff",
+   "strokeRel": 0.0,
+   "lines": [
+    {
+     "text": "Little Princess",
+     "font": "Great Vibes",
+     "size": 0.14,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "banner_scroll",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 1.0,
+     "rotation": 0
+    }
+   ]
+  },
+  {
+   "id": "born_princess",
+   "name": "Born to be a Princess",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "Born",
+     "font": "Great Vibes",
+     "size": 0.2,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "to be a",
+     "font": "Great Vibes",
+     "size": 0.12,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "Princess",
+     "font": "Great Vibes",
+     "size": 0.2,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "tiara",
+     "x": 0.5,
+     "y": 0.05,
+     "w": 0.3,
+     "rotation": 0
+    },
+    {
+     "asset": "heart_basic",
+     "x": 0.5,
+     "y": 0.97,
+     "w": 0.06,
+     "rotation": 0
+    }
+   ]
+  },
+  {
+   "id": "princess_vibes",
+   "name": "Princess Vibes",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "Princess",
+     "font": "Great Vibes",
+     "size": 0.2,
+     "fill": "#3d5fa8",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "Vibes",
+     "font": "Great Vibes",
+     "size": 0.22,
+     "fill": "#f48fb1",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "crown_gold",
+     "x": 0.5,
+     "y": 0.06,
+     "w": 0.3,
+     "rotation": 0
+    },
+    {
+     "asset": "heart_basic",
+     "x": 0.12,
+     "y": 0.6,
+     "w": 0.07,
+     "rotation": -15
+    },
+    {
+     "asset": "heart_basic",
+     "x": 0.88,
+     "y": 0.45,
+     "w": 0.07,
+     "rotation": 15
+    }
+   ]
+  },
+  {
+   "id": "courage_kind",
+   "name": "Have Courage and be Kind",
+   "stroke": "#ffffff",
+   "strokeRel": 0.07,
+   "lines": [
+    {
+     "text": "Have",
+     "font": "Great Vibes",
+     "size": 0.18,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "Courage",
+     "font": "Great Vibes",
+     "size": 0.2,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    },
+    {
+     "text": "and be Kind",
+     "font": "Great Vibes",
+     "size": 0.14,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "glass_slipper",
+     "x": 0.15,
+     "y": 0.85,
+     "w": 0.22,
+     "rotation": 0
+    },
+    {
+     "asset": "heart_basic",
+     "x": 0.9,
+     "y": 0.2,
+     "w": 0.06,
+     "rotation": 0
+    }
+   ]
+  },
+  {
+   "id": "believe_magic",
+   "name": "Believe in Magic",
+   "stroke": "#ffffff",
+   "strokeRel": 0.0,
+   "lines": [
+    {
+     "text": "Believe in Magic",
+     "font": "Great Vibes",
+     "size": 0.13,
+     "fill": "#1d2b6a",
+     "colors": null,
+     "curve": null
+    }
+   ],
+   "decor": [
+    {
+     "asset": "banner_scroll",
+     "x": 0.5,
+     "y": 0.5,
+     "w": 1.0,
+     "rotation": 0
+    },
+    {
+     "asset": "sparkles",
+     "x": 0.88,
+     "y": 0.15,
+     "w": 0.14,
+     "rotation": 0
+    }
+   ]
+  }
+ ]
 }

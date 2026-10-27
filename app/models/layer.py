@@ -54,6 +54,7 @@ class Layer:
     background: dict | None = None
     curve: float = 0.0  # arc in degrees; 0 = straight
     wrap_width: float = 0.0  # 0 = no wrapping
+    letter_colors: list = field(default_factory=list)  # cycle these fills per letter ("word art")
     # shape
     shape: str = "rect"
     corner_radius: float = 0.0

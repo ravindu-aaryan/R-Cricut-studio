@@ -3161,5 +3161,742 @@
   "anchor": null,
   "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
   "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "action_lines",
+  "name": "Emphasis lines",
+  "category": "confetti",
+  "tags": [
+   "action",
+   "lines",
+   "emphasis",
+   "pop",
+   "excited"
+  ],
+  "kind": "svg",
+  "file": "action_lines.svg",
+  "aspect": 1.0,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "action_lines_color",
+  "name": "Colour pop lines",
+  "category": "confetti",
+  "tags": [
+   "action",
+   "lines",
+   "emphasis",
+   "burst"
+  ],
+  "kind": "svg",
+  "file": "action_lines_color.svg",
+  "aspect": 1.0,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_0",
+  "name": "Number balloon 0",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "0"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_0.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_1",
+  "name": "Number balloon 1",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "1"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_1.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_2",
+  "name": "Number balloon 2",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "2"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_2.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_3",
+  "name": "Number balloon 3",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "3"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_3.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_4",
+  "name": "Number balloon 4",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "4"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_4.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_5",
+  "name": "Number balloon 5",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "5"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_5.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_6",
+  "name": "Number balloon 6",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "6"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_6.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_7",
+  "name": "Number balloon 7",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "7"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_7.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_8",
+  "name": "Number balloon 8",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "8"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_8.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_number_9",
+  "name": "Number balloon 9",
+  "category": "balloons",
+  "tags": [
+   "number",
+   "balloon",
+   "age",
+   "gold",
+   "birthday",
+   "9"
+  ],
+  "kind": "svg",
+  "file": "balloon_number_9.svg",
+  "aspect": 0.5652,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "balloon_cluster",
+  "name": "Glossy balloon cluster",
+  "category": "balloons",
+  "tags": [
+   "balloons",
+   "party",
+   "birthday",
+   "bunch",
+   "glossy"
+  ],
+  "kind": "svg",
+  "file": "balloon_cluster.svg",
+  "aspect": 0.8571,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "gift_stack",
+  "name": "Stack of gifts",
+  "category": "gifts",
+  "tags": [
+   "gifts",
+   "presents",
+   "birthday",
+   "stack"
+  ],
+  "kind": "svg",
+  "file": "gift_stack.svg",
+  "aspect": 0.9091,
+  "recolor": [
+   "primary",
+   "secondary",
+   "accent"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#e63946",
+   "secondary": "#ffd166",
+   "accent": "#3a86ff"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "teddy_bear",
+  "name": "Teddy bear",
+  "category": "animals",
+  "tags": [
+   "teddy",
+   "bear",
+   "toy",
+   "cuddle",
+   "cute"
+  ],
+  "kind": "svg",
+  "file": "teddy_bear.svg",
+  "aspect": 0.8696,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#e63946"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "party_glasses",
+  "name": "Birthday party glasses",
+  "category": "sunglasses",
+  "tags": [
+   "party",
+   "glasses",
+   "birthday",
+   "candles",
+   "fun"
+  ],
+  "kind": "svg",
+  "file": "party_glasses.svg",
+  "aspect": 1.8462,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#ff4f8b",
+   "secondary": "#ffffff"
+  },
+  "anchor": "eyes",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "cake_chocolate",
+  "name": "Chocolate cake with candles",
+  "category": "cakes",
+  "tags": [
+   "cake",
+   "chocolate",
+   "candles",
+   "birthday"
+  ],
+  "kind": "svg",
+  "file": "cake_chocolate.svg",
+  "aspect": 1.1,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "fedora",
+  "name": "Fedora hat",
+  "category": "hats",
+  "tags": [
+   "fedora",
+   "hat",
+   "gentleman",
+   "classic"
+  ],
+  "kind": "svg",
+  "file": "fedora.svg",
+  "aspect": 1.5714,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#1f1d2b",
+   "secondary": "#2b4a75"
+  },
+  "anchor": "head",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "mustache_stick",
+  "name": "Mustache on a stick",
+  "category": "gentleman",
+  "tags": [
+   "mustache",
+   "prop",
+   "photo booth",
+   "gentleman",
+   "funny"
+  ],
+  "kind": "svg",
+  "file": "mustache_stick.svg",
+  "aspect": 0.9091,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#1f1d2b"
+  },
+  "anchor": "mouth",
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "vintage_car",
+  "name": "Vintage car",
+  "category": "gentleman",
+  "tags": [
+   "car",
+   "vintage",
+   "classic",
+   "gentleman",
+   "toy"
+  ],
+  "kind": "svg",
+  "file": "vintage_car.svg",
+  "aspect": 1.75,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#1d2b4a"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "books_stack",
+  "name": "Stack of books",
+  "category": "school",
+  "tags": [
+   "books",
+   "reading",
+   "stack",
+   "smart",
+   "gentleman"
+  ],
+  "kind": "svg",
+  "file": "books_stack.svg",
+  "aspect": 1.8333,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#5a3e2b",
+   "secondary": "#2b4a75"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "castle_blue",
+  "name": "Fairytale castle (blue)",
+  "category": "fantasy",
+  "tags": [
+   "castle",
+   "princess",
+   "fairytale",
+   "palace",
+   "blue"
+  ],
+  "kind": "svg",
+  "file": "castle_blue.svg",
+  "aspect": 0.9167,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#8fb6f0",
+   "secondary": "#3d5fa8"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "glass_slipper",
+  "name": "Glass slipper",
+  "category": "fantasy",
+  "tags": [
+   "slipper",
+   "shoe",
+   "princess",
+   "fairytale",
+   "glass"
+  ],
+  "kind": "svg",
+  "file": "glass_slipper.svg",
+  "aspect": 1.375,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "slipper_cushion",
+  "name": "Slipper on a cushion",
+  "category": "fantasy",
+  "tags": [
+   "slipper",
+   "cushion",
+   "princess",
+   "royal"
+  ],
+  "kind": "svg",
+  "file": "slipper_cushion.svg",
+  "aspect": 1.4118,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#1d2b6a"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "pumpkin_carriage",
+  "name": "Pumpkin carriage",
+  "category": "fantasy",
+  "tags": [
+   "carriage",
+   "pumpkin",
+   "princess",
+   "fairytale",
+   "coach"
+  ],
+  "kind": "svg",
+  "file": "pumpkin_carriage.svg",
+  "aspect": 1.3,
+  "recolor": [],
+  "defaultColors": {},
+  "paletteDefaults": {},
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "clock_roman",
+  "name": "Midnight clock",
+  "category": "fantasy",
+  "tags": [
+   "clock",
+   "midnight",
+   "time",
+   "princess",
+   "fairytale"
+  ],
+  "kind": "svg",
+  "file": "clock_roman.svg",
+  "aspect": 1.0,
+  "recolor": [
+   "primary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#3d5fa8"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "butterfly_blue",
+  "name": "Butterfly",
+  "category": "fantasy",
+  "tags": [
+   "butterfly",
+   "princess",
+   "garden",
+   "spring"
+  ],
+  "kind": "svg",
+  "file": "butterfly_blue.svg",
+  "aspect": 1.2,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#8fb6f0",
+   "secondary": "#cfe3ff"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "rose_pink",
+  "name": "Pink roses",
+  "category": "flowers",
+  "tags": [
+   "rose",
+   "flowers",
+   "princess",
+   "wedding",
+   "pink"
+  ],
+  "kind": "svg",
+  "file": "rose_pink.svg",
+  "aspect": 1.375,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#f7a8c4",
+   "secondary": "#f48fb1"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "rose_blue",
+  "name": "Blue roses",
+  "category": "flowers",
+  "tags": [
+   "rose",
+   "flowers",
+   "princess",
+   "blue"
+  ],
+  "kind": "svg",
+  "file": "rose_blue.svg",
+  "aspect": 1.375,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#cfe3ff",
+   "secondary": "#8fb6f0"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "banner_scroll",
+  "name": "Scroll banner",
+  "category": "banners",
+  "tags": [
+   "banner",
+   "scroll",
+   "ribbon",
+   "princess",
+   "title",
+   "parchment"
+  ],
+  "kind": "svg",
+  "file": "banner_scroll.svg",
+  "aspect": 2.9091,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#fbf3dc",
+   "secondary": "#e8d8b0"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
+ },
+ {
+  "id": "princess_cameo",
+  "name": "Princess silhouette cameo",
+  "category": "fantasy",
+  "tags": [
+   "princess",
+   "silhouette",
+   "cameo",
+   "portrait",
+   "fairytale"
+  ],
+  "kind": "svg",
+  "file": "princess_cameo.svg",
+  "aspect": 0.7826,
+  "recolor": [
+   "primary",
+   "secondary"
+  ],
+  "defaultColors": {},
+  "paletteDefaults": {
+   "primary": "#3d5fa8",
+   "secondary": "#3d5fa8"
+  },
+  "anchor": null,
+  "license": "CC0 1.0 (original artwork for Offline Sticker Studio)",
+  "author": "Offline Sticker Studio"
  }
 ]
